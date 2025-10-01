@@ -24,65 +24,179 @@ A comprehensive asset management system with advanced features for network devic
 - **Department Management**: Organize assets by departments and organizational units
 - **Collection Limiting**: Smart collection limits to prevent system overload
 
-## Prerequisites
+## 📋 Prerequisites
 
 - Python 3.13+
 - PyQt6
 - Windows OS (recommended)
 - Git (for version control)
 
-## Setup Instructions
+## 🛠️ Installation
 
-A PowerShell script is provided to automate the entire setup process. This is the recommended way to prepare your environment as it ensures all dependencies are installed correctly.
-
-1.  **Open PowerShell as an Administrator**
-
-    Right-click the PowerShell icon and select "Run as Administrator". This is required to allow script execution if it's your first time.
-
-2.  **Allow Script Execution (One-Time Step)**
-
-    If you haven't run local PowerShell scripts before, you may need to change the execution policy. Run the following command and answer 'Y' or 'A' when prompted:
-
-    ```powershell
-    Set-ExecutionPolicy RemoteSigned
-    ```
-
-3.  **Run the Setup Script**
-
-    Navigate to your project directory and run the `setup.ps1` script.
-
-    ```powershell
-    # Navigate to your project directory
-    cd E:\Projects\Asset-Project-Enhanced
-
-    # Run the setup script
-    .\setup.ps1
-    ```
-    The script will automatically delete any old environment, create a new one, and install all dependencies.
-
-## How to Run the Application
-
-After the setup script completes successfully, make sure your virtual environment is active (your prompt should start with `(.venv)`). Then, run the application:
-
-```powershell
-# If your terminal session was closed, reactivate the environment first:
-# .\.venv\Scripts\activate
-
-# Run the main application
-python main.py
+### Quick Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/Mostafa96-cybersecurity/Asset-Desktop.git
+cd Asset-Desktop
 ```
 
-This will launch the main GUI window. If the setup was successful, you will **not** see the SNMP warning message in the logs.
-    ```powershell
-    pip install -r requirements.txt
-    ```
-
-## How to Run the Application
-
-Once the setup is complete, run the application from your project's root directory:
-
+2. Run the automated setup script:
 ```powershell
-python main.py
+# Open PowerShell as Administrator
+Set-ExecutionPolicy RemoteSigned
+.\setup.ps1
 ```
 
-This will launch the main GUI window. If the setup was successful, you will **not** see the SNMP warning message in the logs.
+3. Activate virtual environment and run:
+```powershell
+.\.venv\Scripts\activate
+python gui/app.py
+```
+
+### Manual Setup
+If you prefer manual setup:
+
+```bash
+# Create virtual environment
+python -m venv .venv
+.venv\Scripts\activate
+
+# Install dependencies
+pip install PyQt6 requests psutil wmi winshell
+
+# Run the application
+python gui/app.py
+```
+
+## 🚀 How to Run
+
+### Desktop Application
+```bash
+python gui/app.py
+```
+
+### Web Interface
+```bash
+python production_web_service.py
+```
+Then open http://localhost:5000 in your browser.
+
+## 📁 Project Structure
+
+```
+Asset-Desktop/
+├── gui/                          # GUI modules
+│   ├── app.py                   # Main application interface
+│   ├── enhanced_app.py          # Enhanced GUI features
+│   ├── thread_safe_enhancement.py # Thread safety improvements
+│   └── department_management.py # Department management UI
+├── core/                        # Core business logic
+│   ├── worker.py               # Worker threads
+│   ├── collector.py            # Collection engines
+│   └── logic.py                # Business logic
+├── collectors/                  # Data collectors
+│   ├── wmi_collector.py        # WMI-based collection
+│   ├── ssh_collector.py        # SSH-based collection
+│   └── snmp_collector.py       # SNMP-based collection
+├── tools/                       # Utility tools
+├── templates/                   # Web templates
+├── ultra_fast_collector.py     # Core collection engine
+├── automatic_scanner.py        # Automated scanning system
+├── massive_scan_protection.py  # Large network protection
+└── assets.db                   # SQLite database
+```
+
+## 🔧 Configuration
+
+### Automatic Scanning
+Configure automatic scanning in `automatic_scanner_config.json`:
+```json
+{
+    "scan_interval": 3600,
+    "enabled_networks": ["192.168.1.0/24"],
+    "max_concurrent_scans": 5
+}
+```
+
+### Network Profiles
+Set up network profiles in `network_profiles.json`:
+```json
+{
+    "profiles": [
+        {
+            "name": "Office Network",
+            "network": "192.168.1.0/24",
+            "credentials": "default"
+        }
+    ]
+}
+```
+
+## 🚀 Key Components
+
+### Ultra-Fast Collector
+High-performance device collection with:
+- Multi-threaded scanning
+- Intelligent retry mechanisms
+- Progress tracking
+- Error handling
+
+### Thread-Safe Enhancements
+- UI responsiveness during operations
+- Background processing
+- Thread pool management
+- Emergency recovery systems
+
+### Massive Scan Protection
+- Prevents UI freezing on large networks
+- Smart resource management
+- Automatic load balancing
+- Performance monitoring
+
+## 📊 Monitoring and Logs
+
+The system provides comprehensive logging:
+- `desktop_app.log` - Main application logs
+- `enhanced_asset_collector.log` - Collection operation logs
+- Real-time error monitoring dashboard
+
+## 🔒 Security Features
+
+- Credential management system
+- Encrypted data storage
+- Access control and authentication
+- Audit logging
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🐛 Known Issues
+
+- Ensure Python virtual environment is properly configured
+- Windows Defender may flag some network scanning operations
+- Large network scans require adequate system resources
+
+## 📞 Support
+
+For support and questions, please open an issue in the GitHub repository.
+
+## 🎯 Roadmap
+
+- [ ] Linux/macOS support
+- [ ] Enhanced reporting features
+- [ ] Cloud integration capabilities
+- [ ] Mobile app companion
+- [ ] Advanced analytics dashboard
+
+---
+
+**Asset Management System Enhanced Edition** - Built for enterprise-scale asset management with performance and reliability in mind.
