@@ -1,0 +1,41 @@
+{
+  "HQ": {
+    "network_list": [
+      {
+        "description": "No description",
+        "network": "10.0.21.0/24"
+      },
+      {
+        "description": "No description",
+        "enabled": true,
+        "network": "10.0.22.0/24"
+      },
+      {
+        "description": "No description",
+        "enabled": true,
+        "network": "10.0.23.0/24"
+      }
+    ],
+    "networks": "10.0.21.0/24, 10.0.22.0/24, 10.0.23.0/24",
+    "win_credentials": [
+      {
+        "username": ".\\administrator",
+        "password": "••••••••"
+      },
+      {
+        "username": ".\\administrator",
+        "password": "••••••••"
+      },
+      {
+        "username": "square\\administrator",
+        "password": "••••••••"
+      }
+    ],
+    "linux_credentials": [
+      {
+        "username": "",
+        "password": ""
+      }
+    ]
+  }
+}

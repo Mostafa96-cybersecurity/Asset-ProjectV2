@@ -1,0 +1,23 @@
+{
+  "schedules": [
+    {
+      "schedule_type": "interval",
+      "interval_minutes": 30,
+      "daily_time": null,
+      "weekly_days": null,
+      "weekly_time": null,
+      "once_datetime": null,
+      "enabled": false,
+      "name": "Default 30-minute scan"
+    }
+  ],
+  "targets": [
+    {
+      "name": "Local Network",
+      "network_range": "192.168.1.1-50",
+      "enabled": false,
+      "last_scan": null,
+      "devices_found": 0
+    }
+  ]
+}

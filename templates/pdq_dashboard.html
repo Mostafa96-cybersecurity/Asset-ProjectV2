@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDQ Inventory - Asset Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pdq-primary: #2c3e50;
+            --pdq-secondary: #34495e;
+            --pdq-accent: #3498db;
+            --pdq-success: #27ae60;
+            --pdq-warning: #f39c12;
+            --pdq-danger: #e74c3c;
+            --pdq-light: #ecf0f1;
+            --pdq-dark: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* PDQ-style header */
+        .pdq-header {
+            background: linear-gradient(135deg, var(--pdq-primary) 0%, var(--pdq-secondary) 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .pdq-header .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            color: white !important;
+        }
+        
+        .pdq-header .navbar-brand i {
+            color: var(--pdq-accent);
+            margin-right: 10px;
+        }
+        
+        /* PDQ-style toolbar */
+        .pdq-toolbar {
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 15px 0;
+            margin-bottom: 0;
+        }
+        
+        .pdq-toolbar .btn {
+            margin-right: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 8px 16px;
+        }
+        
+        .btn-pdq-primary {
+            background: var(--pdq-primary);
+            border: var(--pdq-primary);
+            color: white;
+        }
+        
+        .btn-pdq-primary:hover {
+            background: var(--pdq-secondary);
+            border: var(--pdq-secondary);
+            color: white;
+        }
+        
+        .btn-pdq-success {
+            background: var(--pdq-success);
+            border: var(--pdq-success);
+            color: white;
+        }
+        
+        .btn-pdq-success:hover {
+            background: #229954;
+            border: #229954;
+            color: white;
+        }
+        
+        /* Search box */
+        .search-container {
+            position: relative;
+        }
+        
+        .search-container input {
+            padding-left: 40px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            height: 42px;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        /* PDQ-style table */
+        .pdq-table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 20px 0;
+        }
+        
+        .pdq-table {
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .pdq-table th {
+            background: var(--pdq-light);
+            color: var(--pdq-dark);
+            font-weight: 600;
+            padding: 12px 15px;
+            border-bottom: 2px solid #dee2e6;
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .pdq-table th:hover {
+            background: #d5dbdb;
+        }
+        
+        .pdq-table th i {
+            margin-left: 5px;
+            opacity: 0.5;
+        }
+        
+        .pdq-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f8f9fa;
+            vertical-align: middle;
+        }
+        
+        .pdq-table tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .pdq-table tbody tr:hover {
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        .pdq-table tbody tr.selected {
+            background: #e3f2fd !important;
+            border-left: 4px solid var(--pdq-accent);
+        }
+        
+        /* Status indicators */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        /* Online/Offline indicators */
+        .online-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pdq-success);
+            animation: pulse 2s infinite;
+        }
+        
+        .offline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #dc3545;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+        }
+        
+        /* Modal styles */
+        .modal-header {
+            background: var(--pdq-primary);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+        
+        /* Loading states */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--pdq-accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Stats cards */
+        .stats-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border-left: 4px solid var(--pdq-accent);
+        }
+        
+        .stats-card h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--pdq-primary);
+            margin-bottom: 5px;
+        }
+        
+        .stats-card p {
+            color: #6c757d;
+            margin: 0;
+            font-weight: 500;
+        }
+        
+        /* Pagination */
+        .pagination .page-link {
+            color: var(--pdq-primary);
+            border-color: #dee2e6;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: var(--pdq-light);
+            color: var(--pdq-secondary);
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--pdq-primary);
+            border-color: var(--pdq-primary);
+        }
+        
+        /* Form styles */
+        .form-control:focus {
+            border-color: var(--pdq-accent);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .pdq-toolbar {
+                text-align: center;
+            }
+            
+            .pdq-toolbar .btn {
+                margin: 5px;
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .pdq-table th,
+            .pdq-table td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Custom scrollbar */
+        .table-responsive::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</head>
+<body>
+    <!-- PDQ Header -->
+    <div class="pdq-header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-pc-display"></i>
+                        PDQ Inventory - Asset Management
+                    </a>
+                    <div class="d-flex align-items-center text-light">
+                        <i class="bi bi-database me-2"></i>
+                        <span id="connectionStatus">Connected to Database</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- PDQ Toolbar -->
+    <div class="pdq-toolbar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex flex-wrap">
+                        <button type="button" class="btn btn-pdq-success" onclick="showAddComputerModal()">
+                            <i class="bi bi-plus-circle me-1"></i>
+                            Add Computer
+                        </button>
+                        <button type="button" class="btn btn-pdq-primary" onclick="refreshData()">
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+                            Refresh
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="exportData()">
+                            <i class="bi bi-download me-1"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" class="form-control" 
+                               placeholder="Search computers, users, IP addresses..." 
+                               onkeyup="handleSearch()">
+                        <i class="bi bi-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistics Cards -->
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <h3 id="totalComputers">0</h3>
+                    <p>Total Computers</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card" style="border-left-color: var(--pdq-success);">
+                    <h3 id="onlineComputers">0</h3>
+                    <p>Online</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card" style="border-left-color: var(--pdq-warning);">
+                    <h3 id="windowsComputers">0</h3>
+                    <p>Windows PCs</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card" style="border-left-color: var(--pdq-danger);">
+                    <h3 id="lastScanTime">...</h3>
+                    <p>Last Scan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Data Table -->
+    <div class="container-fluid">
+        <div class="pdq-table-container position-relative">
+            <!-- Loading overlay -->
+            <div class="loading-overlay d-none" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+            </div>
+            
+            <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                <table class="table table-hover pdq-table" id="computersTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('name')">
+                                Computer Name <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('user')">
+                                User <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('ip_address')">
+                                IP Address <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('os')">
+                                Operating System <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('manufacturer')">
+                                Manufacturer <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('model')">
+                                Model <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('memory_gb')">
+                                Memory (GB) <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('status')">
+                                Status <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th onclick="sortTable('last_seen')">
+                                Last Seen <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="computersTableBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center p-3 border-top">
+                <div>
+                    <span id="paginationInfo">Showing 0 - 0 of 0 computers</span>
+                </div>
+                <nav>
+                    <ul class="pagination pagination-sm mb-0" id="paginationNav">
+                        <!-- Pagination will be populated by JavaScript -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add/Edit Computer Modal -->
+    <div class="modal fade" id="computerModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="computerModalTitle">Add Computer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="computerForm">
+                        <input type="hidden" id="computerId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="computerName" class="form-label">Computer Name *</label>
+                                    <input type="text" class="form-control" id="computerName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="ipAddress" class="form-label">IP Address</label>
+                                    <input type="text" class="form-control" id="ipAddress">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="userName" class="form-label">User Name</label>
+                                    <input type="text" class="form-control" id="userName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="domainName" class="form-label">Domain</label>
+                                    <input type="text" class="form-control" id="domainName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="operatingSystem" class="form-label">Operating System</label>
+                                    <input type="text" class="form-control" id="operatingSystem">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="manufacturer" class="form-label">Manufacturer</label>
+                                    <input type="text" class="form-control" id="manufacturer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="modelName" class="form-label">Model</label>
+                                    <input type="text" class="form-control" id="modelName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="serialNumber" class="form-label">Serial Number</label>
+                                    <input type="text" class="form-control" id="serialNumber">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="assetTag" class="form-label">Asset Tag</label>
+                                    <input type="text" class="form-control" id="assetTag">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="department" class="form-label">Department</label>
+                                    <input type="text" class="form-control" id="department">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-pdq-success" onclick="saveComputer()">Save Computer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let computersData = [];
+        let currentPage = 1;
+        let itemsPerPage = 50;
+        let sortField = 'name';
+        let sortDirection = 'asc';
+        let searchTerm = '';
+        let totalComputers = 0;
+        
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 PDQ Inventory Style Asset Manager Initialized');
+            loadComputers();
+            
+            // Set up auto-refresh every 30 seconds
+            setInterval(loadComputers, 30000);
+        });
+        
+        // Load computers from API
+        async function loadComputers() {
+            try {
+                showLoading(true);
+                
+                const offset = (currentPage - 1) * itemsPerPage;
+                const url = `/api/computers?search=${encodeURIComponent(searchTerm)}&limit=${itemsPerPage}&offset=${offset}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    computersData = data.data;
+                    totalComputers = data.total;
+                    
+                    renderComputersTable();
+                    updateStatistics();
+                    updatePagination();
+                    
+                    console.log(`✅ Loaded ${computersData.length} computers`);
+                } else {
+                    throw new Error(data.error || 'Failed to load computers');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading computers:', error);
+                showError('Failed to load computer data: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Render computers table
+        function renderComputersTable() {
+            const tbody = document.getElementById('computersTableBody');
+            tbody.innerHTML = '';
+            
+            if (computersData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1"></i>
+                            <div class="mt-2">No computers found</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            computersData.forEach(computer => {
+                const row = document.createElement('tr');
+                row.onclick = () => selectComputer(computer.id);
+                
+                // Format last seen date
+                const lastSeen = computer.last_seen ? 
+                    new Date(computer.last_seen).toLocaleDateString() : 'Never';
+                
+                // Format memory
+                const memory = computer.memory_gb ? `${computer.memory_gb} GB` : '';
+                
+                // Status badge
+                const statusClass = computer.status === 'Active' ? 'status-active' : 'status-inactive';
+                const statusBadge = `<span class="status-badge ${statusClass}">${computer.status || 'Unknown'}</span>`;
+                
+                // Online indicator
+                const onlineIndicator = computer.online === 'Yes' ? 
+                    '<span class="online-indicator"><span class="online-dot"></span>Online</span>' :
+                    '<span class="online-indicator"><span class="offline-dot"></span>Offline</span>';
+                
+                row.innerHTML = `
+                    <td><strong>${computer.name || 'Unknown'}</strong></td>
+                    <td>${computer.user || ''}</td>
+                    <td><code>${computer.ip_address || 'No IP'}</code></td>
+                    <td>${computer.os || ''}</td>
+                    <td>${computer.manufacturer || ''}</td>
+                    <td>${computer.model || ''}</td>
+                    <td>${memory}</td>
+                    <td>${onlineIndicator}</td>
+                    <td>${lastSeen}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation(); editComputer(${computer.id})" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); deleteComputer(${computer.id})" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Update statistics
+        function updateStatistics() {
+            document.getElementById('totalComputers').textContent = totalComputers;
+            
+            const onlineCount = computersData.filter(c => c.online === 'Yes').length;
+            document.getElementById('onlineComputers').textContent = onlineCount;
+            
+            const windowsCount = computersData.filter(c => 
+                c.os && c.os.toLowerCase().includes('windows')
+            ).length;
+            document.getElementById('windowsComputers').textContent = windowsCount;
+            
+            document.getElementById('lastScanTime').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Update pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(totalComputers / itemsPerPage);
+            const paginationNav = document.getElementById('paginationNav');
+            
+            // Update info
+            const start = (currentPage - 1) * itemsPerPage + 1;
+            const end = Math.min(currentPage * itemsPerPage, totalComputers);
+            document.getElementById('paginationInfo').textContent = 
+                `Showing ${start} - ${end} of ${totalComputers} computers`;
+            
+            // Build pagination
+            paginationNav.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('li');
+            prevBtn.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>`;
+            paginationNav.appendChild(prevBtn);
+            
+            // Page numbers
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('li');
+                pageBtn.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+                paginationNav.appendChild(pageBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('li');
+            nextBtn.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>`;
+            paginationNav.appendChild(nextBtn);
+        }
+        
+        // Change page
+        function changePage(page) {
+            if (page < 1 || page > Math.ceil(totalComputers / itemsPerPage)) return;
+            currentPage = page;
+            loadComputers();
+        }
+        
+        // Handle search
+        let searchTimeout;
+        function handleSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchTerm = document.getElementById('searchInput').value;
+                currentPage = 1;
+                loadComputers();
+            }, 500);
+        }
+        
+        // Show/hide loading
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) {
+                overlay.classList.remove('d-none');
+            } else {
+                overlay.classList.add('d-none');
+            }
+        }
+        
+        // Select computer
+        function selectComputer(computerId) {
+            // Remove previous selection
+            document.querySelectorAll('#computersTableBody tr').forEach(row => {
+                row.classList.remove('selected');
+            });
+            
+            // Add selection to clicked row
+            event.target.closest('tr').classList.add('selected');
+        }
+        
+        // Show add computer modal
+        function showAddComputerModal() {
+            document.getElementById('computerModalTitle').textContent = 'Add Computer';
+            document.getElementById('computerForm').reset();
+            document.getElementById('computerId').value = '';
+            
+            const modal = new bootstrap.Modal(document.getElementById('computerModal'));
+            modal.show();
+        }
+        
+        // Edit computer
+        async function editComputer(computerId) {
+            try {
+                const response = await fetch(`/api/computer/${computerId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const computer = data.data;
+                    
+                    document.getElementById('computerModalTitle').textContent = 'Edit Computer';
+                    document.getElementById('computerId').value = computer.id;
+                    document.getElementById('computerName').value = computer.hostname || '';
+                    document.getElementById('ipAddress').value = computer.ip_address || '';
+                    document.getElementById('userName').value = computer.working_user || '';
+                    document.getElementById('domainName').value = computer.domain_name || '';
+                    document.getElementById('operatingSystem').value = computer.firmware_os_version || '';
+                    document.getElementById('manufacturer').value = computer.model_vendor ? computer.model_vendor.split(' ')[0] : '';
+                    document.getElementById('modelName').value = computer.model_vendor || '';
+                    document.getElementById('serialNumber').value = computer.sn || '';
+                    document.getElementById('assetTag').value = computer.asset_tag || '';
+                    document.getElementById('department').value = computer.department || '';
+                    document.getElementById('notes').value = computer.notes || '';
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('computerModal'));
+                    modal.show();
+                } else {
+                    showError('Failed to load computer details');
+                }
+            } catch (error) {
+                console.error('Error loading computer:', error);
+                showError('Failed to load computer details');
+            }
+        }
+        
+        // Save computer
+        async function saveComputer() {
+            try {
+                const computerId = document.getElementById('computerId').value;
+                const isEdit = computerId !== '';
+                
+                const computerData = {
+                    hostname: document.getElementById('computerName').value,
+                    ip_address: document.getElementById('ipAddress').value,
+                    working_user: document.getElementById('userName').value,
+                    domain_name: document.getElementById('domainName').value,
+                    os: document.getElementById('operatingSystem').value,
+                    model_vendor: document.getElementById('modelName').value,
+                    serial_number: document.getElementById('serialNumber').value,
+                    asset_tag: document.getElementById('assetTag').value,
+                    department: document.getElementById('department').value,
+                    notes: document.getElementById('notes').value
+                };
+                
+                const url = isEdit ? `/api/computer/${computerId}` : '/api/computer';
+                const method = isEdit ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(computerData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess(data.message);
+                    bootstrap.Modal.getInstance(document.getElementById('computerModal')).hide();
+                    loadComputers();
+                } else {
+                    showError(data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error saving computer:', error);
+                showError('Failed to save computer');
+            }
+        }
+        
+        // Delete computer
+        async function deleteComputer(computerId) {
+            if (!confirm('Are you sure you want to delete this computer?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/computer/${computerId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('Computer deleted successfully');
+                    loadComputers();
+                } else {
+                    showError(data.error);
+                }
+                
+            } catch (error) {
+                console.error('Error deleting computer:', error);
+                showError('Failed to delete computer');
+            }
+        }
+        
+        // Refresh data
+        function refreshData() {
+            loadComputers();
+        }
+        
+        // Export data (placeholder)
+        function exportData() {
+            showInfo('Export functionality coming soon!');
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            showAlert(message, 'success');
+        }
+        
+        // Show error message
+        function showError(message) {
+            showAlert(message, 'danger');
+        }
+        
+        // Show info message
+        function showInfo(message) {
+            showAlert(message, 'info');
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show position-fixed" 
+                     style="top: 20px; right: 20px; z-index: 2000; max-width: 400px;">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', alertHtml);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                if (alerts.length > 0) {
+                    alerts[alerts.length - 1].remove();
+                }
+            }, 5000);
+        }
+        
+        // Sort table (placeholder - will be implemented with actual sorting)
+        function sortTable(field) {
+            if (sortField === field) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortField = field;
+                sortDirection = 'asc';
+            }
+            
+            // For now, just reload data
+            // TODO: Implement actual sorting
+            loadComputers();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Portal - Professional Asset Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --portal-primary: #1e3a8a;
+            --portal-secondary: #3b82f6;
+            --portal-accent: #06b6d4;
+            --portal-success: #10b981;
+            --portal-warning: #f59e0b;
+            --portal-danger: #ef4444;
+            --portal-light: #f8fafc;
+            --portal-dark: #1e293b;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #334155;
+        }
+        
+        /* Portal Header */
+        .portal-header {
+            background: linear-gradient(135deg, var(--portal-primary) 0%, var(--portal-secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);
+        }
+        
+        .portal-header .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        
+        .portal-header .navbar-brand i {
+            color: var(--portal-accent);
+            margin-right: 0.5rem;
+        }
+        
+        /* Control Panel */
+        .control-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .control-panel .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-portal-primary {
+            background: var(--portal-primary);
+            border: var(--portal-primary);
+            color: white;
+        }
+        
+        .btn-portal-primary:hover {
+            background: var(--portal-secondary);
+            border: var(--portal-secondary);
+            color: white;
+        }
+        
+        .btn-portal-success {
+            background: var(--portal-success);
+            border: var(--portal-success);
+            color: white;
+        }
+        
+        .btn-portal-success:hover {
+            background: #059669;
+            border: #059669;
+            color: white;
+        }
+        
+        /* Search and Filter */
+        .search-filter-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .search-input {
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .search-input:focus {
+            border-color: var(--portal-accent);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+        
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--portal-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* Classification Filter */
+        .classification-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .classification-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .classification-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .classification-badge.active {
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+        
+        .classification-badge i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Asset Table */
+        .asset-table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        
+        .asset-table {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .asset-table thead th {
+            background: var(--portal-light);
+            color: var(--portal-dark);
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .asset-table thead th:hover {
+            background: #e2e8f0;
+        }
+        
+        .asset-table tbody td {
+            padding: 0.875rem 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+        
+        .asset-table tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .asset-table tbody tr:hover {
+            background: #f8fafc;
+            cursor: pointer;
+        }
+        
+        .asset-table tbody tr.selected {
+            background: #eff6ff !important;
+            border-left: 4px solid var(--portal-primary);
+        }
+        
+        /* Asset Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-online {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-offline {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-unknown {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        /* Classification Icons */
+        .classification-icon {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.375rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: white;
+            margin-right: 0.5rem;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        .action-btn {
+            padding: 0.375rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #6b7280;
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+        }
+        
+        .action-btn:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .action-btn-primary {
+            border-color: var(--portal-primary);
+            color: var(--portal-primary);
+        }
+        
+        .action-btn-primary:hover {
+            background: var(--portal-primary);
+            color: white;
+        }
+        
+        .action-btn-danger {
+            border-color: var(--portal-danger);
+            color: var(--portal-danger);
+        }
+        
+        .action-btn-danger:hover {
+            background: var(--portal-danger);
+            color: white;
+        }
+        
+        /* Loading States */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            z-index: 1000;
+        }
+        
+        .loading-spinner {
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid var(--portal-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        
+        .pagination .page-link {
+            color: var(--portal-primary);
+            border-color: #e2e8f0;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: var(--portal-light);
+            color: var(--portal-secondary);
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--portal-primary);
+            border-color: var(--portal-primary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .control-panel .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .asset-table th,
+            .asset-table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .classification-filters {
+                justify-content: center;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        .table-responsive::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Portal Header -->
+    <div class="portal-header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-building"></i>
+                        Asset Portal
+                    </a>
+                    <div class="d-flex align-items-center text-light">
+                        <i class="bi bi-database me-2"></i>
+                        <span id="connectionStatus">Connected to Database</span>
+                        <span class="ms-3">
+                            <i class="bi bi-clock me-1"></i>
+                            <span id="lastUpdate">Loading...</span>
+                        </span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="container-fluid mt-3">
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-3 mb-md-0"><i class="bi bi-gear me-2"></i>Asset Management</h5>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <button type="button" class="btn btn-portal-success" onclick="showAddAssetModal()">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Add Asset
+                    </button>
+                    <button type="button" class="btn btn-portal-primary" onclick="refreshAssets()">
+                        <i class="bi bi-arrow-clockwise me-1"></i>
+                        Refresh
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="exportAssets()">
+                        <i class="bi bi-download me-1"></i>
+                        Export
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-grid" id="statsGrid">
+            <!-- Statistics will be populated by JavaScript -->
+        </div>
+        
+        <!-- Search and Filter Panel -->
+        <div class="search-filter-panel">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="search-container">
+                        <input type="text" class="form-control search-input" 
+                               id="searchInput" 
+                               placeholder="Search assets by hostname, user, IP address, model..."
+                               onkeyup="handleSearch()">
+                        <i class="bi bi-search"></i>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end mt-2 mt-md-0">
+                        <label class="me-2 fw-medium">Show:</label>
+                        <select class="form-select form-select-sm" id="limitSelect" onchange="changeLimit()" style="width: auto;">
+                            <option value="50">50 items</option>
+                            <option value="100" selected>100 items</option>
+                            <option value="200">200 items</option>
+                            <option value="500">500 items</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Classification Filters -->
+            <div class="classification-filters" id="classificationFilters">
+                <!-- Classification filters will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Asset Table -->
+        <div class="asset-table-container position-relative">
+            <!-- Loading overlay -->
+            <div class="loading-overlay d-none" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+            </div>
+            
+            <div class="table-responsive" style="max-height: 600px;">
+                <table class="table table-hover asset-table" id="assetTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('hostname')">
+                                <i class="bi bi-pc-display me-1"></i>
+                                Hostname
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('working_user')">
+                                <i class="bi bi-person me-1"></i>
+                                User
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('ip_address')">
+                                <i class="bi bi-hdd-network me-1"></i>
+                                IP Address
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('classification')">
+                                <i class="bi bi-tags me-1"></i>
+                                Classification
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('manufacturer')">
+                                <i class="bi bi-building me-1"></i>
+                                Manufacturer
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('os_name')">
+                                <i class="bi bi-window me-1"></i>
+                                Operating System
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('department')">
+                                <i class="bi bi-diagram-3 me-1"></i>
+                                Department
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('status')">
+                                <i class="bi bi-activity me-1"></i>
+                                Status
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th onclick="sortTable('last_seen')">
+                                <i class="bi bi-clock me-1"></i>
+                                Last Seen
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+                            </th>
+                            <th>
+                                <i class="bi bi-tools"></i>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="assetTableBody">
+                        <!-- Assets will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="d-flex align-items-center">
+                    <span id="paginationInfo">Showing 0 - 0 of 0 assets</span>
+                </div>
+                <nav>
+                    <ul class="pagination pagination-sm mb-0" id="paginationNav">
+                        <!-- Pagination will be populated by JavaScript -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let assetsData = [];
+        let classificationsData = [];
+        let currentPage = 1;
+        let itemsPerPage = 100;
+        let searchTerm = '';
+        let classificationFilter = '';
+        let totalAssets = 0;
+        let sortField = 'hostname';
+        let sortDirection = 'asc';
+        
+        // Initialize Asset Portal
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏢 Asset Portal Initialized');
+            loadClassifications();
+            loadAssets();
+            
+            // Set up auto-refresh every 60 seconds
+            setInterval(() => {
+                loadAssets(false); // Silent refresh
+            }, 60000);
+        });
+        
+        // Load classifications
+        async function loadClassifications() {
+            try {
+                const response = await fetch('/api/classifications');
+                const data = await response.json();
+                
+                if (data.success) {
+                    classificationsData = data.classifications;
+                    renderClassificationFilters();
+                    console.log('✅ Loaded classifications:', data.classifications.length);
+                }
+            } catch (error) {
+                console.error('❌ Error loading classifications:', error);
+            }
+        }
+        
+        // Load assets
+        async function loadAssets(showLoading = true) {
+            try {
+                if (showLoading) showLoadingState(true);
+                
+                const offset = (currentPage - 1) * itemsPerPage;
+                const url = `/api/assets?search=${encodeURIComponent(searchTerm)}&classification=${encodeURIComponent(classificationFilter)}&limit=${itemsPerPage}&offset=${offset}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    assetsData = data.data;
+                    totalAssets = data.total;
+                    
+                    renderAssetTable();
+                    renderStatistics(data.classification_counts);
+                    renderPagination();
+                    updateLastUpdate();
+                    
+                    console.log(`✅ Loaded ${assetsData.length} assets`);
+                } else {
+                    throw new Error(data.error || 'Failed to load assets');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading assets:', error);
+                showAlert('Failed to load assets: ' + error.message, 'danger');
+            } finally {
+                if (showLoading) showLoadingState(false);
+            }
+        }
+        
+        // Render classification filters
+        function renderClassificationFilters() {
+            const container = document.getElementById('classificationFilters');
+            container.innerHTML = '';
+            
+            // All Assets filter
+            const allFilter = document.createElement('div');
+            allFilter.className = `classification-badge ${!classificationFilter ? 'active' : ''}`;
+            allFilter.style.backgroundColor = '#6366f1';
+            allFilter.onclick = () => filterByClassification('');
+            allFilter.innerHTML = `<i class="bi bi-grid"></i> All Assets`;
+            container.appendChild(allFilter);
+            
+            // Individual classification filters
+            classificationsData.forEach(classification => {
+                const filter = document.createElement('div');
+                filter.className = `classification-badge ${classificationFilter === classification.name ? 'active' : ''}`;
+                filter.style.backgroundColor = classification.color;
+                filter.onclick = () => filterByClassification(classification.name);
+                filter.innerHTML = `
+                    <i class="${classification.icon}"></i>
+                    ${classification.name}
+                    <span class="ms-1 badge bg-light text-dark">${classification.count}</span>
+                `;
+                container.appendChild(filter);
+            });
+        }
+        
+        // Render statistics
+        function renderStatistics(classificationCounts) {
+            const statsGrid = document.getElementById('statsGrid');
+            statsGrid.innerHTML = '';
+            
+            // Calculate statistics
+            const totalCount = totalAssets;
+            const onlineCount = assetsData.filter(asset => asset.online_status === 'Online').length;
+            const withUserCount = assetsData.filter(asset => asset.has_user).length;
+            const classificationCount = Object.keys(classificationCounts || {}).length;
+            
+            const stats = [
+                { icon: 'bi-hdd-stack', label: 'Total Assets', value: totalCount, color: '#1e3a8a' },
+                { icon: 'bi-wifi', label: 'Online', value: onlineCount, color: '#10b981' },
+                { icon: 'bi-person-check', label: 'With Users', value: withUserCount, color: '#3b82f6' },
+                { icon: 'bi-tags', label: 'Classifications', value: classificationCount, color: '#f59e0b' }
+            ];
+            
+            stats.forEach(stat => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                statCard.innerHTML = `
+                    <div class="stat-icon" style="color: ${stat.color};">
+                        <i class="${stat.icon}"></i>
+                    </div>
+                    <div class="stat-number" style="color: ${stat.color};">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                statsGrid.appendChild(statCard);
+            });
+        }
+        
+        // Render asset table
+        function renderAssetTable() {
+            const tbody = document.getElementById('assetTableBody');
+            tbody.innerHTML = '';
+            
+            if (assetsData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" class="text-center py-5">
+                            <div class="text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                <div>No assets found matching your criteria</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            assetsData.forEach(asset => {
+                const row = document.createElement('tr');
+                row.onclick = () => selectAsset(asset.id, row);
+                
+                // Format data
+                const lastSeen = asset.last_seen ? 
+                    new Date(asset.last_seen).toLocaleDateString() : 'Never';
+                const osDisplay = asset.os_name ? 
+                    (asset.os_name.length > 25 ? asset.os_name.substring(0, 25) + '...' : asset.os_name) : '';
+                const userDisplay = asset.working_user || '';
+                const domainDisplay = asset.domain_name ? ` (${asset.domain_name})` : '';
+                const fullUser = userDisplay + domainDisplay;
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="fw-medium">${asset.hostname}</div>
+                        ${asset.serial_number ? `<small class="text-muted">SN: ${asset.serial_number}</small>` : ''}
+                    </td>
+                    <td>
+                        <div>${fullUser}</div>
+                        ${asset.department ? `<small class="text-muted">${asset.department}</small>` : ''}
+                    </td>
+                    <td>
+                        <code class="text-primary">${asset.ip_address || 'No IP'}</code>
+                    </td>
+                    <td>
+                        <div class="classification-icon" style="background-color: ${asset.classification_config.color};">
+                            <i class="${asset.classification_config.icon}"></i>
+                            ${asset.classification}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="fw-medium">${asset.manufacturer}</div>
+                        ${asset.model_vendor ? `<small class="text-muted">${asset.model_vendor.length > 30 ? asset.model_vendor.substring(0, 30) + '...' : asset.model_vendor}</small>` : ''}
+                    </td>
+                    <td>
+                        <div title="${asset.os_name}">${osDisplay}</div>
+                        ${asset.memory_gb ? `<small class="text-muted">RAM: ${asset.memory_gb}GB</small>` : ''}
+                    </td>
+                    <td>
+                        <div>${asset.department || 'Not assigned'}</div>
+                        ${asset.site ? `<small class="text-muted">${asset.site}</small>` : ''}
+                    </td>
+                    <td>
+                        <span class="status-indicator status-${asset.online_status.toLowerCase()}">
+                            <i class="bi bi-${asset.online_status === 'Online' ? 'wifi' : 'wifi-off'} me-1"></i>
+                            ${asset.online_status}
+                        </span>
+                    </td>
+                    <td>
+                        <div>${lastSeen}</div>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn action-btn-primary" onclick="event.stopPropagation(); editAsset(${asset.id})" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="action-btn" onclick="event.stopPropagation(); viewAsset(${asset.id})" title="View Details">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="action-btn action-btn-danger" onclick="event.stopPropagation(); deleteAsset(${asset.id})" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Render pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(totalAssets / itemsPerPage);
+            const paginationNav = document.getElementById('paginationNav');
+            const paginationInfo = document.getElementById('paginationInfo');
+            
+            // Update info
+            const start = (currentPage - 1) * itemsPerPage + 1;
+            const end = Math.min(currentPage * itemsPerPage, totalAssets);
+            paginationInfo.textContent = `Showing ${start} - ${end} of ${totalAssets} assets`;
+            
+            // Build pagination
+            paginationNav.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('li');
+            prevBtn.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>`;
+            paginationNav.appendChild(prevBtn);
+            
+            // Page numbers
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('li');
+                pageBtn.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+                paginationNav.appendChild(pageBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('li');
+            nextBtn.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextBtn.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>`;
+            paginationNav.appendChild(nextBtn);
+        }
+        
+        // Filter by classification
+        function filterByClassification(classification) {
+            classificationFilter = classification;
+            currentPage = 1;
+            loadAssets();
+            renderClassificationFilters(); // Update active state
+        }
+        
+        // Handle search
+        let searchTimeout;
+        function handleSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchTerm = document.getElementById('searchInput').value;
+                currentPage = 1;
+                loadAssets();
+            }, 500);
+        }
+        
+        // Change page
+        function changePage(page) {
+            const totalPages = Math.ceil(totalAssets / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            loadAssets();
+        }
+        
+        // Change limit
+        function changeLimit() {
+            itemsPerPage = parseInt(document.getElementById('limitSelect').value);
+            currentPage = 1;
+            loadAssets();
+        }
+        
+        // Select asset
+        function selectAsset(assetId, rowElement) {
+            // Remove previous selection
+            document.querySelectorAll('#assetTableBody tr').forEach(tr => {
+                tr.classList.remove('selected');
+            });
+            
+            // Add selection to clicked row
+            rowElement.classList.add('selected');
+        }
+        
+        // Asset management functions
+        function showAddAssetModal() {
+            showAlert('Add Asset functionality coming soon!', 'info');
+        }
+        
+        function editAsset(assetId) {
+            showAlert('Edit Asset functionality coming soon!', 'info');
+        }
+        
+        function viewAsset(assetId) {
+            showAlert('View Asset Details functionality coming soon!', 'info');
+        }
+        
+        function deleteAsset(assetId) {
+            if (confirm('Are you sure you want to delete this asset?')) {
+                showAlert('Delete Asset functionality coming soon!', 'warning');
+            }
+        }
+        
+        // Refresh assets
+        function refreshAssets() {
+            loadAssets();
+        }
+        
+        // Export assets
+        function exportAssets() {
+            showAlert('Export functionality coming soon!', 'info');
+        }
+        
+        // Utility functions
+        function showLoadingState(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) {
+                overlay.classList.remove('d-none');
+            } else {
+                overlay.classList.add('d-none');
+            }
+        }
+        
+        function updateLastUpdate() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+        
+        function sortTable(field) {
+            if (sortField === field) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortField = field;
+                sortDirection = 'asc';
+            }
+            
+            // For now, just reload data (server-side sorting can be implemented later)
+            loadAssets();
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show position-fixed" 
+                     style="top: 20px; right: 20px; z-index: 2000; max-width: 400px;">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', alertHtml);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                if (alerts.length > 0) {
+                    const lastAlert = alerts[alerts.length - 1];
+                    if (lastAlert.parentNode) {
+                        lastAlert.parentNode.removeChild(lastAlert);
+                    }
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
