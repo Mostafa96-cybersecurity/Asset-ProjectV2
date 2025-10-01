@@ -11,11 +11,13 @@
   "extraPaths": [
     ".",
     "./gui",
-    "./core"
+    "./core",
+    "./.venv/Lib/site-packages"
   ],
   "pythonVersion": "3.13",
   "pythonPlatform": "Windows",
   "typeCheckingMode": "off",
+  "diagnosticMode": "openFilesOnly",
   "useLibraryCodeForTypes": false,
   "autoSearchPaths": true,
   "autoImportCompletions": true,

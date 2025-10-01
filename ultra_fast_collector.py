@@ -35,7 +35,7 @@ try:
     import paramiko
     import requests
     from pysnmp.hlapi import (
-        getCmd, SnmpEngine, UdpTransportTarget, ContextData,
+        getCmd, nextCmd, SnmpEngine, UdpTransportTarget, ContextData,
         ObjectType, ObjectIdentity, CommunityData, usmUserData,
         UsmUserData, usmHMACMD5AuthProtocol, usmDESPrivProtocol
     )

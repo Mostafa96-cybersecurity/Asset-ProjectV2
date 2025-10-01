@@ -54,7 +54,7 @@ except ImportError:
 # SNMP support for network devices
 try:
     from pysnmp.hlapi import (
-        getCmd, SnmpEngine, UdpTransportTarget, ContextData,
+        getCmd, nextCmd, SnmpEngine, UdpTransportTarget, ContextData,
         ObjectType, ObjectIdentity, CommunityData
     )
     SNMP_AVAILABLE = True
