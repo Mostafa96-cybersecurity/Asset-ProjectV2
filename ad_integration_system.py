@@ -286,7 +286,7 @@ class ActiveDirectoryConnector:
                 user=username,
                 password=password,
                 authentication=NTLM,
-                auto_bind='AUTO_BIND_NONE'
+                auto_bind='NONE'
             )
             
             # Manually bind

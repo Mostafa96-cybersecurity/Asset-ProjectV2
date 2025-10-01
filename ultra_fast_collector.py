@@ -34,7 +34,11 @@ try:
     import subprocess
     import paramiko
     import requests
-    from pysnmp.hlapi import *
+    from pysnmp.hlapi import (
+        getCmd, SnmpEngine, UdpTransportTarget, ContextData,
+        ObjectType, ObjectIdentity, CommunityData, usmUserData,
+        UsmUserData, usmHMACMD5AuthProtocol, usmDESPrivProtocol
+    )
     COLLECTION_UTILS_AVAILABLE = True
 except ImportError:
     COLLECTION_UTILS_AVAILABLE = False

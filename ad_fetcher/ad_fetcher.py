@@ -50,7 +50,7 @@ def ad_fetch_computers(server_host, base_dn, username, password, use_ssl=False, 
     try:
         tls = Tls(validate=ssl.CERT_NONE) if use_ssl else None
         server = Server(server_host, use_ssl=use_ssl, get_info=ALL, tls=tls, connect_timeout=timeout)
-        conn = Connection(server, user=username, password=password, auto_bind='AUTO_BIND_NO_TLS')
+        conn = Connection(server, user=username, password=password, auto_bind='NO_TLS')
         
         # Search for computers
         conn.search(
