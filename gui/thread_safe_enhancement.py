@@ -35,25 +35,48 @@ class ThreadSafeCollector(QThread):
         try:
             self.status_updated.emit("🚀 Initializing collection...")
             
-            # Create collector instance in this thread
+            # Create collector instance in this thread (safe approach)
             self.collector = self.collector_class(**self.collector_kwargs)
             
-            # Connect collector signals if available
-            if hasattr(self.collector, 'progress_updated'):
-                self.collector.progress_updated.connect(self.progress_updated)
-            if hasattr(self.collector, 'log_message'):
-                self.collector.log_message.connect(self.log_message)
-            if hasattr(self.collector, 'device_collected'):
-                self.collector.device_collected.connect(self.device_collected)
-            
-            self.status_updated.emit("📡 Collection in progress...")
-            
-            # Start collection
-            if hasattr(self.collector, 'start'):
-                self.collector.start()
-            else:
-                # If collector doesn't have start method, call run directly
+            # For QThread-based collectors, connect signals and use moveToThread
+            if isinstance(self.collector, QThread):
+                # Connect collector signals if available
+                if hasattr(self.collector, 'update_progress'):
+                    self.collector.update_progress.connect(self.progress_updated)
+                elif hasattr(self.collector, 'progress_updated'):
+                    self.collector.progress_updated.connect(self.progress_updated)
+                    
+                if hasattr(self.collector, 'log_message'):
+                    self.collector.log_message.connect(self.log_message)
+                if hasattr(self.collector, 'device_collected'):
+                    self.collector.device_collected.connect(self.device_collected)
+                if hasattr(self.collector, 'finished_with_status'):
+                    self.collector.finished_with_status.connect(self.collection_finished)
+                elif hasattr(self.collector, 'collection_finished'):
+                    self.collector.collection_finished.connect(self.collection_finished)
+                
+                self.status_updated.emit("� Collection in progress...")
+                
+                # For QThread collectors, call run() directly instead of start()
+                # because we're already in a thread context
                 self.collector.run()
+                
+            else:
+                # For non-QThread collectors, use normal approach
+                if hasattr(self.collector, 'progress_updated'):
+                    self.collector.progress_updated.connect(self.progress_updated)
+                if hasattr(self.collector, 'log_message'):
+                    self.collector.log_message.connect(self.log_message)
+                if hasattr(self.collector, 'device_collected'):
+                    self.collector.device_collected.connect(self.device_collected)
+                
+                self.status_updated.emit("📡 Collection in progress...")
+                
+                # Start collection
+                if hasattr(self.collector, 'start'):
+                    self.collector.start()
+                else:
+                    self.collector.run()
                 
             if not self.is_stopping:
                 self.status_updated.emit("✅ Collection completed successfully")
@@ -313,26 +336,80 @@ def create_thread_safe_collector(main_window, collector_class, **kwargs):
     """
     Create a thread-safe collector instance
     """
-    collector = ThreadSafeCollector(collector_class, **kwargs)
+    # Check if collector_class is already a QThread
+    if issubclass(collector_class, QThread):
+        # For QThread-based collectors, use them directly (they're already threaded)
+        print("🔧 Detected QThread-based collector, using direct threading")
+        collector = collector_class(**kwargs)
+        
+        # Connect signals safely with proper signal names
+        try:
+            if hasattr(collector, 'update_progress'):
+                collector.update_progress.connect(main_window.progress_bar.setValue)
+            elif hasattr(collector, 'progress_updated'):
+                collector.progress_updated.connect(main_window.progress_bar.setValue)
+        except Exception as e:
+            print(f"⚠️ Progress signal connection error: {e}")
+        
+        try:
+            if hasattr(collector, 'log_message'):
+                collector.log_message.connect(main_window.log_output.append)
+        except Exception as e:
+            print(f"⚠️ Log signal connection error: {e}")
+        
+        try:
+            if hasattr(collector, 'finished_with_status'):
+                collector.finished_with_status.connect(lambda success: main_window.on_finished(success))
+            elif hasattr(collector, 'collection_finished'):
+                collector.collection_finished.connect(lambda success: main_window.on_finished(success))
+        except Exception as e:
+            print(f"⚠️ Finished signal connection error: {e}")
+        
+        try:
+            if hasattr(main_window, '_on_device_collected') and hasattr(collector, 'device_collected'):
+                collector.device_collected.connect(main_window._on_device_collected)
+        except Exception as e:
+            print(f"⚠️ Device collection signal error: {e}")
+        
+        return collector
     
-    # Connect signals
-    collector.progress_updated.connect(main_window.progress_bar.setValue)
-    collector.log_message.connect(main_window.log_output.append)
-    collector.collection_finished.connect(lambda success: main_window.on_finished(success))
-    collector.status_updated.connect(lambda status: main_window.log_output.append(status))
-    
-    if hasattr(main_window, '_on_device_collected'):
-        collector.device_collected.connect(main_window._on_device_collected)
-    
-    # Update UI manager
-    collector.started.connect(lambda: main_window.ui_manager.set_collection_active(True))
-    collector.finished.connect(lambda: main_window.ui_manager.set_collection_active(False))
-    
-    # Performance optimization
-    collector.started.connect(main_window.performance_optimizer.optimize_for_collection)
-    collector.finished.connect(main_window.performance_optimizer.restore_normal_mode)
-    
-    return collector
+    else:
+        # For non-QThread collectors, use ThreadSafeCollector wrapper
+        collector = ThreadSafeCollector(collector_class, **kwargs)
+        
+        # Connect signals safely
+        try:
+            collector.progress_updated.connect(main_window.progress_bar.setValue)
+            collector.log_message.connect(main_window.log_output.append)
+            collector.collection_finished.connect(lambda success: main_window.on_finished(success))
+            collector.status_updated.connect(lambda status: main_window.log_output.append(status))
+        except Exception as e:
+            print(f"⚠️ Signal connection error: {e}")
+        
+        # Connect device collection signal if available
+        try:
+            if hasattr(main_window, '_on_device_collected'):
+                collector.device_collected.connect(main_window._on_device_collected)
+        except Exception as e:
+            print(f"⚠️ Device collection signal error: {e}")
+        
+        # Connect UI manager signals if available (with safe checks)
+        try:
+            if hasattr(main_window, 'ui_manager') and main_window.ui_manager:
+                collector.started.connect(lambda: main_window.ui_manager.set_collection_active(True))
+                collector.finished.connect(lambda: main_window.ui_manager.set_collection_active(False))
+        except Exception as e:
+            print(f"⚠️ UI manager signal error: {e}")
+        
+        # Connect performance optimizer signals if available (with safe checks)
+        try:
+            if hasattr(main_window, 'performance_optimizer') and main_window.performance_optimizer:
+                collector.started.connect(main_window.performance_optimizer.optimize_for_collection)
+                collector.finished.connect(main_window.performance_optimizer.restore_normal_mode)
+        except Exception as e:
+            print(f"⚠️ Performance optimizer signal error: {e}")
+        
+        return collector
 
 if __name__ == "__main__":
     print("🚀 High-Performance Thread-Safe GUI Enhancement Module Ready")

@@ -1182,16 +1182,7 @@ class UltraFastDeviceCollector(QThread):
                 # Attempt ultra-fast collection with strict timeout
                 device_data = self._collect_device_data_ultra_fast(task)
                 
-                # Debug: Log what we got back
-                if device_data:
-                    self.log_message.emit(f"🔍 DEBUG: Collected data keys: {list(device_data.keys())}")
-                    self.log_message.emit(f"🔍 DEBUG: Has Error key: {'Error' in device_data}")
-                    hostname = device_data.get('hostname', device_data.get('computer_name', 'Unknown'))
-                    self.log_message.emit(f"🔍 DEBUG: Hostname from data: {hostname}")
-                    wmi_status = device_data.get('wmi_collection_status', 'N/A')
-                    self.log_message.emit(f"🔍 DEBUG: WMI status: {wmi_status}")
-                else:
-                    self.log_message.emit(f"🔍 DEBUG: device_data is None or falsy")
+                # Debug disabled for cleaner output
                 
                 if device_data:
                     # Check if this is a successful collection
@@ -1213,7 +1204,7 @@ class UltraFastDeviceCollector(QThread):
                         collection_method not in ['Unknown', '']
                     )
                     
-                    self.log_message.emit(f"🔍 DEBUG: Success check - WMI: {wmi_status}, Method: {collection_method}, Hostname: {hostname}, Success: {is_success}")
+                    # Debug disabled: self.log_message.emit(f"🔍 DEBUG: Success check - WMI: {wmi_status}, Method: {collection_method}, Hostname: {hostname}, Success: {is_success}")
                     
                     if is_success:
                         # Success - Save to database immediately
@@ -1237,7 +1228,7 @@ class UltraFastDeviceCollector(QThread):
                         
                     else:
                         # Failed - try fallback methods before retrying
-                        self.log_message.emit(f"🔍 DEBUG: Collection considered failed for {task.ip}")
+                        # Debug disabled: self.log_message.emit(f"🔍 DEBUG: Collection considered failed for {task.ip}")
                         
                         # Try fallback methods if haven't tried them yet
                         if not hasattr(task, 'attempted_methods'):
@@ -1280,7 +1271,7 @@ class UltraFastDeviceCollector(QThread):
                                 self.stats.failed += 1
                 else:
                     # device_data is None or empty
-                    self.log_message.emit(f"🔍 DEBUG: No device data returned for {task.ip}")
+                    # Debug disabled: self.log_message.emit(f"🔍 DEBUG: No device data returned for {task.ip}")
                     with self.stats_lock:
                         self.failed_ips.add(task.ip)
                         self.stats.failed += 1

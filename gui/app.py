@@ -18,6 +18,9 @@ from PyQt6.QtWidgets import (
 
 # Import thread-safe enhancements
 try:
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from gui.thread_safe_enhancement import (
         make_collection_thread_safe,
         create_thread_safe_collector,
@@ -44,7 +47,7 @@ except ImportError:
 try:
     from massive_scan_protection import apply_massive_scan_protection
     MASSIVE_SCAN_PROTECTION_AVAILABLE = True
-    print("🛑️ Massive scan protection loaded - handles 3+ networks without hanging")
+    print("�️ Massive scan protection loaded - handles 3+ networks without hanging")
 except ImportError:
     MASSIVE_SCAN_PROTECTION_AVAILABLE = False
     print("⚠️ Massive scan protection not available")
@@ -103,25 +106,41 @@ except ImportError:
     COLLECTION_LIMITER_AVAILABLE = False
     print("⚠️ Collection limiter not available")
 
-# Import massive scan protection for 3+ networks
+# Import enhanced collection strategy with fallbacks
 try:
-    from massive_scan_protection import apply_massive_scan_protection
-    MASSIVE_SCAN_PROTECTION_AVAILABLE = True
-    print("🛡️ Massive scan protection loaded - handles 3+ networks")
-except ImportError:
-    MASSIVE_SCAN_PROTECTION_AVAILABLE = False
-    print("⚠️ Massive scan protection not available")
-
-# Import ultra-fast collector instead of original slow collector
-try:
-    from ultra_fast_collector import UltraFastDeviceCollector as DeviceInfoCollector
-    ULTRA_FAST_AVAILABLE = True
-    print("✅ ULTRA-FAST collector loaded - prevents hangs and maximizes speed")
-except ImportError:
-    # Fallback to original collector
-    from core.worker import DeviceInfoCollector
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from enhanced_collection_strategy import EnhancedCollectionStrategy as DeviceInfoCollector
+    ENHANCED_STRATEGY_AVAILABLE = True
+    PROPER_STRATEGY_AVAILABLE = False
     ULTRA_FAST_AVAILABLE = False
-    print("⚠️ Using standard collector - may experience hangs during collection")
+    print("🎯 Enhanced Collection Strategy loaded (MAXIMUM DATA COLLECTION)")
+except ImportError:
+    ENHANCED_STRATEGY_AVAILABLE = False
+    # Fallback to proper collection strategy
+    try:
+        from proper_collection_strategy import ProperCollectionStrategy as DeviceInfoCollector
+        PROPER_STRATEGY_AVAILABLE = True
+        ENHANCED_STRATEGY_AVAILABLE = False
+        ULTRA_FAST_AVAILABLE = False
+        print("🎯 Proper 3-step collection strategy loaded (PING → NMAP → COLLECT)")
+    except ImportError:
+        PROPER_STRATEGY_AVAILABLE = False
+        # Fallback to ultra-fast collector
+        try:
+            from ultra_fast_collector import UltraFastDeviceCollector as DeviceInfoCollector
+            ULTRA_FAST_AVAILABLE = True
+            ENHANCED_STRATEGY_AVAILABLE = False
+            PROPER_STRATEGY_AVAILABLE = False
+            print("✅ ULTRA-FAST collector loaded - prevents hangs and maximizes speed")
+        except ImportError:
+            # Final fallback to original collector
+            from core.worker import DeviceInfoCollector
+            ULTRA_FAST_AVAILABLE = False
+            ENHANCED_STRATEGY_AVAILABLE = False
+            PROPER_STRATEGY_AVAILABLE = False
+            print("⚠️ Using standard collector - may experience hangs during collection")
 
 try:
     from core.worker import ADWorker  # type: ignore
@@ -1267,7 +1286,25 @@ class MainWindow(QMainWindow):
             'parent': self
         }
 
-        if ULTRA_FAST_AVAILABLE:
+        if ENHANCED_STRATEGY_AVAILABLE:
+            # Use enhanced collection strategy with maximum data collection
+            collector_kwargs.update({
+                'ping_workers': 100,      # Ultra-fast ping discovery
+                'nmap_workers': 20,       # Comprehensive port scanning  
+                'collection_workers': 15  # Maximum data collection
+            })
+            collector_class = DeviceInfoCollector
+            self.log_output.append("🚀 Using ENHANCED collection strategy (MAXIMUM DATA COLLECTION)")
+        elif PROPER_STRATEGY_AVAILABLE:
+            # Use proper 3-step collection strategy
+            collector_kwargs.update({
+                'ping_workers': 50,       # Fast ping discovery
+                'nmap_workers': 10,       # OS detection workers  
+                'collection_workers': 8   # Targeted collection
+            })
+            collector_class = DeviceInfoCollector
+            self.log_output.append("🎯 Using PROPER collection strategy (PING → NMAP → COLLECT)")
+        elif ULTRA_FAST_AVAILABLE:
             # Use ultra-fast collector
             collector_kwargs.update({
                 'discovery_workers': 20,  # Ultra-fast discovery
