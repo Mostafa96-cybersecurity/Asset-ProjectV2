@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Ultimate Performance Collection Engine

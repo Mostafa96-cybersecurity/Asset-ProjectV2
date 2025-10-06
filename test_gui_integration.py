@@ -5,6 +5,7 @@ GUI Integration Test
 Tests if the GUI properly integrates with Enhanced Collection Strategy and web services.
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import time
 import requests

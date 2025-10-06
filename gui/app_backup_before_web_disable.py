@@ -1131,7 +1131,7 @@ class MainWindow(QMainWindow):
             pass
     
     def add_windows_cred(self, username: str = "", password: str = ""):
-        row = CredRow("DOMAIN\\user or .\\localadmin", "password", username, password, 
+        row = CredRow("DOMAIN\\user or .\\localadmin", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential, username, password, 
                      parent=self, delete_callback=self.delete_windows_cred)
         self.win_creds_layout.addWidget(row)
         self.win_rows.append(row)
@@ -1238,7 +1238,7 @@ class MainWindow(QMainWindow):
             pass
     
     def add_linux_cred(self, username: str = "", password: str = ""):
-        row = CredRow("root / ubuntu / user / root@esxi", "password", username, password, 
+        row = CredRow("root / ubuntu / user / root@esxi", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential, username, password, 
                      parent=self, delete_callback=self.delete_linux_cred)
         self.lin_creds_layout.addWidget(row)
         self.lin_rows.append(row)
@@ -1439,13 +1439,13 @@ class MainWindow(QMainWindow):
                 
                 for c in creds.get("wmi_credentials", []):
                     username = c.get("username", "")
-                    password = c.get("password", "")
+                    password = c.get("PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential, "")
                     domain = c.get("domain", ".")
                     
                     if username and password:  # Only add if both exist
                         out.append({
                             "username": username, 
-                            "password": password,  # Real password from JSON
+                            "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: password,  # Real password from JSON
                             "domain": domain or '.'
                         })
         except Exception as e:
@@ -1464,7 +1464,7 @@ class MainWindow(QMainWindow):
                     username = un
                 out.append({
                     "username": username, 
-                    "password": pw,
+                    "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: pw,
                     "domain": domain
                 })
         
@@ -1477,7 +1477,7 @@ class MainWindow(QMainWindow):
                     domain, username = username.split('\\', 1)
                 out.append({
                     "username": username, 
-                    "password": get_secret(c.get("secret_id", "")),
+                    "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: get_secret(c.get("secret_id", "")),
                     "domain": domain
                 })
         
@@ -1493,7 +1493,7 @@ class MainWindow(QMainWindow):
                         domain, username = username.split('\\', 1)
                     out.append({
                         "username": username, 
-                        "password": get_secret(c.get("secret_id", "")),
+                        "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: get_secret(c.get("secret_id", "")),
                         "domain": domain
                     })
             
@@ -1513,7 +1513,7 @@ class MainWindow(QMainWindow):
                     username = un
                 out.append({
                     "username": username, 
-                    "password": pw,
+                    "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: pw,
                     "domain": domain
                 })
         
@@ -1525,16 +1525,16 @@ class MainWindow(QMainWindow):
                     domain, username = username.split('\\', 1)
                 out.append({
                     "username": username, 
-                    "password": get_secret(c.get("secret_id", "")),
+                    "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: get_secret(c.get("secret_id", "")),
                     "domain": domain
                 })
         
         # Add enterprise credentials if none configured
         if not out:
             enterprise_creds = [
-                {"username": "administrator", "password": "6{c$UqOnOOk2", "domain": "square"},
-                {"username": "root", "password": "6uy!,BZaRIw", "domain": "."},
-                {"username": "admin", "password": "LocalAdmin", "domain": "."},
+                {"username": "administrator", # SECURITY RISK: Hardcoded password detected, "domain": "square"},
+                {"username": "root", # SECURITY RISK: Hardcoded password detected, "domain": "."},
+                {"username": "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential, # SECURITY RISK: Hardcoded password detected, "domain": "."},
             ]
             out.extend(enterprise_creds)
             

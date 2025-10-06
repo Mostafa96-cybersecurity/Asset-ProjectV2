@@ -5,6 +5,7 @@
 Reliable launcher that actually works for GUI integration
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import sys
 import os

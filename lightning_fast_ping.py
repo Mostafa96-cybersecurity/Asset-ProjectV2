@@ -118,9 +118,7 @@ class LightningFastPingValidator:
                 timeout_seconds = timeout_sec
             
             # Execute with minimal overhead
-            process = subprocess.Popen(
-                cmd,
-                shell=True,
+            process = subprocess.Popen(cmd, shell=False  # SECURITY FIX: was shell=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,

@@ -57,7 +57,7 @@ def test_web_service_manager_comprehensive():
         
         # 6. User Management (ACL)
         print("\n🔐 Testing ACL Management:")
-        add_user = manager.add_user("demo_user", "demo_pass", "admin")
+        add_user = manager.add_user("demo_user", "demo_pass", "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential)
         print(f"✅ Add User: {add_user['success']} - {add_user.get('message', '')}")
         
         remove_user = manager.remove_user("demo_user")

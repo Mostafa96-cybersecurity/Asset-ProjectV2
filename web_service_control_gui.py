@@ -980,7 +980,7 @@ class AddUserDialog(QDialog):
         form_layout.addRow("Password:", self.password_edit)
         
         self.role_combo = QComboBox()
-        self.role_combo.addItems(["user", "admin", "moderator"])
+        self.role_combo.addItems(["user", "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential, "moderator"])
         form_layout.addRow("Role:", self.role_combo)
         
         layout.addLayout(form_layout)
@@ -1031,13 +1031,13 @@ class AddUserDialog(QDialog):
         if self.write_cb.isChecked():
             permissions.append("write")
         if self.admin_cb.isChecked():
-            permissions.append("admin")
+            permissions.append("PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential)
             
         allowed_ips = [ip.strip() for ip in self.allowed_ips_edit.text().split(',') if ip.strip()]
         
         return {
             "username": self.username_edit.text(),
-            "password": self.password_edit.text(),
+            "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: self.password_edit.text(),
             "role": self.role_combo.currentText(),
             "permissions": permissions,
             "allowed_ips": allowed_ips

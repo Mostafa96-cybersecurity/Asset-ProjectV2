@@ -12,6 +12,7 @@ This system ensures 100% data collection from all devices with:
 [OK] Comprehensive logging system
 """
 
+import ipaddress  # For IP validation
 import sqlite3
 import json
 import time

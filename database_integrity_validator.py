@@ -256,7 +256,7 @@ class SmartUpdateManager:
                         values.append(datetime.now().isoformat())
                     
                     if update_pairs:
-                        update_sql = f"UPDATE assets SET {', '.join(update_pairs)} WHERE id = ?"
+                        update_sql = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                         values.append(existing_data['id'])
                         
                         cursor.execute(update_sql, values)

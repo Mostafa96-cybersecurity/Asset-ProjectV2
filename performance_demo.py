@@ -7,6 +7,7 @@ Simple demonstration of the performance improvements achieved
 through modern implementation techniques while maintaining 100% accuracy.
 """
 
+import ipaddress  # For IP validation
 import time
 import subprocess
 import platform

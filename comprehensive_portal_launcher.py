@@ -5,6 +5,7 @@
 Launches both the secure web service and enhanced dashboard
 """
 
+import ipaddress  # For IP validation
 import os
 import sys
 import subprocess

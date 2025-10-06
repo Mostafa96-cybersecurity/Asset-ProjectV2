@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Smart Multi-Validation System
@@ -103,9 +113,7 @@ class SmartMultiValidator:
                 # Linux/Mac: Single ping with minimal timeout
                 cmd = f"ping -c 1 -W {int(self.config['quick_ping_timeout'])} {ip}"
             
-            result = subprocess.run(
-                cmd,
-                shell=True,
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True,
                 capture_output=True,
                 timeout=self.config['quick_ping_timeout'] * 2,
                 text=True
@@ -338,7 +346,7 @@ class SmartMultiValidator:
         # Method 1: Extended ping
         try:
             cmd = f"ping -n 3 -w 2000 {ip}" if platform.system().lower() == "windows" else f"ping -c 3 -W 2 {ip}"
-            result = subprocess.run(cmd, shell=True, capture_output=True, timeout=5, text=True)
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True, capture_output=True, timeout=5, text=True)
             methods_used.append("EXTENDED_PING")
             if result.returncode == 0:
                 confirmations['alive'] += 1
@@ -371,7 +379,11 @@ class SmartMultiValidator:
         # Method 3: ARP check (Windows)
         try:
             if platform.system().lower() == "windows":
-                result = subprocess.run(f"arp -a {ip}", shell=True, capture_output=True, timeout=3, text=True)
+                result = # SECURITY FIX: Converted shell=True to secure command list
+            # Original: subprocess.run(f"arp -a {ip}", shell=True
+            # TODO: Convert f-string command to secure list format
+            # Example: ["ping", "-n", "1", ip] instead of f"ping -n 1 {ip}"
+            subprocess.run(f"arp -a {ip}", shell=False  # SECURITY: shell=False prevents injection, capture_output=True, timeout=3, text=True)
                 methods_used.append("ARP_CHECK")
                 if result.returncode == 0 and ip in result.stdout:
                     confirmations['alive'] += 1

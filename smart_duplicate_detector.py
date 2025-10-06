@@ -444,7 +444,7 @@ class SmartDuplicateDetector:
             'update_existing'
         ])
         
-        query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+        query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
         values.append(match.existing_id)
         
         cursor.execute(query, values)
@@ -580,7 +580,7 @@ class SmartDuplicateDetector:
             reason
         ])
         
-        query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+        query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
         values.append(device_id)
         
         cursor.execute(query, values)

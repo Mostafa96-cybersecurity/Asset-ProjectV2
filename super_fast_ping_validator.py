@@ -105,9 +105,7 @@ class SuperFastPingValidator:
             cmd = self.ping_cmd.format(ip=ip)
             
             # Execute with minimal timeout
-            result = subprocess.run(
-                cmd,
-                shell=True,
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True,
                 capture_output=True,
                 timeout=self.config['ping_timeout_ms'] / 1000.0 * 2,  # 2x timeout for safety
                 text=True,

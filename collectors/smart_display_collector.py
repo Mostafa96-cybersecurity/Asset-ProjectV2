@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Smart Display Collector
@@ -5,6 +15,7 @@ Collects information from Smart TVs, Digital Displays, and other devices
 that don't require authentication (LG, Samsung, JAC, etc.)
 """
 
+import ipaddress  # For IP validation
 import requests
 import socket
 import nmap

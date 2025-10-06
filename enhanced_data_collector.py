@@ -8,6 +8,7 @@ providing real-time device enhancement capabilities.
 نموذج جامع البيانات المحسن مع تكامل الواجهة الرسومية
 """
 
+import ipaddress  # For IP validation
 import logging
 from datetime import datetime
 from typing import Dict, Any

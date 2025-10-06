@@ -17,6 +17,7 @@ Features:
 Author: Enhanced from your excellent foundation
 """
 
+import ipaddress  # For IP validation
 import asyncio
 import socket
 import struct

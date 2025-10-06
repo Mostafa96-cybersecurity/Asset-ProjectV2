@@ -247,7 +247,7 @@ class SmartDuplicateValidator:
                 
                 if update_fields:
                     update_values.append(existing_id)
-                    query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+                    query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                     cursor.execute(query, update_values)
                 
                 result.update({
@@ -284,7 +284,7 @@ class SmartDuplicateValidator:
                         update_values.append(value)
                 
                 update_values.append(existing_id)
-                query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+                query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                 cursor.execute(query, update_values)
                 
                 result.update({

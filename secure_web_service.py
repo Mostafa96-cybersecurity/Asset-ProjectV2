@@ -184,7 +184,7 @@ def index():
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" id="password" required>
+                        <input type="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential id="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential required>
                         <small>Default: admin123 / user123</small>
                     </div>
                     <button type="submit" class="btn">Login</button>

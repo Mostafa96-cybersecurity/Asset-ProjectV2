@@ -33,6 +33,7 @@ USAGE SCENARIOS:
 
 """
 
+import ipaddress  # For IP validation
 import time
 import asyncio
 import subprocess
@@ -86,9 +87,7 @@ class UltraFastNetworkSpeedDemo:
             else:
                 cmd = f"ping -c 1 -W {timeout} {ip}"
             
-            result = subprocess.run(
-                cmd,
-                shell=True,
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True,
                 capture_output=True,
                 timeout=timeout*2
             )

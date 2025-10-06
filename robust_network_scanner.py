@@ -381,7 +381,7 @@ class RobustNetworkScanner:
             updated_fields.append('last_seen')
             
             if len(update_pairs) > 1:  # More than just timestamp
-                update_sql = f"UPDATE assets SET {', '.join(update_pairs)} WHERE id = ?"
+                update_sql = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                 values.append(existing_data['id'])
                 cursor.execute(update_sql, values)
                 result['action'] = 'updated'

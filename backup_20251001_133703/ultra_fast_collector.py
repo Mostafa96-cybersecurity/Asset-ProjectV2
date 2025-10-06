@@ -1308,7 +1308,7 @@ class UltraFastDeviceCollector(QThread):
             try:
                 # Handle different credential formats defensively
                 if isinstance(cred, dict):
-                    # Dictionary format: {"username": "user", "password": "pass", "domain": "domain"}
+                    # Dictionary format: {"username": "user", # SECURITY RISK: Hardcoded password detected, "domain": "domain"}
                     username = cred.get('username', '')
                     password = cred.get('password', '')
                     domain = cred.get('domain', '.')
@@ -1352,7 +1352,7 @@ class UltraFastDeviceCollector(QThread):
             try:
                 # Handle different credential formats defensively
                 if isinstance(cred, dict):
-                    # Dictionary format: {"username": "user", "password": "pass", "domain": "domain"}
+                    # Dictionary format: {"username": "user", # SECURITY RISK: Hardcoded password detected, "domain": "domain"}
                     username = cred.get('username', '')
                     password = cred.get('password', '')
                     # For SSH, domain is usually ignored, but we can use it for logging

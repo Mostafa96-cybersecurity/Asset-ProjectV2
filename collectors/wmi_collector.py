@@ -134,7 +134,7 @@ def _open_wmi_connection(
     if username:
         kwargs["user"] = username
     if password:
-        kwargs["password"] = password
+        kwargs["PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential] = password
     return wmi.WMI(**kwargs)
 
 # -------- Core Collectors -------- #

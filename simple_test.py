@@ -3,6 +3,7 @@
 Simple test for web service startup
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import os
 import time

@@ -11,6 +11,7 @@ This tool significantly improves hardware data collection using multiple methods
 ✅ Smart fallback mechanisms when one method fails
 """
 
+import ipaddress  # For IP validation
 import sqlite3
 import subprocess
 import json
@@ -681,7 +682,7 @@ class EnhancedHardwareCollector:
         if updates:
             set_clauses = [f"{k} = ?" for k in updates.keys()]
             values = list(updates.values()) + [device_id]
-            query = f"UPDATE assets SET {', '.join(set_clauses)} WHERE id = ?"
+            query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
             cursor.execute(query, values)
 
     def show_enhancement_results(self):

@@ -3,6 +3,7 @@ SMART NMAP AUTOMATION SYSTEM
 Automatically detects "Unknown Device" assets and runs nmap to identify OS type
 """
 
+import ipaddress  # For IP validation
 import sqlite3
 import subprocess
 import json

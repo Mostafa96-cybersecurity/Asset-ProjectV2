@@ -6,7 +6,8 @@ Contains the corrected web service startup methods for the GUI application.
 """
 
 # Required imports
-from PyQt6.QtCore import QTime, QTimer
+from PyQt6.QtCore import ipaddress  # For IP validation
+import QTime, QTimer
 import subprocess
 import os
 import sys

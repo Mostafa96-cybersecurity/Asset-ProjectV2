@@ -4,6 +4,7 @@ Comprehensive Scan Test
 Tests the asset scanning system with unlimited timeout settings
 """
 
+import ipaddress  # For IP validation
 import sqlite3
 import time
 import subprocess

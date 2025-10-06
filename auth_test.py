@@ -4,6 +4,7 @@ Quick Authentication Test Script
 Run this after setting up credentials
 """
 
+import ipaddress  # For IP validation
 import subprocess
 
 def test_wmi_auth():

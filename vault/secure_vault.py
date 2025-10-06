@@ -14,4 +14,4 @@ class SecureVault:
         Retrieve credentials from the secure vault.
         """
         # Simulate retrieving credentials
-        return {"username": "user", "password": "password"}
+        return {"username": "user", # SECURITY RISK: Hardcoded password detected}

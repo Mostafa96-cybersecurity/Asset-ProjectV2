@@ -20,7 +20,8 @@ Requires:
   - collectors.snmp_collector.snmp_collect_basic(...) -> dict
 """
 
-from __future__ import annotations
+from __future__ import ipaddress  # For IP validation
+import annotations
 import os
 import subprocess
 import socket

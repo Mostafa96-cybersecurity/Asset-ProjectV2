@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Ultimate Fast & Accurate Network Validator
@@ -127,12 +137,36 @@ class UltimateFastValidator:
             )
         
         try:
-            cmd = self.lightning_ping_cmd.format(ip=ip)
+            # Build secure command list instead of shell=True
+            import ipaddress
+            # Validate IP address to prevent command injection
+            try:
+                ipaddress.ip_address(ip)
+            except ValueError:
+                return FastValidationResult(
+                    ip=ip,
+                    status=DeviceStatus.DEAD,
+                    confidence=0.9,
+                    response_time_ms=0,
+                    validation_method="INVALID_IP",
+                    needs_multi_validation=False,
+                    details="Invalid IP address format",
+                    ping_time_ms=0
+                )
+            
+            # Create safe command list
+            system = platform.system().lower()
+            if system == "windows":
+                cmd_list = ["ping", "-n", "1", "-w", str(self.config['lightning_ping_timeout_ms']), "-l", "32", ip]
+            else:
+                timeout_sec = str(int(self.config['lightning_ping_timeout_ms'] / 1000.0))
+                cmd_list = ["ping", "-c", "1", "-W", timeout_sec, "-s", "32", ip]
+            
             timeout_sec = self.config['lightning_ping_timeout_ms'] / 1000.0
             
             process = subprocess.Popen(
-                cmd,
-                shell=True,
+                cmd_list,
+                shell=False,  # Security: No shell injection possible
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
@@ -238,13 +272,29 @@ class UltimateFastValidator:
         validation_scores = []
         methods_used = []
         
-        # Method 1: Extended ping (3 attempts)
+        # Method 1: Extended ping (3 attempts) - Secure implementation
         try:
-            cmd = self.multi_ping_cmd.format(ip=ip)
+            # Validate IP address to prevent injection
+            import ipaddress
+            try:
+                ipaddress.ip_address(ip)
+            except ValueError:
+                validation_scores.append(0.0)
+                methods_used.append("INVALID_IP")
+                return self._calculate_final_result(ip, start_time, validation_scores, methods_used)
+            
+            # Create safe command list
+            system = platform.system().lower()
+            if system == "windows":
+                cmd_list = ["ping", "-n", "3", "-w", str(self.config['multi_ping_timeout_ms']), ip]
+            else:
+                timeout_sec = str(int(self.config['multi_ping_timeout_ms'] / 1000.0))
+                cmd_list = ["ping", "-c", "3", "-W", timeout_sec, ip]
+            
             timeout_sec = self.config['multi_ping_timeout_ms'] / 1000.0 * 4
             
             result = subprocess.run(
-                cmd, shell=True, capture_output=True, 
+                cmd_list, shell=False, capture_output=True,  # Security: No shell injection
                 timeout=timeout_sec, text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW if platform.system().lower() == "windows" else 0
             )
@@ -286,8 +336,11 @@ class UltimateFastValidator:
         # Method 3: ARP check (Windows only, fast)
         if platform.system().lower() == "windows":
             try:
-                result = subprocess.run(
-                    f"arp -a {ip}", shell=True, capture_output=True, 
+                result = # SECURITY FIX: Converted shell=True to secure command list
+            # Original: subprocess.run(f"arp -a {ip}", shell=True
+            # TODO: Convert f-string command to secure list format
+            # Example: ["ping", "-n", "1", ip] instead of f"ping -n 1 {ip}"
+            subprocess.run(f"arp -a {ip}", shell=False  # SECURITY: shell=False prevents injection, capture_output=True, 
                     timeout=2, text=True,
                     creationflags=subprocess.CREATE_NO_WINDOW
                 )

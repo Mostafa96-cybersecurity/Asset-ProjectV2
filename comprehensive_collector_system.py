@@ -333,21 +333,22 @@ class EnhancedDeviceCollector:
             # USE DESKTOP APP CREDENTIALS FIRST
             desktop_app_credentials = self.desktop_credentials['windows'].copy()
             
-            # Add fallback test credentials if no desktop credentials
+            # Load credentials securely from configuration file
             if not desktop_app_credentials:
-                desktop_app_credentials = [
-                    # Format: {"username": "user", "password": "pass", "domain": "domain"}
-                    {"username": "administrator", "password": "admin", "domain": ".", "source": "Fallback"},
-                    {"username": "admin", "password": "password", "domain": ".", "source": "Fallback"},
-                    {"username": "administrator", "password": "123456", "domain": ".", "source": "Fallback"},
-                    
-                    # Domain credentials (replace with your actual domain)
-                    {"username": "your_username", "password": "your_password", "domain": "YOUR_DOMAIN", "source": "Manual"},
-                    {"username": "service_account", "password": "service_pass", "domain": "YOUR_DOMAIN", "source": "Manual"},
-                    
-                    # Local machine credentials  
-                    {"username": "localuser", "password": "localpass", "domain": ".", "source": "Manual"},
-                ]
+                try:
+                    # Load from secure configuration file
+                    config_file = 'collector_credentials.json'
+                    if os.path.exists(config_file):
+                        with open(config_file, 'r') as f:
+                            creds_data = json.load(f)
+                            desktop_app_credentials = creds_data.get('wmi_credentials', [])
+                    else:
+                        desktop_app_credentials = []
+                        print("⚠️ No credentials configuration found. Please run 'configure_wmi_credentials.py' first.")
+                        print("⚠️ Secure credential storage is required for production use.")
+                except Exception as e:
+                    print(f"⚠️ Could not load credentials: {e}")
+                    desktop_app_credentials = []
                 print("⚠️ No desktop app credentials found, using fallback credentials")
             else:
                 print(f"✅ Using {len(desktop_app_credentials)} credentials from desktop app")
@@ -402,18 +403,18 @@ class EnhancedDeviceCollector:
             # USE DESKTOP APP CREDENTIAL FORMAT
             # These match the format used by the desktop app's build_linux_creds_for_scan()
             desktop_app_ssh_credentials = [
-                # Format: {"username": "user", "password": "pass", "port": 22}
-                {"username": "root", "password": "password", "port": 22},
-                {"username": "admin", "password": "admin", "port": 22},
-                {"username": "administrator", "password": "admin", "port": 22},
-                {"username": "user", "password": "user", "port": 22},
+                # Format: {"username": "user", # SECURITY RISK: Hardcoded password detected, "port": 22}
+                {"username": "root", # SECURITY RISK: Hardcoded password detected, "port": 22},
+                {"username": "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential, # SECURITY RISK: Hardcoded password detected, "port": 22},
+                {"username": "administrator", # SECURITY RISK: Hardcoded password detected, "port": 22},
+                {"username": "user", # SECURITY RISK: Hardcoded password detected, "port": 22},
                 
                 # ESXi/Hypervisor common credentials
-                {"username": "root", "password": "vmware", "port": 22},
-                {"username": "root", "password": "123456", "port": 22},
+                {"username": "root", # SECURITY RISK: Hardcoded password detected, "port": 22},
+                {"username": "root", # SECURITY RISK: Hardcoded password detected, "port": 22},
                 
                 # Replace with your actual SSH credentials:
-                {"username": "your_ssh_user", "password": "your_ssh_password", "port": 22},
+                {"username": "your_ssh_user", # SECURITY RISK: Hardcoded password detected, "port": 22},
             ]
             
             print(f"🔑 Testing {len(desktop_app_ssh_credentials)} SSH credential sets...")

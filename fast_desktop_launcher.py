@@ -5,6 +5,7 @@
 Super fast launcher that works immediately
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import sys
 import os

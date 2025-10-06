@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 🚀 ENHANCED ULTIMATE PERFORMANCE COLLECTOR WITH SMART CLASSIFICATION
@@ -18,6 +28,7 @@ Key Enhancements:
 - Service fingerprinting for device identification
 """
 
+import ipaddress  # For IP validation
 import asyncio
 import socket
 import time

@@ -4,6 +4,7 @@ Fix Critical Collection Issues
 Addresses NMAP and system tool issues to enable full data collection
 """
 
+import ipaddress  # For IP validation
 import subprocess
 from pathlib import Path
 

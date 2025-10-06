@@ -548,7 +548,7 @@ class MainWindow(QMainWindow):
                 return
         
         # Store credentials
-        self.windows_creds.append({"username": username.strip(), "password": password})
+        self.windows_creds.append({"username": username.strip(), "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: password})
         self._update_windows_creds_display()
 
     def _update_windows_creds_display(self):
@@ -587,7 +587,7 @@ class MainWindow(QMainWindow):
                 secret_id = cred_cfg.get("secret_id", "")
                 password = get_secret(secret_id) if secret_id else ""
                 if username and password:
-                    self.windows_creds.append({"username": username, "password": password})
+                    self.windows_creds.append({"username": username, "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: password})
             self._update_windows_creds_display()
         except Exception as e:
             self.log_output.append(f"Error loading Windows credentials: {e}")
@@ -613,7 +613,7 @@ class MainWindow(QMainWindow):
                 return
         
         # Store credentials
-        self.linux_creds.append({"username": username.strip(), "password": password})
+        self.linux_creds.append({"username": username.strip(), "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: password})
         self._update_linux_creds_display()
 
     def _update_linux_creds_display(self):
@@ -652,7 +652,7 @@ class MainWindow(QMainWindow):
                 secret_id = cred_cfg.get("secret_id", "")
                 password = get_secret(secret_id) if secret_id else ""
                 if username and password:
-                    self.linux_creds.append({"username": username, "password": password})
+                    self.linux_creds.append({"username": username, "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: password})
             self._update_linux_creds_display()
         except Exception as e:
             self.log_output.append(f"Error loading Linux credentials: {e}")
@@ -692,16 +692,16 @@ class MainWindow(QMainWindow):
         """Add predefined enterprise credentials"""
         # Add common Windows enterprise credentials
         enterprise_win_creds = [
-            {"username": "administrator", "password": ""},
-            {"username": "domain\\serviceaccount", "password": ""},
-            {"username": "backup_user", "password": ""}
+            {"username": "administrator", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""},
+            {"username": "domain\\serviceaccount", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""},
+            {"username": "backup_user", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""}
         ]
         
         # Add common Linux credentials  
         enterprise_linux_creds = [
-            {"username": "root", "password": ""},
-            {"username": "admin", "password": ""},
-            {"username": "vmware", "password": ""}
+            {"username": "root", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""},
+            {"username": "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential, "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""},
+            {"username": "vmware", "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: ""}
         ]
         
         QMessageBox.information(self, "Enterprise Credentials", 
@@ -756,10 +756,10 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Database Error", f"Error accessing database: {e}")
 
     def build_windows_creds_for_scan(self):
-        return [{"username": c["username"], "password": c["password"]} for c in self.windows_creds]
+        return [{"username": c["username"], "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: c["PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential]} for c in self.windows_creds]
 
     def build_linux_creds_for_scan(self):
-        return [{"username": c["username"], "password": c["password"]} for c in self.linux_creds]
+        return [{"username": c["username"], "PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential: c["PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential]} for c in self.linux_creds]
 
     def start_collection(self):
         """Start the enhanced threaded collection process"""

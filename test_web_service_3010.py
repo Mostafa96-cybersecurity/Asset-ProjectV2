@@ -5,6 +5,7 @@ Web Service Complete Test - Port 3010
 Tests all web service components for functionality
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import time
 import requests

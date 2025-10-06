@@ -824,7 +824,7 @@ class ProperCollectionStrategy(QThread):
                 
                 if update_fields:
                     update_values.append(existing_id)
-                    query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+                    query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                     cursor.execute(query, update_values)
                     self.log_message.emit(f"✅ Database UPDATE successful: {hostname}")
             else:

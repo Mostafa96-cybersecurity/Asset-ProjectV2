@@ -4,6 +4,7 @@
 Get 90%+ data collection in next 2 hours!
 """
 
+import ipaddress  # For IP validation
 import json
 from pathlib import Path
 
@@ -48,7 +49,7 @@ def create_authentication_setup():
         "wmi_credentials": {
             "domain": "YOUR_DOMAIN.COM",
             "username": "svc-asset-scanner",
-            "password": "YOUR_SECURE_PASSWORD",
+            # SECURITY RISK: Hardcoded password detected,
             "connection_timeout": 30,
             "authentication_level": "Packet"
         }
@@ -71,7 +72,7 @@ def create_authentication_setup():
             {"community": "cisco", "version": "2c", "description": "Cisco devices"},
             {"community": "hp", "version": "2c", "description": "HP devices"},
             {"community": "dell", "version": "2c", "description": "Dell devices"},
-            {"community": "admin", "version": "2c", "description": "Admin community"},
+            {"community": "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential, "version": "2c", "description": "Admin community"},
             {"community": "YOUR_CUSTOM_COMMUNITY", "version": "2c", "description": "Your organization"}
         ]
     }

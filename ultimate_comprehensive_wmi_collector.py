@@ -597,7 +597,7 @@ class UltimateWMICollector:
             if existing:
                 # Update existing record
                 set_clause = ', '.join([f"{col} = ?" for col in columns])
-                update_query = f"UPDATE assets SET {set_clause} WHERE id = ?"
+                update_query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                 cursor.execute(update_query, values + [existing[0]])
                 print(f"✅ Updated existing record for {hostname}")
             else:

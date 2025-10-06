@@ -5,6 +5,7 @@
 Verify all web services use port 5556 and have no auto-startup
 """
 
+import ipaddress  # For IP validation
 import os
 import sys
 import subprocess

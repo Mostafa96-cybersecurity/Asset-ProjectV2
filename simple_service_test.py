@@ -5,6 +5,7 @@ Simple Service Test
 Direct test of service functionality
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import time
 import urllib.request

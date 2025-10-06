@@ -3,6 +3,7 @@ ENHANCED 100% DATA COLLECTOR
 Comprehensive data collection system to achieve near 100% data completeness
 """
 
+import ipaddress  # For IP validation
 import wmi
 import psutil
 import socket

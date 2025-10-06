@@ -90,7 +90,7 @@ def create_credentials_config():
             else:
                 break
         
-        password = input("🔑 Password: ").strip()
+        password = getpass.getpass("🔑 Password: ").strip()
         description = input("📝 Description (e.g., 'Domain Admin'): ").strip()
         
         wmi_cred = {
@@ -119,7 +119,7 @@ def create_credentials_config():
             if not username:
                 break
             
-            password = input("🔑 SSH Password: ").strip()
+            password = getpass.getpass("🔑 SSH Password: ").strip()
             description = input("📝 Description: ").strip()
             
             ssh_cred = {

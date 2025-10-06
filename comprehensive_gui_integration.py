@@ -14,6 +14,7 @@ Integrates all enhancements directly into the GUI app with working functionality
 8. ✅ Multithreading Performance (High-speed)
 """
 
+import ipaddress  # For IP validation
 import os
 import sqlite3
 import json

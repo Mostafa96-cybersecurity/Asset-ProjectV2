@@ -5,6 +5,7 @@ Real-time Logs Monitor
 Live monitoring of system logs with filtering and search capabilities
 """
 
+import ipaddress  # For IP validation
 import os
 import threading
 import time

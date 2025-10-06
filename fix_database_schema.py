@@ -211,7 +211,7 @@ class RobustDataSaver:
         
         # Build UPDATE query
         set_clauses = [f"{col} = ?" for col in update_data.keys()]
-        query = f"UPDATE assets SET {', '.join(set_clauses)} WHERE id = ?"
+        query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
         values = list(update_data.values()) + [record_id]
         
         cursor.execute(query, values)

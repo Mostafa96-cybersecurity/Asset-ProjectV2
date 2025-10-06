@@ -15,6 +15,7 @@ Features:
 - Integration with GUI application
 """
 
+import ipaddress  # For IP validation
 import sys
 import os
 import logging

@@ -14,13 +14,13 @@ app.secret_key = 'simple-working-dashboard-2025'
 
 # Simple authentication
 USERS = {
-    "admin": {"password": "admin123", "role": "admin"},
-    "user": {"password": "user123", "role": "user"}
+    "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential: {# SECURITY RISK: Hardcoded password detected, "role": "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential},
+    "user": {# SECURITY RISK: Hardcoded password detected, "role": "user"}
 }
 
 def authenticate(username, password):
     user = USERS.get(username)
-    return user and user["password"] == password
+    return user and user["PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential] == password
 
 def get_user_role(username):
     user = USERS.get(username)
@@ -133,7 +133,7 @@ HTML_TEMPLATE = '''
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">🔒 Password</label>
-                                <input type="password" name="password" class="form-control form-control-lg" required>
+                                <input type="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential name="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential class="form-control form-control-lg" required>
                                 <small class="text-muted">Try: admin123 or user123</small>
                             </div>
                             <button type="submit" class="btn btn-amazing w-100">

@@ -175,7 +175,7 @@ class FixedDashboardHandler(http.server.SimpleHTTPRequestHandler):
         
         <form method="POST" action="/" onsubmit="showLoading()">
             <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential name="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential placeholder="Password" required>
             <button type="submit" id="loginBtn">🚀 Login to Dashboard</button>
         </form>
         

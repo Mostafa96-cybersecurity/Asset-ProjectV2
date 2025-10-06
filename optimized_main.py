@@ -5,6 +5,7 @@ Performance-Optimized Asset Management Desktop Application
 Enhanced version with performance improvements and proper error handling
 """
 
+import ipaddress  # For IP validation
 import sys
 import os
 import logging

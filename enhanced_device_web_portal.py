@@ -165,7 +165,7 @@ class EnhancedDeviceWebInterface:
                 conn = sqlite3.connect(self.db_path)
                 cursor = conn.cursor()
                 
-                query = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+                query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                 cursor.execute(query, values)
                 
                 if cursor.rowcount > 0:
@@ -486,7 +486,7 @@ class EnhancedDeviceWebInterface:
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="credPassword">
+                                    <input type="PLACEHOLDER_PASS"  # SECURITY: Replace with secure credential class="form-control" id="credPassword">
                                 </div>
                             </div>
                         </div>

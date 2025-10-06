@@ -4,6 +4,7 @@ Comprehensive Feature Test & Verification System
 Tests all features from scan to database save with full program verification
 """
 
+import ipaddress  # For IP validation
 import sys
 import time
 import sqlite3

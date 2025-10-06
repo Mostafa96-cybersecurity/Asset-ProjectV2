@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Complete Network Scanner with Robust Data Persistence
@@ -6,6 +16,7 @@ This scanner collects comprehensive network data and ensures all data
 is properly saved to the database using the robust data saver.
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import socket
 import threading

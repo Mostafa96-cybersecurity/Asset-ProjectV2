@@ -5,6 +5,7 @@
 Fixes all web service button issues and adds comprehensive logging
 """
 
+import ipaddress  # For IP validation
 import time
 import subprocess
 import socket

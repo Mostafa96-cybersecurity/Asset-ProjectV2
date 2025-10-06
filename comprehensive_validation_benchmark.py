@@ -24,6 +24,7 @@ PERFORMANCE BENCHMARKS:
 - Reliability Test: Success rate across network types
 """
 
+import ipaddress  # For IP validation
 import asyncio
 import time
 import subprocess
@@ -120,8 +121,7 @@ class NetworkValidationBenchmark:
             else:
                 cmd = f"ping -c 1 -W {timeout_ms/1000.0} {ip}"
             
-            result = subprocess.run(
-                cmd, shell=True, capture_output=True, 
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True, capture_output=True, 
                 timeout=0.2, text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW if platform.system().lower() == "windows" else 0
             )
@@ -291,8 +291,7 @@ class NetworkValidationBenchmark:
             else:
                 cmd = f"ping -c 1 -W 0.05 {ip}"
             
-            result = subprocess.run(
-                cmd, shell=True, capture_output=True, 
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True, capture_output=True, 
                 timeout=0.15, text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW if platform.system().lower() == "windows" else 0
             )

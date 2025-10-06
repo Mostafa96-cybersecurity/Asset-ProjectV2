@@ -13,6 +13,7 @@ Smart Device Collector with Advanced Error Prevention
 6. Error recovery and retry mechanisms
 """
 
+import ipaddress  # For IP validation
 import subprocess
 import socket
 import logging

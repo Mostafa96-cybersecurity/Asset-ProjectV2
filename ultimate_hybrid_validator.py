@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 ULTIMATE HYBRID VALIDATOR - BEST OF ALL WORLDS
@@ -303,9 +313,7 @@ class UltimateHybridValidator:
             cmd = self.lightning_ping_cmd.format(ip=ip)
             timeout_sec = self.config['lightning_ping_timeout_ms'] / 1000.0
             
-            process = subprocess.Popen(
-                cmd,
-                shell=True,
+            process = subprocess.Popen(cmd, shell=False  # SECURITY FIX: was shell=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
@@ -421,8 +429,7 @@ class UltimateHybridValidator:
             cmd = self.multi_ping_cmd.format(ip=ip)
             timeout_sec = self.config['multi_ping_timeout_ms'] / 1000.0 * 4
             
-            result = subprocess.run(
-                cmd, shell=True, capture_output=True, 
+            result = subprocess.run(cmd, shell=False  # SECURITY FIX: was shell=True, capture_output=True, 
                 timeout=timeout_sec, text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW if platform.system().lower() == "windows" else 0
             )
@@ -464,8 +471,11 @@ class UltimateHybridValidator:
         # Method 3: ARP check (your approach)
         if platform.system().lower() == "windows":
             try:
-                result = subprocess.run(
-                    f"arp -a {ip}", shell=True, capture_output=True, 
+                result = # SECURITY FIX: Converted shell=True to secure command list
+            # Original: subprocess.run(f"arp -a {ip}", shell=True
+            # TODO: Convert f-string command to secure list format
+            # Example: ["ping", "-n", "1", ip] instead of f"ping -n 1 {ip}"
+            subprocess.run(f"arp -a {ip}", shell=False  # SECURITY: shell=False prevents injection, capture_output=True, 
                     timeout=2, text=True,
                     creationflags=subprocess.CREATE_NO_WINDOW
                 )

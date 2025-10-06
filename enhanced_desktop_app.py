@@ -9,6 +9,7 @@ This is the main desktop application that now includes:
 ✅ Real-time service status monitoring
 """
 
+import ipaddress  # For IP validation
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import threading

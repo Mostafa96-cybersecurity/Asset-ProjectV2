@@ -7,6 +7,7 @@ Advanced Web Service Controller with ACL, Security, and Monitoring
 Complete web service management with professional features
 """
 
+import ipaddress  # For IP validation
 import os
 import sys
 import json
@@ -124,10 +125,10 @@ class WebServiceManager:
             else:
                 self.acl = {
                     "users": {
-                        "admin": {
+                        "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential: {
                             "password_hash": "admin123",  # Should be hashed in production
                             "role": "administrator",
-                            "permissions": ["read", "write", "admin"],
+                            "permissions": ["read", "write", "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential],
                             "allowed_ips": ["*"],
                             "created": datetime.now().isoformat(),
                             "last_login": None,
@@ -517,7 +518,7 @@ class WebServiceManager:
                 }
                 
             if permissions is None:
-                permissions = ["read"] if role == "user" else ["read", "write", "admin"]
+                permissions = ["read"] if role == "user" else ["read", "write", "PLACEHOLDER_ADMIN"  # SECURITY: Replace with secure credential]
                 
             if allowed_ips is None:
                 allowed_ips = ["*"]

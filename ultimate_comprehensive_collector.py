@@ -1097,7 +1097,7 @@ class UltimateComprehensiveCollector:
                 # Update existing record
                 if filtered_data:
                     set_clause = ', '.join([f"{col} = ?" for col in filtered_data.keys()])
-                    update_query = f"UPDATE assets SET {set_clause} WHERE id = ?"
+                    update_query = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                     cursor.execute(update_query, list(filtered_data.values()) + [existing[0]])
                     print(f"✅ Updated existing record for {hostname}")
                 else:

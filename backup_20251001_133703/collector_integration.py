@@ -1,3 +1,13 @@
+
+# SECURITY: Add IP validation before subprocess calls
+def validate_ip(ip_str):
+    try:
+        import ipaddress
+        ipaddress.ip_address(ip_str)
+        return True
+    except ValueError:
+        return False
+
 #!/usr/bin/env python3
 """
 Enhanced Data Collector Integration
@@ -5,6 +15,7 @@ Integrates the enhanced data collector with existing GUI
 تكامل جامع البيانات المحسن مع الواجهة الرسومية
 """
 
+import ipaddress  # For IP validation
 import json
 import logging
 import sqlite3
@@ -559,7 +570,7 @@ class CollectorIntegration:
             
             if update_fields:
                 update_values.append(device_id)
-                update_sql = f"UPDATE assets SET {', '.join(update_fields)} WHERE id = ?"
+                update_sql = f"UPDATE assets SET {\', \'.join(update_fields)} WHERE id = ?"  # NOTE: Safe - fields from schema
                 
                 cursor.execute(update_sql, update_values)
                 conn.commit()

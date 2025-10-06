@@ -6,6 +6,7 @@ This module provides intelligent device classification using NMAP scanning
 for unknown devices in the asset management system.
 """
 
+import ipaddress  # For IP validation
 import nmap
 import subprocess
 import json
