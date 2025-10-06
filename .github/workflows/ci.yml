@@ -1,0 +1,45 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install -U pip wheel
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov mypy ruff flake8 bandit safety
+
+      - name: Lint (ruff + flake8)
+        run: |
+          ruff check .
+          flake8 .
+
+      - name: Type check (mypy)
+        run: mypy --ignore-missing-imports .
+
+      - name: Unit tests + coverage
+        run: pytest -q --maxfail=1 --disable-warnings --cov=. --cov-report=xml --cov-report=html
+
+      - name: Security (bandit + safety)
+        run: |
+          bandit -q -r . -f html -o bandit.html || true
+          safety check --full-report || true
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-reports
+          path: |
+            ./htmlcov/
+            ./coverage.xml
+            ./bandit.html
