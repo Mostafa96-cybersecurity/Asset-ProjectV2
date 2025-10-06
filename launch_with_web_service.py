@@ -4,7 +4,6 @@ Launch Desktop APP to demonstrate Web Service Management System
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path

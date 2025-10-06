@@ -7,8 +7,6 @@ Fixed version that handles errors gracefully and ensures data persistence
 import sqlite3
 import subprocess
 import socket
-import time
-import json
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -29,7 +27,7 @@ class RobustNetworkScanner:
         
     def scan_network_comprehensive(self, network_range: str = "10.0.21.0/24") -> Dict[str, Any]:
         """Run comprehensive network scan with complete data collection"""
-        print(f"🚀 ROBUST NETWORK SCAN")
+        print("🚀 ROBUST NETWORK SCAN")
         print(f"📡 Network: {network_range}")
         print("=" * 60)
         
@@ -117,7 +115,7 @@ class RobustNetworkScanner:
     
     def _collect_device_data(self, live_hosts: List[str]) -> List[Dict[str, Any]]:
         """Phase 2: Collect comprehensive device data"""
-        print(f"\n📊 Phase 2: Data Collection...")
+        print("\n📊 Phase 2: Data Collection...")
         print(f"🔍 Collecting data from {len(live_hosts)} devices...")
         
         collected_data = []
@@ -288,7 +286,7 @@ class RobustNetworkScanner:
     
     def _store_data_safely(self, collected_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Phase 3: Store data safely in database with smart updates"""
-        print(f"\n💾 Phase 3: Database Storage...")
+        print("\n💾 Phase 3: Database Storage...")
         print(f"💾 Saving {len(collected_data)} devices to database...")
         
         storage_stats = {
@@ -330,7 +328,7 @@ class RobustNetworkScanner:
             print(f"❌ Database error: {str(e)}")
             storage_stats['errors'] += len(collected_data)
         
-        print(f"💾 Storage complete:")
+        print("💾 Storage complete:")
         print(f"   ➕ New records: {storage_stats['new_records']}")
         print(f"   ✏️ Updated records: {storage_stats['updated_records']}")
         print(f"   📝 Refreshed: {storage_stats['unchanged_records']}")
@@ -419,7 +417,7 @@ def run_robust_scan():
     report = scanner.scan_network_comprehensive("10.0.21.0/24")
     
     # Display final report
-    print(f"\n📋 FINAL SCAN REPORT")
+    print("\n📋 FINAL SCAN REPORT")
     print("=" * 60)
     
     scan_info = report['scan_info']
@@ -440,6 +438,6 @@ def run_robust_scan():
 if __name__ == "__main__":
     report = run_robust_scan()
     
-    print(f"\n🎯 SCAN COMPLETED SUCCESSFULLY!")
-    print(f"💡 Run 'py simple_db_analysis.py' to see updated database analysis")
+    print("\n🎯 SCAN COMPLETED SUCCESSFULLY!")
+    print("💡 Run 'py simple_db_analysis.py' to see updated database analysis")
     print(f"🕐 Finished: {datetime.now()}")

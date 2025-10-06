@@ -19,14 +19,10 @@ Device Types & Collection Methods:
 - Printers: SNMP (pysnmp)
 """
 
-import os
-import sys
 import socket
-import subprocess
-import threading
 import sqlite3
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple
 import logging
 
 # Network and device detection

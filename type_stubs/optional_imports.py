@@ -1,5 +1,4 @@
 # Type stubs for optional imports
-from typing import Any, Optional
 
 # SNMP stubs
 class getCmd: pass

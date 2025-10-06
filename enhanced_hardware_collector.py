@@ -14,10 +14,8 @@ This tool significantly improves hardware data collection using multiple methods
 import sqlite3
 import subprocess
 import json
-import re
 import platform
 import socket
-import threading
 from datetime import datetime
 import wmi
 import winreg
@@ -41,7 +39,7 @@ class EnhancedHardwareCollector:
         print("🔧 ENHANCED HARDWARE DATA COLLECTOR")
         print("=" * 70)
         print(f"🕐 Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"🎯 Goal: Improve hardware data collection success rate")
+        print("🎯 Goal: Improve hardware data collection success rate")
         print()
         
         conn = sqlite3.connect(self.db_path)
@@ -72,7 +70,7 @@ class EnhancedHardwareCollector:
             conn.close()
             return
         
-        print(f"\n📊 ENHANCING HARDWARE DATA:")
+        print("\n📊 ENHANCING HARDWARE DATA:")
         
         for device_id, hostname, ip_address in devices_to_enhance:
             print(f"\n🔧 Processing: {hostname or ip_address} (ID: {device_id})")
@@ -110,7 +108,7 @@ class EnhancedHardwareCollector:
                 hardware_data.update(wmi_data)
                 collection_success = True
                 self.stats['wmi_success'] += 1
-                print(f"      ✅ WMI data collected")
+                print("      ✅ WMI data collected")
         except Exception as e:
             self.stats['errors'].append(f"WMI error for {hostname}: {str(e)}")
             print(f"      ⚠️ WMI collection failed: {str(e)[:50]}")
@@ -125,7 +123,7 @@ class EnhancedHardwareCollector:
                         hardware_data[key] = value
                 collection_success = True
                 self.stats['powershell_success'] += 1
-                print(f"      ✅ PowerShell data collected")
+                print("      ✅ PowerShell data collected")
         except Exception as e:
             self.stats['errors'].append(f"PowerShell error for {hostname}: {str(e)}")
             print(f"      ⚠️ PowerShell collection failed: {str(e)[:50]}")
@@ -140,7 +138,7 @@ class EnhancedHardwareCollector:
                             hardware_data[key] = value
                     collection_success = True
                     self.stats['registry_success'] += 1
-                    print(f"      ✅ Registry data collected")
+                    print("      ✅ Registry data collected")
             except Exception as e:
                 self.stats['errors'].append(f"Registry error for {hostname}: {str(e)}")
                 print(f"      ⚠️ Registry collection failed: {str(e)[:50]}")
@@ -154,7 +152,7 @@ class EnhancedHardwareCollector:
                         hardware_data[key] = value
                 collection_success = True
                 self.stats['network_success'] += 1
-                print(f"      ✅ Network discovery data collected")
+                print("      ✅ Network discovery data collected")
         except Exception as e:
             self.stats['errors'].append(f"Network error for {hostname}: {str(e)}")
             print(f"      ⚠️ Network collection failed: {str(e)[:50]}")
@@ -167,7 +165,7 @@ class EnhancedHardwareCollector:
                     if key not in hardware_data or not hardware_data[key]:
                         hardware_data[key] = value
                 collection_success = True
-                print(f"      ✅ System command data collected")
+                print("      ✅ System command data collected")
         except Exception as e:
             self.stats['errors'].append(f"System command error for {hostname}: {str(e)}")
             print(f"      ⚠️ System command collection failed: {str(e)[:50]}")
@@ -689,7 +687,7 @@ class EnhancedHardwareCollector:
     def show_enhancement_results(self):
         """Show hardware enhancement results"""
         
-        print(f"\n📊 HARDWARE ENHANCEMENT RESULTS")
+        print("\n📊 HARDWARE ENHANCEMENT RESULTS")
         print("=" * 70)
         print(f"📱 Devices processed: {self.stats['devices_processed']}")
         print(f"✅ Hardware data improved: {self.stats['hardware_data_improved']}")
@@ -703,13 +701,13 @@ class EnhancedHardwareCollector:
         print(f"\n📈 SUCCESS RATE: {success_rate:.1f}%")
         
         if success_rate > 80:
-            print(f"🎉 EXCELLENT: Hardware data collection significantly improved!")
+            print("🎉 EXCELLENT: Hardware data collection significantly improved!")
         elif success_rate > 60:
-            print(f"✅ GOOD: Hardware data collection improved well")
+            print("✅ GOOD: Hardware data collection improved well")
         elif success_rate > 40:
-            print(f"⚠️ MODERATE: Some improvement in hardware data collection")
+            print("⚠️ MODERATE: Some improvement in hardware data collection")
         else:
-            print(f"❌ NEEDS WORK: Limited improvement in hardware data collection")
+            print("❌ NEEDS WORK: Limited improvement in hardware data collection")
         
         if self.stats['errors']:
             print(f"\n⚠️ ERRORS ENCOUNTERED ({len(self.stats['errors'])}):")

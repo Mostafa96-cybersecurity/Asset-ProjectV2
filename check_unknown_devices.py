@@ -5,7 +5,6 @@ Analysis of current device classification and unknown devices
 """
 
 import sqlite3
-import json
 from collections import Counter
 
 def check_unknown_devices():

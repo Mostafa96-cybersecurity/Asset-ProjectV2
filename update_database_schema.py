@@ -8,7 +8,6 @@ Add new columns for NMAP/OS detection results
 
 import sqlite3
 import sys
-from pathlib import Path
 
 def update_database_schema():
     """Add NMAP OS detection columns to assets table"""
@@ -52,7 +51,7 @@ def update_database_schema():
             print(f"\n✅ Successfully added {len(added_columns)} new columns")
             print(f"   New columns: {', '.join(added_columns)}")
         else:
-            print(f"\nℹ️ No new columns needed - schema already up to date")
+            print("\nℹ️ No new columns needed - schema already up to date")
         
         # Verify the update
         cursor.execute('PRAGMA table_info(assets)')
@@ -67,7 +66,7 @@ def update_database_schema():
         
         conn.close()
         
-        print(f"\n✅ Database schema update completed successfully!")
+        print("\n✅ Database schema update completed successfully!")
         
     except Exception as e:
         print(f"❌ Database schema update failed: {e}")
@@ -78,7 +77,7 @@ def update_database_schema():
 def test_updated_schema():
     """Test the updated schema with a sample insert"""
     
-    print(f"\n🧪 TESTING UPDATED SCHEMA")
+    print("\n🧪 TESTING UPDATED SCHEMA")
     print("-" * 40)
     
     try:
@@ -120,7 +119,7 @@ def test_updated_schema():
         result = cursor.fetchone()
         
         if result:
-            print(f"✅ Test insert successful:")
+            print("✅ Test insert successful:")
             print(f"   IP: {result[0]}")
             print(f"   Hostname: {result[1]}")
             print(f"   OS Family: {result[2]}")
@@ -131,9 +130,9 @@ def test_updated_schema():
             # Clean up test record
             cursor.execute('DELETE FROM assets WHERE ip_address = ?', (test_data['ip_address'],))
             conn.commit()
-            print(f"🧹 Test record cleaned up")
+            print("🧹 Test record cleaned up")
         else:
-            print(f"❌ Test insert failed - no record found")
+            print("❌ Test insert failed - no record found")
         
         conn.close()
         
@@ -153,7 +152,7 @@ def main():
         # Test the update
         test_updated_schema()
         
-        print(f"\n" + "=" * 70)
+        print("\n" + "=" * 70)
         print("📋 SCHEMA UPDATE SUMMARY")
         print("=" * 70)
         print("✅ Database schema updated for NMAP OS detection")
@@ -161,7 +160,7 @@ def main():
         print("✅ Schema tested successfully")
         print("🎯 Ready for enhanced OS-aware data collection")
     else:
-        print(f"\n❌ Schema update failed")
+        print("\n❌ Schema update failed")
         sys.exit(1)
 
 if __name__ == "__main__":

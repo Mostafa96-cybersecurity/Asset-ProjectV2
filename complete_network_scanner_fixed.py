@@ -11,8 +11,6 @@ import socket
 import threading
 import time
 from datetime import datetime
-import json
-import sqlite3
 from robust_data_saver import RobustDataSaver
 
 class CompleteNetworkScanner:
@@ -183,7 +181,7 @@ class CompleteNetworkScanner:
     
     def collect_data(self):
         """Collect data from all discovered hosts"""
-        print(f"\nPhase 2: Data Collection...")
+        print("\nPhase 2: Data Collection...")
         print(f"Collecting data from {len(self.live_hosts)} devices...")
         
         collected_count = 0
@@ -206,7 +204,7 @@ class CompleteNetworkScanner:
     
     def save_to_database(self):
         """Save all collected data to database using robust saver"""
-        print(f"\nPhase 3: Database Storage...")
+        print("\nPhase 3: Database Storage...")
         print(f"Saving {len(self.device_data)} devices to database...")
         
         success_count = 0
@@ -218,7 +216,7 @@ class CompleteNetworkScanner:
         # Get summary
         summary = self.data_saver.get_summary()
         
-        print(f"Storage complete:")
+        print("Storage complete:")
         print(f"   New records: {summary['new_records']}")
         print(f"   Updated records: {summary['updated_records']}")
         print(f"   Refreshed: {len(self.device_data) - summary['new_records'] - summary['updated_records']}")
@@ -249,11 +247,11 @@ class CompleteNetworkScanner:
         duration = time.time() - start_time
         success_rate = (summary['new_records'] + summary['updated_records']) / len(self.device_data) * 100 if self.device_data else 0
         
-        print(f"\nFINAL SCAN REPORT")
+        print("\nFINAL SCAN REPORT")
         print("=" * 60)
         print(f"Network: {self.network}")
         print(f"Duration: {duration:.1f} seconds")
-        print(f"IPs scanned: 254")
+        print("IPs scanned: 254")
         print(f"Live hosts: {discovered}")
         print(f"Data collected: {collected}")
         print(f"Database saved: {summary['new_records'] + summary['updated_records']}")

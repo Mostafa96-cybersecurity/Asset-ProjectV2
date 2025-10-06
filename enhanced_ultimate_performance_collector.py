@@ -27,7 +27,6 @@ import platform
 import concurrent.futures
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Tuple, Any
-from ipaddress import IPv4Network, IPv4Address
 
 # Enhanced imports
 try:
@@ -392,7 +391,6 @@ class EnhancedUltimatePerformanceCollector:
     def setup_enhanced_database(self, db_path: str = "assets.db"):
         """Create enhanced database schema with comprehensive tracking columns"""
         import sqlite3
-        import json
         
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
@@ -1963,7 +1961,7 @@ if __name__ == "__main__":
         )
         
         # Show results
-        print(f"\n🏆 Enhanced Collection Results:")
+        print("\n🏆 Enhanced Collection Results:")
         print(f"Devices collected: {len(results)}")
         
         # Show device types
@@ -1978,7 +1976,7 @@ if __name__ == "__main__":
         
         # Performance metrics
         metrics = collector.get_performance_metrics()
-        print(f"\n📊 Performance Metrics:")
+        print("\n📊 Performance Metrics:")
         print(f"  Collection speed: {metrics['devices_per_second']:.1f} devices/sec")
         print(f"  Success rate: {metrics['success_rate']:.1f}%")
         print(f"  Classification success: {metrics['classification_success_rate']:.1f}%")

@@ -65,23 +65,23 @@ class PowerfulSmartCycle:
         
         try:
             # Phase 1: Network Discovery
-            print(f"\n📡 PHASE 1: NETWORK DISCOVERY")
+            print("\n📡 PHASE 1: NETWORK DISCOVERY")
             new_devices = self.discover_network_devices(network_range)
             
             # Phase 2: Duplicate Detection & Resolution
-            print(f"\n🔍 PHASE 2: 100% POWERFUL DUPLICATE DETECTION")
+            print("\n🔍 PHASE 2: 100% POWERFUL DUPLICATE DETECTION")
             self.detect_and_resolve_all_duplicates()
             
             # Phase 3: Smart Device Processing
-            print(f"\n🧠 PHASE 3: SMART DEVICE PROCESSING")
+            print("\n🧠 PHASE 3: SMART DEVICE PROCESSING")
             self.process_discovered_devices(new_devices)
             
             # Phase 4: Database Optimization
-            print(f"\n⚡ PHASE 4: DATABASE OPTIMIZATION")
+            print("\n⚡ PHASE 4: DATABASE OPTIMIZATION")
             self.optimize_database()
             
             # Phase 5: Verification
-            print(f"\n✅ PHASE 5: VERIFICATION")
+            print("\n✅ PHASE 5: VERIFICATION")
             self.verify_cycle_success()
             
             self.stats['cycle_success'] = True
@@ -122,7 +122,7 @@ class PowerfulSmartCycle:
                             discovered_devices.append(device_info)
                             print(f"   ✅ Found: {ip} ({device_info.get('hostname', 'Unknown')})")
                             
-                except Exception as e:
+                except Exception:
                     pass  # Silent fail for unavailable IPs
             
             # Parallel scanning for speed
@@ -259,7 +259,7 @@ class PowerfulSmartCycle:
     def detect_and_resolve_all_duplicates(self):
         """100% POWERFUL duplicate detection and resolution"""
         
-        print(f"💪 100% POWERFUL DUPLICATE DETECTION")
+        print("💪 100% POWERFUL DUPLICATE DETECTION")
         print("=" * 50)
         
         conn = sqlite3.connect(self.db_path)
@@ -282,7 +282,7 @@ class PowerfulSmartCycle:
             print(f"⚠️ Found {len(duplicate_groups)} duplicate groups")
             self.resolve_duplicate_groups(duplicate_groups, columns)
         else:
-            print(f"✅ No duplicates detected - database is clean!")
+            print("✅ No duplicates detected - database is clean!")
         
         conn.close()
 
@@ -456,7 +456,7 @@ class PowerfulSmartCycle:
         conn.commit()
         conn.close()
         
-        print(f"✅ Duplicate resolution complete!")
+        print("✅ Duplicate resolution complete!")
 
     def calculate_device_score(self, device_dict):
         """Calculate device data completeness score"""
@@ -669,7 +669,7 @@ class PowerfulSmartCycle:
     def optimize_database(self):
         """Optimize database after cycle"""
         
-        print(f"⚡ Optimizing database...")
+        print("⚡ Optimizing database...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -682,12 +682,12 @@ class PowerfulSmartCycle:
         
         conn.close()
         
-        print(f"✅ Database optimization complete")
+        print("✅ Database optimization complete")
 
     def verify_cycle_success(self):
         """Verify that the cycle was successful"""
         
-        print(f"🔍 Verifying cycle success...")
+        print("🔍 Verifying cycle success...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -723,16 +723,16 @@ class PowerfulSmartCycle:
         print(f"   ⚠️ Remaining duplicates: {remaining_duplicates}")
         
         if remaining_duplicates == 0:
-            print(f"   ✅ No duplicates remaining - Success!")
+            print("   ✅ No duplicates remaining - Success!")
         else:
-            print(f"   ⚠️ Some duplicates may still exist")
+            print("   ⚠️ Some duplicates may still exist")
 
     def display_cycle_results(self):
         """Display final cycle results"""
         
         cycle_duration = datetime.now() - self.stats['scan_started']
         
-        print(f"\n🎯 SMART CYCLE RESULTS")
+        print("\n🎯 SMART CYCLE RESULTS")
         print("=" * 70)
         print(f"⏱️ Cycle duration: {cycle_duration}")
         print(f"🌐 Network devices scanned: {self.stats['devices_scanned']}")
@@ -751,12 +751,12 @@ class PowerfulSmartCycle:
         conn.close()
         
         print(f"📈 Final device count: {final_count}")
-        print(f"\n🎉 SMART CYCLE COMPLETED SUCCESSFULLY!")
-        print(f"✅ Your database is now optimized with:")
-        print(f"   • All new devices added")
-        print(f"   • All existing devices updated with latest data")
-        print(f"   • All duplicates intelligently merged")
-        print(f"   • Zero data loss - everything preserved")
+        print("\n🎉 SMART CYCLE COMPLETED SUCCESSFULLY!")
+        print("✅ Your database is now optimized with:")
+        print("   • All new devices added")
+        print("   • All existing devices updated with latest data")
+        print("   • All duplicates intelligently merged")
+        print("   • Zero data loss - everything preserved")
 
 def main():
     """Run the complete smart cycle"""

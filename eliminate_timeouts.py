@@ -26,24 +26,24 @@ def eliminate_all_timeouts():
     print("✅ 3. Future completion timeout: UNLIMITED")
     changes_made.append("Future completion timeout: None (unlimited)")
     
-    print(f"\n🎯 OPTIMIZATION SUMMARY:")
+    print("\n🎯 OPTIMIZATION SUMMARY:")
     print("=" * 30)
     for i, change in enumerate(changes_made, 1):
         print(f"   {i}. {change}")
     
-    print(f"\n📈 Expected Results:")
+    print("\n📈 Expected Results:")
     print("   • Collection Time: 15-20 minutes for 560 devices")
     print("   • Success Rate: 95-100%")
     print("   • No timeout errors")
     print("   • Complete device inventory")
     
-    print(f"\n🚀 NEXT STEPS:")
+    print("\n🚀 NEXT STEPS:")
     print("1. ⚠️  RESTART your application completely")
     print("2. 🔄 Close the current Asset Management GUI")
     print("3. 🚀 Launch fresh: py launch_original_desktop.py")
     print("4. 📊 Run Asset Scan - should collect ALL 560 devices")
     
-    print(f"\n⏱️ PATIENCE REQUIRED:")
+    print("\n⏱️ PATIENCE REQUIRED:")
     print("   • Scan will take 15-20 minutes")
     print("   • Do NOT close the application")
     print("   • Wait for completion message")
@@ -74,7 +74,7 @@ def create_unlimited_config():
         with open('unlimited_collection_config.json', 'w') as f:
             json.dump(config, f, indent=2)
         
-        print(f"\n📁 Created: unlimited_collection_config.json")
+        print("\n📁 Created: unlimited_collection_config.json")
         print("   Contains optimal settings for large networks")
         
     except Exception as e:
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     eliminate_all_timeouts()
     create_unlimited_config()
     
-    print(f"\n🎉 TIMEOUT ELIMINATION COMPLETE!")
+    print("\n🎉 TIMEOUT ELIMINATION COMPLETE!")
     print("   Your system is now configured for unlimited collection")
     print("   Restart the application and scan again!")
-    print(f"\n💪 EXPECTED: 560/560 devices collected successfully!")
+    print("\n💪 EXPECTED: 560/560 devices collected successfully!")

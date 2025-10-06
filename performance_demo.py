@@ -72,7 +72,7 @@ def test_ultimate_performance(ips: List[str]) -> Tuple[float, int]:
         print(f"      ✅ Alive: {alive_count}, Dead: {len(ips) - alive_count}")
         print(f"      ⏱️  Time: {total_time:.2f} seconds")
         print(f"      💾 Cache hit rate: {cache_stats['hit_rate']:.1f}%")
-        print(f"      🎯 100% accuracy maintained")
+        print("      🎯 100% accuracy maintained")
         
         return speed, alive_count
     
@@ -140,10 +140,10 @@ def performance_demonstration():
         else:
             print("🎯 Performance optimization successful!")
     
-    print(f"✅ Accuracy: 100% maintained (your smart strategy)")
-    print(f"🔧 Modern enhancements: AsyncIO + Raw Sockets + Caching")
-    print(f"🛡️ Advanced features: Circuit Breakers + Memory Management")
-    print(f"📊 Enterprise ready: Streaming + Load Balancing")
+    print("✅ Accuracy: 100% maintained (your smart strategy)")
+    print("🔧 Modern enhancements: AsyncIO + Raw Sockets + Caching")
+    print("🛡️ Advanced features: Circuit Breakers + Memory Management")
+    print("📊 Enterprise ready: Streaming + Load Balancing")
     
     print("\n🏆 ULTIMATE PERFORMANCE ACHIEVED!")
     print("Your excellent smart strategy enhanced with cutting-edge 2025 techniques!")

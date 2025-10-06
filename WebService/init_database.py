@@ -7,8 +7,6 @@ Ensures the database has proper structure and sample data
 
 import sqlite3
 import os
-import json
-from datetime import datetime
 
 def find_database_path():
     """Find the correct database path"""
@@ -192,7 +190,7 @@ def verify_data(db_path):
     
     conn.close()
     
-    print(f"[OK] Database verification complete:")
+    print("[OK] Database verification complete:")
     print(f"  - Total assets: {asset_count}")
     print(f"  - Active devices: {active_count}")
     print(f"  - Offline devices: {offline_count}")

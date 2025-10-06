@@ -24,13 +24,10 @@ SPEED OPTIMIZATION:
 🚀 Batch processing for large subnets
 """
 
-import os
 import sys
 import time
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Any, Optional, Tuple
-import ipaddress
+from typing import List, Dict, Any
 from pathlib import Path
 
 # Add current directory to path
@@ -281,7 +278,7 @@ class PerfectAccuracySpeedCollector:
         }
         
         # Log accuracy analysis
-        log_callback(f"   📊 Accuracy Analysis Results:")
+        log_callback("   📊 Accuracy Analysis Results:")
         log_callback(f"   ✅ Alive Devices: {len(alive_devices)}")
         log_callback(f"   ❌ Dead Devices: {len(dead_devices)}")
         log_callback(f"   ❓ Uncertain: {len(uncertain_devices)} (need manual review)")
@@ -323,7 +320,7 @@ class PerfectAccuracySpeedCollector:
                     perfect_results['requires_manual_review'].append(result)
         
         # Log final compilation
-        log_callback(f"   📊 Final Results Compilation:")
+        log_callback("   📊 Final Results Compilation:")
         log_callback(f"   ✅ High Confidence Alive: {len(perfect_results['high_confidence_alive'])}")
         log_callback(f"   ❌ High Confidence Dead: {len(perfect_results['high_confidence_dead'])}")
         log_callback(f"   ⚠️  Medium Confidence Alive: {len(perfect_results['medium_confidence_alive'])}")
@@ -349,7 +346,7 @@ class PerfectAccuracySpeedCollector:
             'average_device_time': total_time / len(results) if results else 0,
         }
         
-        log_callback(f"📈 Final Performance Statistics:")
+        log_callback("📈 Final Performance Statistics:")
         log_callback(f"   ⏱️  Total Time: {total_time:.2f} seconds")
         log_callback(f"   🚀 Validation Rate: {validation_rate:.1f} devices/second")
         log_callback(f"   🎯 Accuracy Rate: {self.stats['accuracy_rate']:.1f}%")
@@ -396,7 +393,7 @@ def main():
     
     if success:
         print("\n🎉 PERFECT ACCURACY SCAN COMPLETED SUCCESSFULLY!")
-        print(f"✅ 100% accurate results guaranteed")
+        print("✅ 100% accurate results guaranteed")
         print(f"⚡ Completed in {total_time:.2f} seconds")
         print(f"🚀 Rate: {collector.stats['speed_metrics']['validation_rate']:.1f} devices/second")
         print(f"🎯 Accuracy: {collector.stats['accuracy_rate']:.1f}%")

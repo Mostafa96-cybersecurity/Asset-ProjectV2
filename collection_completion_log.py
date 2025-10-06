@@ -30,7 +30,7 @@ def generate_completion_log():
     print("-" * 50)
     print(f"✅ Recent Collection Results: {recent_count} devices collected")
     print(f"📦 Total Database Records: {total_count} devices")
-    print(f"🕒 Collection Time Window: Last 10 minutes")
+    print("🕒 Collection Time Window: Last 10 minutes")
     print()
     
     # Success rate analysis
@@ -196,11 +196,11 @@ def generate_completion_log():
     print("=" * 80)
     print("🎉 COLLECTION COMPLETION STATUS: SUCCESS")
     print("=" * 80)
-    print(f"✅ Scan completed successfully")
+    print("✅ Scan completed successfully")
     print(f"✅ {recent_count} devices collected and saved to database")
-    print(f"✅ Data quality verification completed")
-    print(f"✅ Deduplication analysis completed")
-    print(f"✅ All collected data properly saved in assets.db")
+    print("✅ Data quality verification completed")
+    print("✅ Deduplication analysis completed")
+    print("✅ All collected data properly saved in assets.db")
     print("=" * 80)
     
     conn.close()

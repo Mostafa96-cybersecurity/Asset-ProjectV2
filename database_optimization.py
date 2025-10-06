@@ -6,7 +6,6 @@ Analyzes collected data, removes duplicates, and optimizes save performance
 
 import sqlite3
 import time
-from datetime import datetime
 
 def analyze_collected_data():
     """Analyze all collected data and show comprehensive statistics"""
@@ -26,7 +25,7 @@ def analyze_collected_data():
         
         duplicates = total_records - unique_ips
         
-        print(f'📊 DATABASE OVERVIEW:')
+        print('📊 DATABASE OVERVIEW:')
         print(f'   Total Records: {total_records}')
         print(f'   Unique IP Addresses: {unique_ips}')
         print(f'   Duplicate Records: {duplicates}')
@@ -59,7 +58,7 @@ def analyze_collected_data():
         cursor.execute('PRAGMA table_info(assets)')
         columns = cursor.fetchall()
         
-        print(f'💾 DATABASE SCHEMA:')
+        print('💾 DATABASE SCHEMA:')
         print(f'   Total Columns: {len(columns)}')
         
         # Check which columns are being populated
@@ -176,9 +175,9 @@ def clean_duplicates():
         # Commit changes
         conn.commit()
         
-        print(f'\n✅ Cleanup completed!')
+        print('\n✅ Cleanup completed!')
         print(f'   Total records deleted: {total_to_delete}')
-        print(f'   Database optimized!')
+        print('   Database optimized!')
         
         # Vacuum database to reclaim space
         print('\n🗜️ Optimizing database storage...')
@@ -314,7 +313,7 @@ def main():
     
     total_time = time.time() - start_time
     
-    print(f'\n🎯 OPTIMIZATION COMPLETE')
+    print('\n🎯 OPTIMIZATION COMPLETE')
     print('=' * 30)
     print(f'⏱️ Total optimization time: {total_time:.2f}s')
     print('🚀 Database is now optimized for faster collections!')

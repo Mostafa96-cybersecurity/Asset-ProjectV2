@@ -5,8 +5,6 @@ Checks data integrity, duplicates, completeness, and DNS validation data
 """
 
 import sqlite3
-import json
-from datetime import datetime
 
 def analyze_database():
     print('COMPREHENSIVE DATABASE ANALYSIS')

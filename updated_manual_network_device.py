@@ -1,6 +1,5 @@
 
 import sqlite3
-import json
 from datetime import datetime
 
 def add_manual_network_device(device_info):

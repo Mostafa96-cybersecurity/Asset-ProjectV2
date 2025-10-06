@@ -7,7 +7,6 @@ Combines ultra-fast alive detection with efficient detailed collection
 import time
 import asyncio
 import socket
-import threading
 import ipaddress
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Set, Dict, Optional
@@ -83,7 +82,7 @@ class SpeedOptimizedCollector:
             self.log_message(log_callback, "❌ No valid IPs to scan")
             return False
         
-        self.log_message(log_callback, f"📊 SCAN CONFIGURATION:")
+        self.log_message(log_callback, "📊 SCAN CONFIGURATION:")
         self.log_message(log_callback, f"   Target IPs: {len(all_ips)}")
         self.log_message(log_callback, f"   Scanner type: {'Async' if self.use_async else 'Thread'}")
         self.log_message(log_callback, f"   Alive timeout: {self.alive_timeout*1000:.0f}ms")
@@ -91,7 +90,7 @@ class SpeedOptimizedCollector:
         
         # PHASE 1: Ultra-fast alive detection
         phase1_start = time.time()
-        self.log_message(log_callback, f"\n🚀 PHASE 1: ULTRA-FAST ALIVE DETECTION")
+        self.log_message(log_callback, "\n🚀 PHASE 1: ULTRA-FAST ALIVE DETECTION")
         
         alive_ips = self._ultra_fast_alive_detection(all_ips, progress_callback, log_callback)
         
@@ -128,7 +127,7 @@ class SpeedOptimizedCollector:
         # PHASE 3: Fast database saving
         if collected_data:
             phase3_start = time.time()
-            self.log_message(log_callback, f"\n💾 PHASE 3: FAST DATABASE SAVING")
+            self.log_message(log_callback, "\n💾 PHASE 3: FAST DATABASE SAVING")
             
             saved_count = self._fast_database_saving(collected_data, log_callback)
             
@@ -169,8 +168,8 @@ class SpeedOptimizedCollector:
                 )
                 loop.close()
                 return alive_ips
-            except Exception as e:
-                self.log_message(log_callback, f"⚠️ Async scanner failed, falling back to thread-based")
+            except Exception:
+                self.log_message(log_callback, "⚠️ Async scanner failed, falling back to thread-based")
         
         # Fall back to thread-based ultra scanner
         if ULTRA_SCANNERS_AVAILABLE:
@@ -426,19 +425,19 @@ class SpeedOptimizedCollector:
         # Performance breakdown
         phase_times = self.stats['phase_times']
         
-        self.log_message(log_callback, f"⚡ SPEED PERFORMANCE:")
+        self.log_message(log_callback, "⚡ SPEED PERFORMANCE:")
         self.log_message(log_callback, f"   Total time: {total_time:.2f}s")
         self.log_message(log_callback, f"   Phase 1 (Alive): {phase_times['alive_detection']:.2f}s")
         self.log_message(log_callback, f"   Phase 2 (Collection): {phase_times['data_collection']:.2f}s")
         self.log_message(log_callback, f"   Phase 3 (Database): {phase_times['database_saving']:.2f}s")
         
         # Speed metrics
-        self.log_message(log_callback, f"\n📊 SPEED METRICS:")
+        self.log_message(log_callback, "\n📊 SPEED METRICS:")
         self.log_message(log_callback, f"   Overall rate: {self.stats['speed_metrics']['overall_rate']:.1f} IPs/second")
         self.log_message(log_callback, f"   Alive detection: {self.stats['speed_metrics']['alive_detection_rate']:.1f} IPs/second")
         
         # Results summary
-        self.log_message(log_callback, f"\n📈 RESULTS:")
+        self.log_message(log_callback, "\n📈 RESULTS:")
         self.log_message(log_callback, f"   Total IPs: {self.stats['total_ips']}")
         self.log_message(log_callback, f"   Alive devices: {self.stats['alive_devices']}")
         self.log_message(log_callback, f"   Data collected: {self.stats['data_collected']}")
@@ -447,7 +446,7 @@ class SpeedOptimizedCollector:
         # Efficiency metrics
         if self.stats['total_ips'] > 0:
             alive_percentage = (self.stats['alive_devices'] / self.stats['total_ips']) * 100
-            self.log_message(log_callback, f"\n🎯 EFFICIENCY:")
+            self.log_message(log_callback, "\n🎯 EFFICIENCY:")
             self.log_message(log_callback, f"   Alive rate: {alive_percentage:.1f}%")
             
             if self.stats['alive_devices'] > 0:
@@ -485,7 +484,7 @@ def test_speed_optimized_collector():
     success = collector.speed_optimized_scan(progress_callback, log_callback, alive_only=False)
     test_time = time.time() - start_time
     
-    print(f"\n🏆 SPEED TEST RESULTS:")
+    print("\n🏆 SPEED TEST RESULTS:")
     print(f"Total time: {test_time:.2f}s")
     print(f"Overall speed: {collector.stats['speed_metrics']['overall_rate']:.1f} IPs/second")
     print(f"Success: {success}")

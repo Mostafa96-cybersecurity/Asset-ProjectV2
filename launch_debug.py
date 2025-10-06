@@ -6,7 +6,6 @@ This version disables some enhancements to isolate threading issues
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path

@@ -6,12 +6,9 @@ Ensures complete data collection and intelligent database updates (no data repla
 
 import sqlite3
 import subprocess
-import time
-import json
 import socket
-import threading
 from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, Optional, Any, Tuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import ipaddress
 
@@ -518,7 +515,7 @@ class SmartDatabaseManager:
 
 def run_complete_network_scan(network_range: str = "10.0.21.0/24") -> Dict[str, Any]:
     """Run complete network scan with comprehensive data collection"""
-    print(f"🚀 STARTING COMPLETE NETWORK SCAN")
+    print("🚀 STARTING COMPLETE NETWORK SCAN")
     print(f"📡 Network: {network_range}")
     print("=" * 60)
     
@@ -563,7 +560,7 @@ def run_complete_network_scan(network_range: str = "10.0.21.0/24") -> Dict[str, 
     print(f"📊 Found {len(live_hosts)} live hosts")
     
     # Second: Complete data collection on live hosts
-    print(f"\n📊 Phase 2: Complete data collection...")
+    print("\n📊 Phase 2: Complete data collection...")
     collected_devices = []
     
     def collect_device_data(ip):
@@ -625,7 +622,7 @@ if __name__ == "__main__":
     report = run_complete_network_scan(network)
     
     if report:
-        print(f"\n📋 SCAN COMPLETION REPORT")
+        print("\n📋 SCAN COMPLETION REPORT")
         print("=" * 60)
         
         scan_info = report['scan_info']
@@ -636,13 +633,13 @@ if __name__ == "__main__":
         print(f"📊 Devices collected: {report['devices_collected']}")
         
         db_stats = report['database_stats']
-        print(f"\n💾 Database Operations:")
+        print("\n💾 Database Operations:")
         print(f"   📝 New records: {db_stats['new_records']}")
         print(f"   ✏️ Updated records: {db_stats['updated_records']}")
         print(f"   ❌ Errors: {db_stats['errors']}")
         
         collection_stats = report['collection_stats']
-        print(f"\n📊 Collection Methods:")
+        print("\n📊 Collection Methods:")
         for method, count in collection_stats.get('methods_used', {}).items():
             print(f"   • {method}: {count} devices")
     

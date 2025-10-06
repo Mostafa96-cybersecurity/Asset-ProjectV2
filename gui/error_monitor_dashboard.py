@@ -13,17 +13,14 @@ import threading
 import time
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Callable
+from typing import Dict, List
 from collections import defaultdict, deque
 from PyQt6.QtCore import QTimer, QObject, pyqtSignal
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
-                             QPushButton, QTextEdit, QProgressBar, QGroupBox,
-                             QFrame, QScrollArea, QTabWidget)
-from PyQt6.QtGui import QFont, QPalette, QColor
-from PyQt6.QtCore import Qt
+                             QPushButton, QTextEdit, QProgressBar, QFrame, QTabWidget)
+from PyQt6.QtGui import QFont
 
 from core.advanced_duplicate_manager import DuplicateManager, DataValidator, ErrorRecovery
-from db.connection import connect
 
 log = logging.getLogger(__name__)
 

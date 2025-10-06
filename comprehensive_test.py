@@ -5,7 +5,6 @@ Tests all features from scan to database save with full program verification
 """
 
 import sys
-import os
 import time
 import sqlite3
 from pathlib import Path
@@ -109,19 +108,19 @@ def test_environment_setup():
         recommendations.append("Database may need initialization")
     
     # 6. Summary
-    print(f"\n📊 ENVIRONMENT SUMMARY:")
+    print("\n📊 ENVIRONMENT SUMMARY:")
     print(f"   ✅ Core modules: {len(required_modules) - len([i for i in issues if 'Missing module' in i])}/{len(required_modules)}")
     print(f"   🎯 Enhanced modules: {available_modules}/{len(optional_modules)}")
     print(f"   ⚠️ Issues found: {len(issues)}")
     print(f"   💡 Recommendations: {len(recommendations)}")
     
     if issues:
-        print(f"\n❌ CRITICAL ISSUES:")
+        print("\n❌ CRITICAL ISSUES:")
         for issue in issues:
             print(f"   • {issue}")
     
     if recommendations:
-        print(f"\n💡 RECOMMENDATIONS FOR MAXIMUM FUNCTIONALITY:")
+        print("\n💡 RECOMMENDATIONS FOR MAXIMUM FUNCTIONALITY:")
         for rec in recommendations:
             print(f"   • {rec}")
     
@@ -398,26 +397,26 @@ def run_comprehensive_test():
     all_critical = env_ok and strategy_results['strategy_available'] and database_ok
     all_enhanced = all_critical and modules_ok and strategy_results['methods_working']
     
-    print(f"\n🎯 OVERALL ASSESSMENT:")
+    print("\n🎯 OVERALL ASSESSMENT:")
     print(f"   Critical functionality: {'✅ WORKING' if all_critical else '❌ ISSUES'}")
     print(f"   Enhanced functionality: {'✅ FULLY WORKING' if all_enhanced else '⚠️ PARTIAL'}")
     
     if all_enhanced:
-        print(f"\n🎉 RESULT: ALL FEATURES WORKING!")
-        print(f"   • Secure ping detection ✅")
-        print(f"   • Device classification ✅")
-        print(f"   • Multiple collection methods ✅")
-        print(f"   • Database operations ✅")
-        print(f"   • End-to-end functionality ✅")
+        print("\n🎉 RESULT: ALL FEATURES WORKING!")
+        print("   • Secure ping detection ✅")
+        print("   • Device classification ✅")
+        print("   • Multiple collection methods ✅")
+        print("   • Database operations ✅")
+        print("   • End-to-end functionality ✅")
     elif all_critical:
-        print(f"\n⚠️ RESULT: CORE FEATURES WORKING, ENHANCEMENTS LIMITED")
-        print(f"   • Basic collection works ✅")
-        print(f"   • Some advanced features may be limited ⚠️")
-        print(f"   • Install recommended tools for full functionality")
+        print("\n⚠️ RESULT: CORE FEATURES WORKING, ENHANCEMENTS LIMITED")
+        print("   • Basic collection works ✅")
+        print("   • Some advanced features may be limited ⚠️")
+        print("   • Install recommended tools for full functionality")
     else:
-        print(f"\n❌ RESULT: CRITICAL ISSUES FOUND")
-        print(f"   • Core functionality may be impacted")
-        print(f"   • Review and fix critical issues above")
+        print("\n❌ RESULT: CRITICAL ISSUES FOUND")
+        print("   • Core functionality may be impacted")
+        print("   • Review and fix critical issues above")
     
     print("\n" + "=" * 80)
 

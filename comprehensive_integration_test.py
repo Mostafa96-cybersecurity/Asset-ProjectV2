@@ -5,9 +5,6 @@
 # 3. Data visibility in web service
 # 4. Proper credential handling for live device collection
 
-import sys
-import os
-import time
 import sqlite3
 from datetime import datetime
 
@@ -135,7 +132,7 @@ try:
     ''')
     
     recent_devices = cursor.fetchall()
-    print(f"   📋 Recent devices with complete data:")
+    print("   📋 Recent devices with complete data:")
     for device in recent_devices:
         hostname, dev_type, mfg, model, dept, status = device
         print(f"      • {hostname} | {dev_type} | {mfg} {model} | {dept} | {status}")
@@ -152,7 +149,6 @@ print("   Testing if collected data appears in web service...")
 
 try:
     import requests
-    import time
     
     # Test web service API
     response = requests.get('http://127.0.0.1:5555/api/devices', timeout=10)
@@ -174,10 +170,10 @@ try:
             if missing_fields:
                 print(f"   ⚠️ Missing key fields in web service: {missing_fields}")
             else:
-                print(f"   ✅ All key fields present in web service data")
+                print("   ✅ All key fields present in web service data")
             
             # Show sample web service data
-            print(f"   📱 Sample web service device:")
+            print("   📱 Sample web service device:")
             for field in ['hostname', 'device_type', 'manufacturer', 'model', 'department', 'status']:
                 value = device.get(field, 'N/A')
                 print(f"      {field}: {value}")
@@ -218,7 +214,7 @@ try:
         snmp_v3=test_snmp_v3
     )
     
-    print(f"   ✅ Credential structures accepted:")
+    print("   ✅ Credential structures accepted:")
     print(f"      Windows: {len(collector.win_creds)} credential pairs")
     print(f"      Linux: {len(collector.linux_creds)} credential pairs")  
     print(f"      SNMP v2c: {len(collector.snmp_v2c)} communities")
@@ -232,8 +228,8 @@ try:
         'snmp_v3': collector.snmp_v3
     }
     
-    print(f"   ✅ Credentials properly structured for collection")
-    print(f"   🔐 Ready for live device collection with authentication")
+    print("   ✅ Credentials properly structured for collection")
+    print("   🔐 Ready for live device collection with authentication")
 
 except Exception as e:
     print(f"   ❌ Credential handling test error: {e}")
@@ -277,8 +273,8 @@ try:
     success = collector._save_to_database(normalized)
     
     if success:
-        print(f"   ✅ Manual device addition uses identical column structure")
-        print(f"   ✅ Manual device saved with same normalization as collection")
+        print("   ✅ Manual device addition uses identical column structure")
+        print("   ✅ Manual device saved with same normalization as collection")
         
         # Verify consistency 
         conn = sqlite3.connect('assets.db')
@@ -293,7 +289,7 @@ try:
         
         conn.close()
     else:
-        print(f"   ❌ Manual device addition failed")
+        print("   ❌ Manual device addition failed")
 
 except Exception as e:
     print(f"   ❌ Manual addition consistency test error: {e}")
@@ -318,11 +314,11 @@ try:
     total_devices = cursor.fetchone()[0]
     conn.close()
     
-    print(f"\n📊 FINAL DATABASE STATUS:")
+    print("\n📊 FINAL DATABASE STATUS:")
     print(f"   • Total Devices: {total_devices}")
     print(f"   • Device Types: {device_types_count}")
-    print(f"   • All using consistent 103-column schema")
-    print(f"   • Ready for web service and manual additions")
+    print("   • All using consistent 103-column schema")
+    print("   • Ready for web service and manual additions")
 
 except Exception as e:
     print(f"⚠️ Final verification error: {e}")

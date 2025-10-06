@@ -167,7 +167,7 @@ def monitor_scan_progress():
     
     final_count, recent_updates = check_database_after_scan()
     
-    print(f"\n📈 SCAN RESULTS:")
+    print("\n📈 SCAN RESULTS:")
     print(f"   📊 Before: {initial_count} devices")
     print(f"   📊 After: {final_count} devices")
     print(f"   📈 Growth: +{final_count - initial_count} devices")
@@ -188,18 +188,18 @@ if __name__ == "__main__":
     # Run the test
     success, growth = monitor_scan_progress()
     
-    print(f"\n🎯 TEST SUMMARY:")
+    print("\n🎯 TEST SUMMARY:")
     print("=" * 50)
     if success and growth > 0:
-        print(f"   ✅ SCAN SUCCESSFUL!")
+        print("   ✅ SCAN SUCCESSFUL!")
         print(f"   📈 Added {growth} new devices")
-        print(f"   💾 Data successfully saved to database")
+        print("   💾 Data successfully saved to database")
     elif success and growth == 0:
-        print(f"   ⚠️ SCAN COMPLETED BUT NO NEW DATA")
-        print(f"   🤔 May indicate all devices already collected")
-        print(f"   🔍 Or scan range might be limited")
+        print("   ⚠️ SCAN COMPLETED BUT NO NEW DATA")
+        print("   🤔 May indicate all devices already collected")
+        print("   🔍 Or scan range might be limited")
     else:
-        print(f"   ❌ SCAN FAILED")
-        print(f"   🔧 Check collector configuration and network settings")
+        print("   ❌ SCAN FAILED")
+        print("   🔧 Check collector configuration and network settings")
     
     print(f"\n🕐 Test completed: {datetime.now()}")

@@ -16,7 +16,7 @@ def test_web_service_complete_fix():
         from desktop_web_service_launcher import FastWebServiceLauncher
         
         launcher = FastWebServiceLauncher()
-        print(f"   ✅ FastWebServiceLauncher created")
+        print("   ✅ FastWebServiceLauncher created")
         print(f"   🚪 Port: {launcher.port}")
         print(f"   🌐 URL: {launcher.service_url}")
         
@@ -55,7 +55,6 @@ def test_web_service_complete_fix():
     # Test 3: GUI functions (import test)
     print("\n3️⃣ Testing GUI integration...")
     try:
-        from desktop_web_service_launcher import start_web_service_for_gui, open_web_service_for_gui
         print("   ✅ GUI functions available")
         
     except Exception as e:

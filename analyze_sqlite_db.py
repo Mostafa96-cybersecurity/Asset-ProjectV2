@@ -6,7 +6,6 @@ Analyzes the current SQLite database structure and data
 
 import sqlite3
 import os
-import sys
 
 def analyze_sqlite_database():
     """Analyze the current SQLite database"""

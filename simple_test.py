@@ -4,7 +4,6 @@ Simple test for web service startup
 """
 
 import subprocess
-import sys
 import os
 import time
 import requests
@@ -15,7 +14,7 @@ def test_simple_startup():
     python_path = r"D:\Assets-Projects\Asset-Project-Enhanced\.venv\Scripts\python.exe"
     service_file = 'fixed_dashboard.py'
     
-    print(f"Testing subprocess startup...")
+    print("Testing subprocess startup...")
     print(f"Python: {python_path}")
     print(f"Service: {service_file}")
     

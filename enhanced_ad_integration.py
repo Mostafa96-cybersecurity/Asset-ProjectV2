@@ -16,9 +16,7 @@ import os
 import sqlite3
 import json
 import threading
-import time
 from datetime import datetime
-from typing import Dict, List, Optional, Any
 import logging
 
 try:
@@ -540,7 +538,7 @@ if __name__ == "__main__":
     # Show summary if data exists
     summary = ad_integration.get_domain_computers_summary()
     if summary:
-        print(f"📊 Domain Computers Summary:")
+        print("📊 Domain Computers Summary:")
         print(f"   Total: {summary['total_computers']}")
         print(f"   Matched with Assets: {summary['matched_computers']} ({summary['match_percentage']}%)")
         print(f"   Windows: {summary['windows_computers']}")

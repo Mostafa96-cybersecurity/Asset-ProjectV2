@@ -6,7 +6,6 @@ Minimal launcher with essential features only
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path

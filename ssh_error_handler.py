@@ -6,9 +6,7 @@ Prevents SSH/Paramiko errors from blocking UI
 
 import functools
 import logging
-import threading
 from PyQt6.QtCore import QObject, pyqtSignal, QTimer
-from PyQt6.QtWidgets import QApplication
 
 class SSHErrorHandler(QObject):
     """

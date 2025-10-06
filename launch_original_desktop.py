@@ -8,7 +8,6 @@ Complete launcher with Web Service Management System integrated
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path
@@ -196,7 +195,6 @@ def main():
         
         # PyQt6 imports
         from PyQt6.QtWidgets import QApplication
-        from PyQt6.QtCore import Qt
         
         # Import the main app from gui folder
         from gui.app import MainWindow
@@ -215,7 +213,6 @@ def main():
             
         # Apply high DPI settings for better display (PyQt6 compatible)
         try:
-            from PyQt6.QtCore import Qt
             # Use proper PyQt6 syntax
             pass
         except:

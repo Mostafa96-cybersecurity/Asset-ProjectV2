@@ -10,17 +10,10 @@ import sqlite3
 import json
 import sys
 import time
-import threading
 from datetime import datetime
-from collections import defaultdict
 import win32api
 import win32security
-import win32net
-import win32netcon
 import os
-import subprocess
-import psutil
-import socket
 
 class UltimateComprehensiveCollector:
     def __init__(self):
@@ -903,7 +896,7 @@ class UltimateComprehensiveCollector:
                 'startup_program_count': len(startup_commands)
             })
             
-            print(f"   ✅ Complete WMI Collection: All available system data gathered")
+            print("   ✅ Complete WMI Collection: All available system data gathered")
             self.collection_stats['successful_collections'] += 50
             
         except Exception as e:

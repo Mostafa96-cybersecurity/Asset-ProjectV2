@@ -2,7 +2,6 @@
 """
 Generate Static JSON Data for Dashboard
 """
-import sys
 import json
 import sqlite3
 import os
@@ -114,7 +113,7 @@ def generate_assets_json():
         
         conn.close()
         
-        print(f"SUCCESS! Generated data files:")
+        print("SUCCESS! Generated data files:")
         print(f"  - Assets: {assets_file} ({total_count} assets)")
         print(f"  - Stats: {stats_file}")
         print(f"  - Incomplete Assets: {incomplete_count}")

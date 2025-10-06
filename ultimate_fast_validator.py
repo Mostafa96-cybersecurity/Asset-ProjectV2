@@ -22,14 +22,11 @@ PERFORMANCE TARGETS:
 - Accuracy: 100% reliable results
 """
 
-import os
-import sys
 import time
 import subprocess
 import platform
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Tuple, Optional
+from typing import List, Optional
 import ipaddress
 import re
 import socket
@@ -377,7 +374,7 @@ class UltimateFastValidator:
         log(f"🎯 Target devices: {len(unique_ips)}")
         log(f"⚡ Lightning timeout: {self.config['lightning_ping_timeout_ms']}ms")
         log(f"🔍 Multi-validation timeout: {self.config['multi_ping_timeout_ms']}ms")
-        log(f"🧠 Strategy: Lightning check → Smart multi-validation")
+        log("🧠 Strategy: Lightning check → Smart multi-validation")
         log("")
         
         start_time = time.time()
@@ -496,14 +493,14 @@ class UltimateFastValidator:
         lightning_devices = [r for r in results if "LIGHTNING" in r.validation_method]
         multi_devices = [r for r in results if "MULTI" in r.validation_method]
         
-        log_func(f"📊 VALIDATION RESULTS:")
+        log_func("📊 VALIDATION RESULTS:")
         log_func(f"   Total Devices: {len(results)}")
         log_func(f"   ✅ Alive: {len(alive_devices)} ({len(alive_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❌ Dead: {len(dead_devices)} ({len(dead_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❓ Uncertain: {len(uncertain_devices)} ({len(uncertain_devices)/len(results)*100:.1f}%)")
         log_func("")
         
-        log_func(f"🚀 ULTIMATE PERFORMANCE:")
+        log_func("🚀 ULTIMATE PERFORMANCE:")
         log_func(f"   ⚡ Lightning Validation: {len(lightning_devices)} devices ({len(lightning_devices)/len(results)*100:.1f}%)")
         log_func(f"   🔍 Multi-Validation: {len(multi_devices)} devices ({len(multi_devices)/len(results)*100:.1f}%)")
         log_func(f"   ⏱️  Total Time: {total_time:.2f} seconds")
@@ -515,7 +512,7 @@ class UltimateFastValidator:
         lightning_alive = [r for r in alive_devices if "LIGHTNING" in r.validation_method]
         if lightning_alive:
             fastest_alive = sorted(lightning_alive, key=lambda x: x.ping_time_ms or 0)[:10]
-            log_func(f"⚡ FASTEST ALIVE DEVICES (Lightning-validated):")
+            log_func("⚡ FASTEST ALIVE DEVICES (Lightning-validated):")
             for device in fastest_alive:
                 ping_text = f"{device.ping_time_ms:.1f}ms" if device.ping_time_ms else "N/A"
                 skip_text = " (skipped multi)" if not device.needs_multi_validation else ""
@@ -561,10 +558,10 @@ def main():
     results = validator.ultimate_fast_validate(test_targets, progress_handler, log_handler)
     total_time = time.time() - start_time
     
-    print(f"\n🎉 ULTIMATE VALIDATION COMPLETED!")
+    print("\n🎉 ULTIMATE VALIDATION COMPLETED!")
     print(f"⚡ Validated {len(results)} devices in {total_time:.2f} seconds")
     print(f"🚀 Rate: {len(results)/total_time:.1f} devices/second")
-    print(f"🎯 Perfect balance: Speed + Accuracy + Intelligence!")
+    print("🎯 Perfect balance: Speed + Accuracy + Intelligence!")
 
 if __name__ == "__main__":
     main()

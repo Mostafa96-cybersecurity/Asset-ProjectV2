@@ -5,9 +5,7 @@ Real-time duplicate prevention with multi-level validation
 """
 
 import sqlite3
-import json
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
 
 class AdvancedDuplicateManager:
     def __init__(self, db_path="assets.db"):
@@ -199,11 +197,11 @@ class AdvancedDuplicateManager:
         
         if not dry_run:
             conn.commit()
-            print(f"\n✅ CLEANUP COMPLETED!")
+            print("\n✅ CLEANUP COMPLETED!")
         else:
-            print(f"\n📊 CLEANUP PREVIEW COMPLETED!")
+            print("\n📊 CLEANUP PREVIEW COMPLETED!")
         
-        print(f"\n📈 CLEANUP STATISTICS:")
+        print("\n📈 CLEANUP STATISTICS:")
         print(f"   Primary duplicates (Serial+MAC): {cleanup_stats['primary_cleaned']}")
         print(f"   IP duplicates: {cleanup_stats['ip_cleaned']}")
         print(f"   Total records removed: {cleanup_stats['records_removed']}")
@@ -272,7 +270,7 @@ class AdvancedDuplicateManager:
             ("duplicate_check_status", "TEXT DEFAULT 'verified'", "Duplicate verification status"),
         ]
         
-        print(f"\n🔧 ADDING METADATA COLUMNS:")
+        print("\n🔧 ADDING METADATA COLUMNS:")
         for col_name, col_type, description in metadata_columns:
             try:
                 cursor.execute(f"ALTER TABLE assets ADD COLUMN {col_name} {col_type}")
@@ -285,7 +283,7 @@ class AdvancedDuplicateManager:
         
         conn.commit()
         conn.close()
-        print(f"\n✅ DATABASE PREPARED FOR DUPLICATE PREVENTION!")
+        print("\n✅ DATABASE PREPARED FOR DUPLICATE PREVENTION!")
 
 def main():
     print("🚀 ADVANCED DUPLICATE MANAGEMENT SYSTEM")
@@ -312,7 +310,7 @@ def main():
                 print("\n" + "="*60)
                 print("EXECUTING LIVE CLEANUP")
                 final_stats = manager.smart_cleanup_duplicates(dry_run=False)
-                print(f"\n🎉 SUCCESS! Database cleaned and optimized for duplicate prevention!")
+                print("\n🎉 SUCCESS! Database cleaned and optimized for duplicate prevention!")
             else:
                 print("⏸️  Cleanup cancelled. Database unchanged.")
         else:
@@ -320,10 +318,10 @@ def main():
     else:
         print("\n✅ DATABASE IS ALREADY CLEAN!")
     
-    print(f"\n🎯 NEXT STEPS:")
-    print(f"   • Database now has unique constraints for duplicate prevention")
-    print(f"   • Real-time duplicate detection ready for implementation")
-    print(f"   • Smart collection engine will prevent future duplicates")
+    print("\n🎯 NEXT STEPS:")
+    print("   • Database now has unique constraints for duplicate prevention")
+    print("   • Real-time duplicate detection ready for implementation")
+    print("   • Smart collection engine will prevent future duplicates")
 
 if __name__ == "__main__":
     main()

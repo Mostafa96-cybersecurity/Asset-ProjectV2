@@ -6,13 +6,10 @@ Launches the asset management web service with enhanced security
 """
 
 import sys
-import os
 from pathlib import Path
-import subprocess
 import threading
 import time
 import requests
-from datetime import datetime
 
 # Import comprehensive logging
 try:
@@ -277,7 +274,7 @@ def main():
     print("=" * 50)
     
     if start_web_service():
-        print(f"\\n✅ Web service started successfully!")
+        print("\\n✅ Web service started successfully!")
         print(f"[INFO] Access URL: http://localhost:{launcher.port}")
         print("\\n📊 Service Status:")
         status = get_web_service_status()

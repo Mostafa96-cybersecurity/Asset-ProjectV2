@@ -12,9 +12,8 @@ Threaded Enhanced Collector - High Performance with Error Prevention
 import logging
 import threading
 import queue
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Dict, List, Optional, Callable, Set
+from typing import Dict, List, Optional, Set
 from datetime import datetime
 from PyQt6.QtCore import QObject, pyqtSignal, QTimer
 

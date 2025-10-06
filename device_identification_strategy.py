@@ -5,8 +5,7 @@ Handles complex scenarios like device movement, user changes, and hardware track
 """
 
 import sqlite3
-from datetime import datetime
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, Optional, Tuple
 
 class DeviceIdentificationStrategy:
     """
@@ -204,7 +203,7 @@ class DeviceIdentificationStrategy:
         
         print(f"   Old PC: {identity_old['primary_id']} ({identity_old['deduplication_strategy']})")
         print(f"   New PC: {identity_new['primary_id']} ({identity_new['deduplication_strategy']})")
-        print(f"   Result: Two separate devices (different hardware serials)")
+        print("   Result: Two separate devices (different hardware serials)")
         print()
         
         # Scenario 2: PC changes user
@@ -230,7 +229,7 @@ class DeviceIdentificationStrategy:
         
         print(f"   Before: {identity_before['primary_id']} ({identity_before['deduplication_strategy']})")
         print(f"   After: {identity_after['primary_id']} ({identity_after['deduplication_strategy']})")
-        print(f"   Result: Same device record updated (same hardware serial)")
+        print("   Result: Same device record updated (same hardware serial)")
         print()
         
         # Scenario 3: PC moves location
@@ -254,7 +253,7 @@ class DeviceIdentificationStrategy:
         
         print(f"   Office A: {identity_a['primary_id']} ({identity_a['deduplication_strategy']})")
         print(f"   Office B: {identity_b['primary_id']} ({identity_b['deduplication_strategy']})")
-        print(f"   Result: Same device record updated (same hardware serial)")
+        print("   Result: Same device record updated (same hardware serial)")
 
 if __name__ == "__main__":
     strategy = DeviceIdentificationStrategy()

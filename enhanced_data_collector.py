@@ -8,14 +8,9 @@ providing real-time device enhancement capabilities.
 نموذج جامع البيانات المحسن مع تكامل الواجهة الرسومية
 """
 
-import sqlite3
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional
-import socket
-import subprocess
-import json
-import traceback
+from typing import Dict, Any
 from collector_integration import CollectorIntegration
 
 try:

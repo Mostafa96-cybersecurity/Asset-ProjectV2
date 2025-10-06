@@ -1,7 +1,7 @@
 """
 Type stubs for enhanced IDE support
 """
-from typing import Optional, Dict, Any, Union, Callable
+from typing import Optional, Dict, Any, Callable
 import sqlite3
 
 # Common type aliases

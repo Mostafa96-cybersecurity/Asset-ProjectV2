@@ -6,8 +6,7 @@ This implements the proper strategy based on NMAP OS detection
 
 import sqlite3
 import json
-import time
-from typing import Dict, List, Tuple, Optional
+from typing import List, Tuple
 
 class NmapBasedClassifier:
     """Correct NMAP-based device classification following the proper strategy"""
@@ -292,11 +291,11 @@ def analyze_current_classification_vs_nmap():
             print(f"   ⚠️  MISMATCH: Should be '{suggested_type}' instead of '{current_type}'")
             reclassifications.append((hostname, current_type, suggested_type, confidence, reasoning))
         else:
-            print(f"   ✅ Classification matches NMAP data")
+            print("   ✅ Classification matches NMAP data")
         
         print()
     
-    print(f"=== RECLASSIFICATION SUMMARY ===")
+    print("=== RECLASSIFICATION SUMMARY ===")
     print(f"Devices needing reclassification: {len(reclassifications)}")
     
     if reclassifications:

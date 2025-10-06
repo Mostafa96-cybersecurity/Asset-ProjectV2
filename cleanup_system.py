@@ -8,7 +8,6 @@ Keeps only the essential, working files
 
 import os
 import shutil
-from pathlib import Path
 
 def cleanup_outdated_files():
     """Remove outdated files to prevent conflicts"""
@@ -117,7 +116,7 @@ def cleanup_outdated_files():
             print(f"✅ {file}")
             kept_essential.append(file)
     
-    print(f"\n📊 CLEANUP SUMMARY:")
+    print("\n📊 CLEANUP SUMMARY:")
     print(f"🗑️ Files removed: {removed_count}")
     print(f"✅ Essential files kept: {len(kept_essential)}")
     print("\n🎯 SYSTEM OPTIMIZED FOR DESKTOP USE!")

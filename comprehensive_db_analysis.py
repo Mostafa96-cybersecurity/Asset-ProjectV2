@@ -5,7 +5,7 @@ Comprehensive Database Analysis - Check all data quality and collection status
 
 import sqlite3
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def comprehensive_database_analysis():
     print("🔍 COMPREHENSIVE DATABASE ANALYSIS")
@@ -32,7 +32,7 @@ def comprehensive_database_analysis():
         print(f"🌐 Network Ranges: {network_ranges}")
         
         # 2. Recent Activity Analysis
-        print(f"\n⏰ RECENT ACTIVITY ANALYSIS")
+        print("\n⏰ RECENT ACTIVITY ANALYSIS")
         print("-" * 40)
         
         # Check last hour
@@ -60,7 +60,7 @@ def comprehensive_database_analysis():
         print(f"🕙 Updated in last 10 minutes: {last_10min}")
         
         # 3. Collection Methods Analysis
-        print(f"\n🔧 COLLECTION METHODS ANALYSIS")
+        print("\n🔧 COLLECTION METHODS ANALYSIS")
         print("-" * 40)
         
         cursor.execute("""
@@ -83,7 +83,7 @@ def comprehensive_database_analysis():
         print(f"   • No Method: {no_method} devices")
         
         # 4. Device Classification Analysis
-        print(f"\n🏷️ DEVICE CLASSIFICATION ANALYSIS")
+        print("\n🏷️ DEVICE CLASSIFICATION ANALYSIS")
         print("-" * 40)
         
         cursor.execute("""
@@ -106,7 +106,7 @@ def comprehensive_database_analysis():
         print(f"   • Unclassified: {unclassified} devices")
         
         # 5. Data Quality Analysis
-        print(f"\n📈 DATA QUALITY ANALYSIS")
+        print("\n📈 DATA QUALITY ANALYSIS")
         print("-" * 40)
         
         # Check for devices with detailed info
@@ -146,7 +146,7 @@ def comprehensive_database_analysis():
         print(f"💾 Devices with RAM info: {with_ram} ({with_ram/total_assets*100:.1f}%)")
         
         # 6. Network Coverage Analysis
-        print(f"\n🌐 NETWORK COVERAGE ANALYSIS")
+        print("\n🌐 NETWORK COVERAGE ANALYSIS")
         print("-" * 40)
         
         cursor.execute("""
@@ -165,7 +165,7 @@ def comprehensive_database_analysis():
             print(f"   • {network}.x: {count} devices")
         
         # 7. Most Recent Devices
-        print(f"\n🆕 MOST RECENTLY UPDATED DEVICES")
+        print("\n🆕 MOST RECENTLY UPDATED DEVICES")
         print("-" * 40)
         
         cursor.execute("""
@@ -187,7 +187,7 @@ def comprehensive_database_analysis():
             print()
         
         # 8. Database Health Check
-        print(f"\n🏥 DATABASE HEALTH CHECK")
+        print("\n🏥 DATABASE HEALTH CHECK")
         print("-" * 40)
         
         # Check for duplicate IPs
@@ -222,7 +222,7 @@ def comprehensive_database_analysis():
         conn.close()
         
         # 9. Summary and Recommendations
-        print(f"\n📋 SUMMARY AND RECOMMENDATIONS")
+        print("\n📋 SUMMARY AND RECOMMENDATIONS")
         print("=" * 40)
         
         print(f"📊 Database Size: {total_assets} assets")
@@ -235,9 +235,9 @@ def comprehensive_database_analysis():
         elif last_hour > 0:
             print(f"⏰ Some recent activity: {last_hour} devices updated in last hour")
         else:
-            print(f"⚠️ No recent updates detected - scan may not have completed")
+            print("⚠️ No recent updates detected - scan may not have completed")
         
-        print(f"\n💡 Recommendations:")
+        print("\n💡 Recommendations:")
         if total_assets < 400:
             print("   • Run asset scan to discover more devices (expected: 560+ devices)")
         if unclassified > total_assets * 0.2:

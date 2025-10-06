@@ -70,7 +70,7 @@ def verify_database_data(target_ip):
                 'connected_screens': 'Connected Screens'
             }
             
-            print(f"🖥️ WINDOWS DATA FIELDS:")
+            print("🖥️ WINDOWS DATA FIELDS:")
             for field, label in windows_fields.items():
                 value = device_data.get(field)
                 
@@ -97,7 +97,7 @@ def verify_database_data(target_ip):
                 'room': 'Room'
             }
             
-            print(f"\n📝 MANUAL DATA FIELDS:")
+            print("\n📝 MANUAL DATA FIELDS:")
             for field, label in manual_fields.items():
                 value = device_data.get(field)
                 if value and str(value).strip():
@@ -114,14 +114,14 @@ def verify_database_data(target_ip):
                 'collection_method': 'Collection Method'
             }
             
-            print(f"\n🔧 SYSTEM FIELDS:")
+            print("\n🔧 SYSTEM FIELDS:")
             for field, label in system_fields.items():
                 value = device_data.get(field)
                 if value:
                     print(f"ℹ️ {label}: {value}")
             
             # Summary for this record
-            print(f"\n📊 DATA QUALITY SUMMARY:")
+            print("\n📊 DATA QUALITY SUMMARY:")
             print(f"   ✅ English fields: {len(english_fields)}")
             print(f"   ❌ Arabic fields: {len(arabic_fields)}")
             print(f"   ⚪ Empty fields: {len(empty_fields)}")
@@ -129,7 +129,7 @@ def verify_database_data(target_ip):
             if arabic_fields:
                 print(f"   🚨 ARABIC DETECTED IN: {', '.join(arabic_fields)}")
             else:
-                print(f"   ✅ ALL TEXT DATA IS IN ENGLISH")
+                print("   ✅ ALL TEXT DATA IS IN ENGLISH")
             
             # Check for unique identifier to prevent duplicates
             unique_identifiers = []
@@ -150,7 +150,7 @@ def verify_database_data(target_ip):
 def check_collection_capabilities():
     """Check what collection methods are working"""
     
-    print(f"\n🔧 COLLECTION CAPABILITIES CHECK")
+    print("\n🔧 COLLECTION CAPABILITIES CHECK")
     print("=" * 60)
     
     # Check WMI
@@ -195,7 +195,7 @@ def main():
     print("=" * 70)
     print(f"Target: {target_ip}")
     print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Goal: Verify English-only data and completeness")
+    print("Goal: Verify English-only data and completeness")
     print("=" * 70)
     
     # Check collection capabilities
@@ -204,7 +204,7 @@ def main():
     # Verify database data
     verify_database_data(target_ip)
     
-    print(f"\n" + "=" * 70)
+    print("\n" + "=" * 70)
     print("📋 VERIFICATION SUMMARY")
     print("=" * 70)
     print("✅ Data verification completed")

@@ -7,7 +7,6 @@ Clean up test data and enhance database structure
 """
 
 import sqlite3
-from datetime import datetime
 
 def cleanup_and_enhance_database():
     """Clean up test data and enhance database structure"""

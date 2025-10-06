@@ -11,8 +11,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon, QPixmap, QFont, QIntValidator
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton,
-    QTextEdit, QProgressBar, QFileDialog, QHBoxLayout, QGroupBox, QMessageBox, QCheckBox,
-    QScrollArea
+    QTextEdit, QProgressBar, QHBoxLayout, QGroupBox, QMessageBox, QCheckBox
 )
 
 # Import the enhanced threaded collector instead of the original
@@ -26,15 +25,10 @@ except ImportError:
     
 from core.worker import ADWorker  # Keep AD worker as-is
 from config.settings import load_config, save_config, get_secret, set_secret, new_secret_id  # cfg/vault I/O
-from collectors.snmp_collector import _PYSNMP_OK, _SNMP_BACKEND
 from utils.helpers import which  # which("nmap")
-from collectors.ui_add_network_device import open_add_device_dialog, ensure_workbook_tabs
+from collectors.ui_add_network_device import open_add_device_dialog
 
 # NEW: import the manual-entry form helpers
-from collectors.ui_add_network_device import (
-    open_add_device_dialog,
-    ensure_workbook_tabs,
-)
 
 NMAP_BIN = which("nmap")
 
@@ -918,7 +912,7 @@ class MainWindow(QMainWindow):
             self.log_output.append("✅ Collection completed successfully")
         
         # Display final statistics
-        self.log_output.append(f"📊 Final Statistics:")
+        self.log_output.append("📊 Final Statistics:")
         self.log_output.append(f"   • Total Discovered: {final_stats.get('discovered', 0)}")
         self.log_output.append(f"   • Successfully Collected: {final_stats.get('collected', 0)}")
         self.log_output.append(f"   • Failed: {final_stats.get('failed', 0)}")

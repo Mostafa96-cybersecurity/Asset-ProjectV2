@@ -36,7 +36,7 @@ print("🚀 Launching Enhanced Asset Management System...")
 print("=" * 80)
 
 try:
-    import launch_original_desktop
+    pass
     # The GUI will launch and you can test the enhanced collection
 except Exception as e:
     print(f"Error launching GUI: {e}")

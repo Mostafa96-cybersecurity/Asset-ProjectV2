@@ -47,7 +47,7 @@ def enhance_database_schema():
         for col in sorted(existing_columns):
             print(f"   ✅ {col}")
         
-        print(f"\n🔧 Adding Missing Technical Fields:")
+        print("\n🔧 Adding Missing Technical Fields:")
         
         fields_added = 0
         for field_name, field_type, description in missing_fields:
@@ -64,7 +64,7 @@ def enhance_database_schema():
         conn.commit()
         conn.close()
         
-        print(f"\n✅ Schema Enhancement Complete!")
+        print("\n✅ Schema Enhancement Complete!")
         print(f"📊 Added {fields_added} new technical fields")
         
         return True
@@ -76,7 +76,7 @@ def enhance_database_schema():
 def migrate_existing_data():
     """Migrate existing data from notes field to proper technical fields"""
     
-    print(f"\n🔄 MIGRATING EXISTING DATA")
+    print("\n🔄 MIGRATING EXISTING DATA")
     print("="*40)
     
     try:
@@ -162,7 +162,7 @@ def migrate_existing_data():
         conn.commit()
         conn.close()
         
-        print(f"\n✅ Data Migration Complete!")
+        print("\n✅ Data Migration Complete!")
         print(f"📊 Successfully migrated {migrated_count} records")
         
         return True
@@ -174,7 +174,7 @@ def migrate_existing_data():
 def verify_enhanced_data():
     """Verify that technical data is now properly stored"""
     
-    print(f"\n🔍 VERIFYING ENHANCED DATA STORAGE")
+    print("\n🔍 VERIFYING ENHANCED DATA STORAGE")
     print("="*45)
     
     try:
@@ -214,7 +214,7 @@ def verify_enhanced_data():
         
         sample = cursor.fetchone()
         if sample:
-            print(f"\n📋 SAMPLE ENHANCED RECORD:")
+            print("\n📋 SAMPLE ENHANCED RECORD:")
             print("-"*30)
             fields = ['Hostname', 'Working User', 'Domain', 'Infrastructure', 
                      'RAM (GB)', 'Storage', 'Processor', 'GPU', 'Screens']
@@ -244,7 +244,7 @@ def main():
             # Step 3: Verify the enhancement
             verify_enhanced_data()
             
-            print(f"\n🎯 ENHANCEMENT COMPLETE!")
+            print("\n🎯 ENHANCEMENT COMPLETE!")
             print("="*30)
             print("✅ Database schema enhanced with technical fields")
             print("✅ Existing data migrated to proper fields") 

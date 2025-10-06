@@ -8,7 +8,6 @@ Shows details about the most recent collection.
 
 import sqlite3
 import json
-from datetime import datetime
 
 def verify_scan_data():
     """Verify the scan data collection"""
@@ -48,7 +47,7 @@ def verify_scan_data():
     """)
     
     classifications = cursor.fetchall()
-    print(f"\n📋 Device Classifications:")
+    print("\n📋 Device Classifications:")
     for classification, count in classifications:
         print(f"   {classification}: {count}")
     
@@ -61,7 +60,7 @@ def verify_scan_data():
     """)
     
     methods = cursor.fetchall()
-    print(f"\n🔍 Collection Methods (samples):")
+    print("\n🔍 Collection Methods (samples):")
     for method in methods[:3]:
         try:
             method_list = json.loads(method[0])
@@ -79,7 +78,7 @@ def verify_scan_data():
     """)
     
     ports_data = cursor.fetchall()
-    print(f"\n🔌 Open Ports (samples):")
+    print("\n🔌 Open Ports (samples):")
     for ip, hostname, ports in ports_data:
         try:
             port_list = json.loads(ports)
@@ -96,7 +95,7 @@ def verify_scan_data():
     """)
     
     banners = cursor.fetchall()
-    print(f"\n🌐 HTTP Banners (samples):")
+    print("\n🌐 HTTP Banners (samples):")
     for ip, hostname, banner in banners:
         banner_short = banner[:60] + "..." if len(banner) > 60 else banner
         print(f"   {ip}: {banner_short}")
@@ -114,7 +113,7 @@ def verify_scan_data():
     """)
     
     completeness = cursor.fetchone()
-    print(f"\n📈 Data Completeness:")
+    print("\n📈 Data Completeness:")
     print(f"   IP addresses: {completeness[0]}")
     print(f"   Hostnames: {completeness[1]}")
     print(f"   Classifications: {completeness[2]}")
@@ -131,17 +130,17 @@ def verify_scan_data():
     """)
     
     recent = cursor.fetchall()
-    print(f"\n🕐 Most Recent Collections:")
+    print("\n🕐 Most Recent Collections:")
     for ip, hostname, classification, collection_time in recent:
         time_str = collection_time[:19] if collection_time else "Unknown"
         print(f"   {ip} ({hostname}) - {classification} at {time_str}")
     
     conn.close()
     
-    print(f"\n✅ VERIFICATION COMPLETE")
-    print(f"🎯 Data collection was successful!")
+    print("\n✅ VERIFICATION COMPLETE")
+    print("🎯 Data collection was successful!")
     print(f"💾 All {collected_count} scanned devices are properly stored in database")
-    print(f"🔄 Smart update system ensured no data duplication")
+    print("🔄 Smart update system ensured no data duplication")
 
 if __name__ == "__main__":
     verify_scan_data()

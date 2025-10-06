@@ -5,8 +5,6 @@ Addresses the 198.3s save performance issue and removes duplicates
 """
 
 import sqlite3
-import json
-from datetime import datetime
 
 def get_database_structure():
     """Get all columns in the assets table"""

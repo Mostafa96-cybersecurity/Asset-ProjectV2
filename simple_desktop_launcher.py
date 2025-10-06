@@ -10,7 +10,6 @@ import sys
 import os
 import time
 import requests
-import threading
 from pathlib import Path
 
 class SimpleWebServiceLauncher:
@@ -62,9 +61,9 @@ class SimpleWebServiceLauncher:
                     # Check if service is responding
                     response = requests.get(self.service_url, timeout=3)
                     if response.status_code == 200:
-                        print(f"✅ Web service started successfully!")
+                        print("✅ Web service started successfully!")
                         print(f"🌐 URL: {self.service_url}")
-                        print(f"🔐 Login: admin / admin123")
+                        print("🔐 Login: admin / admin123")
                         self.is_running_flag = True
                         return True
                 except requests.exceptions.RequestException:

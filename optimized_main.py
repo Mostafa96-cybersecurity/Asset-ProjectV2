@@ -11,7 +11,6 @@ import logging
 import subprocess
 import time
 from pathlib import Path
-from typing import Optional
 
 # Set encoding environment
 os.environ['PYTHONIOENCODING'] = 'utf-8'
@@ -34,12 +33,11 @@ logging.basicConfig(
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, 
     QHBoxLayout, QLabel, QPushButton, QTextEdit, QTableWidget,
-    QTableWidgetItem, QHeaderView, QGroupBox, QLineEdit, 
-    QProgressBar, QStatusBar, QSplitter, QFrame, QComboBox,
-    QListWidget, QListWidgetItem
+    QTableWidgetItem, QLineEdit, 
+    QStatusBar, QSplitter, QComboBox
 )
-from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal, QProcess
-from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QFont
 
 # Database imports
 from db.connection import connect
@@ -261,7 +259,7 @@ QUALITY DISTRIBUTION:
             for quality, count in quality_dist.items():
                 enhancement_text += f"- {quality}: {count}\n"
             
-            enhancement_text += f"""
+            enhancement_text += """
 DEVICE CLASSIFICATION:
 """
             

@@ -3,10 +3,7 @@
 Comprehensive test for Web Service Management System integration with Desktop APP
 """
 
-import os
 import sys
-import time
-import threading
 import logging
 from pathlib import Path
 
@@ -92,7 +89,6 @@ def test_web_service_gui():
     try:
         # Test PyQt5 availability
         from PyQt5.QtWidgets import QApplication
-        from PyQt5.QtCore import QTimer
         
         # Create QApplication
         app = QApplication.instance()

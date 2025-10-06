@@ -8,7 +8,6 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from enhanced_ultimate_performance_collector import EnhancedUltimatePerformanceCollector
 import sqlite3
 import json
 from collections import Counter
@@ -188,7 +187,7 @@ def enhance_unknown_devices():
     
     # Show summary
     reclassified = [c for c in classifications if c['confidence'] >= 0.3]
-    print(f"=== ENHANCEMENT SUMMARY ===")
+    print("=== ENHANCEMENT SUMMARY ===")
     print(f"Total unknown devices: {len(classifications)}")
     print(f"Successfully reclassified: {len(reclassified)}")
     print(f"Improvement rate: {len(reclassified)/len(classifications)*100:.1f}%")

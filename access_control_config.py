@@ -8,7 +8,6 @@ Tool to configure and test access control policies
 import json
 import os
 from pathlib import Path
-from datetime import datetime
 
 # Import enhanced access control
 try:
@@ -214,7 +213,7 @@ def add_user():
         if access_control_manager.add_user(username, password, role):
             print(f"✅ Added user {username} with role {role}")
         else:
-            print(f"❌ Failed to add user (username may already exist)")
+            print("❌ Failed to add user (username may already exist)")
             
     except Exception as e:
         print(f"❌ Failed to add user: {e}")

@@ -8,7 +8,6 @@ Manually update database records with enhanced data.
 
 import sqlite3
 from datetime import datetime
-import json
 
 def manual_database_update():
     """Manually update database with enhanced data"""

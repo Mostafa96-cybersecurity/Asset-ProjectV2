@@ -3,8 +3,6 @@
 Cleanup unused test and duplicate web service files
 """
 
-import os
-import sys
 from pathlib import Path
 
 def main():
@@ -145,11 +143,11 @@ def main():
             print(f"⚠️ MISSING: {prod_file}")
     
     print("\n" + "=" * 60)
-    print(f"🧹 CLEANUP COMPLETE:")
+    print("🧹 CLEANUP COMPLETE:")
     print(f"   🗑️ Files deleted: {deleted_count}")
     print(f"   📁 Production files kept: {kept_count}")
-    print(f"   🎯 Web services now use port 5556 ONLY")
-    print(f"   🚀 No auto-startup - use launch_original_desktop.py")
+    print("   🎯 Web services now use port 5556 ONLY")
+    print("   🚀 No auto-startup - use launch_original_desktop.py")
     
     print("\n🎯 REMAINING WEB SERVICE FILES:")
     web_service_patterns = ['*dashboard*.py', '*web_service*.py', '*portal*.py']

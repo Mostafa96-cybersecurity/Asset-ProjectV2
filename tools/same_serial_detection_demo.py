@@ -82,15 +82,15 @@ def demonstrate_same_serial_detection():
         print(f"      Scan 2: {val2}")
         
         if val1 == 'N/A' and val2 != 'N/A':
-            print(f"      ✅ ACTION: Add missing info from Scan 2")
+            print("      ✅ ACTION: Add missing info from Scan 2")
         elif val1 != 'N/A' and val2 == 'N/A':
-            print(f"      ✅ ACTION: Keep existing info from Scan 1")
+            print("      ✅ ACTION: Keep existing info from Scan 1")
         elif len(str(val2)) > len(str(val1)):
-            print(f"      ✅ ACTION: Use more detailed info from Scan 2")
+            print("      ✅ ACTION: Use more detailed info from Scan 2")
         elif val1 == val2:
-            print(f"      ✅ ACTION: Values match - confirms accuracy")
+            print("      ✅ ACTION: Values match - confirms accuracy")
         else:
-            print(f"      ✅ ACTION: Combine both values")
+            print("      ✅ ACTION: Combine both values")
     
     print("\\n4️⃣ MERGE RESULT:")
     print("=" * 20)

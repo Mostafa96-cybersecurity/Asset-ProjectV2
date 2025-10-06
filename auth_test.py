@@ -5,8 +5,6 @@ Run this after setting up credentials
 """
 
 import subprocess
-import json
-import sys
 
 def test_wmi_auth():
     """Test WMI authentication"""

@@ -15,7 +15,6 @@ This enhanced web service provides:
 
 import os
 import sys
-import io
 
 # Set console encoding to handle Unicode properly on Windows
 if sys.platform == "win32":
@@ -30,14 +29,7 @@ from flask import Flask, render_template, jsonify, request
 import sqlite3
 import json
 from datetime import datetime
-import os
-import threading
 import time
-import socket
-import subprocess
-import nmap
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
 
 app = Flask(__name__)
 
@@ -1195,7 +1187,7 @@ def api_stats():
             else:
                 raise Exception("Enhanced table empty")
                 
-        except Exception as e:
+        except Exception:
             # Fall back to basic assets table
             cursor.execute("SELECT COUNT(*) FROM assets")
             basic_count = cursor.fetchone()[0]
@@ -1328,7 +1320,7 @@ def api_assets():
                 total = total_count
             else:
                 raise Exception("Enhanced table empty for this filter")
-        except Exception as e:
+        except Exception:
             # Fall back to basic table
             basic_where = where_clause.replace('assets_enhanced', 'assets').replace('ping_response_ms', 'response_time_ms').replace('assigned_department', 'department')
             cursor.execute(f"SELECT COUNT(*) FROM assets {basic_where}", params)
@@ -1643,12 +1635,12 @@ def run_intelligent_service():
     
     print("[STARTING] Starting Intelligent Asset Management System...")
     print(f"[WEB] Dashboard: http://{host}:{port}")
-    print(f"[STATS] Real-time updates: ENABLED")
-    print(f"[AUTOMATION] Intelligent automation: ENABLED")
+    print("[STATS] Real-time updates: ENABLED")
+    print("[AUTOMATION] Intelligent automation: ENABLED")
     nmap_status = 'ENABLED' if asset_manager and asset_manager.nmap_scanner else 'DISABLED'
     print(f"[SEARCH] NMAP classification: {nmap_status}")
-    print(f"🏢 Department management: ENABLED")
-    print(f"[STATS] Advanced filtering: ENABLED")
+    print("🏢 Department management: ENABLED")
+    print("[STATS] Advanced filtering: ENABLED")
     
     # Write PID file
     try:

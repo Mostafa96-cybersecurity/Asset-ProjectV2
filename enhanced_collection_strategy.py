@@ -7,18 +7,15 @@ Enhanced Collection Strategy with Proper Device Types & Maximum Data Collection
 import time
 import threading
 import ipaddress
-import subprocess
-import socket
 from queue import Queue, Empty
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 from datetime import datetime
 import logging
 import nmap
 import requests
-from requests.auth import HTTPBasicAuth
 
-from PyQt6.QtCore import QThread, pyqtSignal, QObject
+from PyQt6.QtCore import QThread, pyqtSignal
 
 # Optional imports for enhanced collection
 try:
@@ -218,7 +215,7 @@ class EnhancedCollectionStrategy(QThread):
             self.os_detected_count = len([d for d in detected_devices if d.os_family != 'Unknown'])
             
             # Debug logging
-            self.log_message.emit(f"📊 Detection Results:")
+            self.log_message.emit("📊 Detection Results:")
             for device in detected_devices:
                 self.log_message.emit(f"   🔍 {device.ip}: {device.device_type} ({device.os_family}) - {len(device.open_ports)} ports")
             
@@ -302,10 +299,6 @@ class EnhancedCollectionStrategy(QThread):
         This ensures devices are truly alive and responding properly
         """
         try:
-            import platform
-            import subprocess
-            import socket
-            import time
             
             # Method 1: System ICMP Ping (Most Reliable)
             icmp_success = self._icmp_ping_verification(ip)
@@ -543,7 +536,7 @@ class EnhancedCollectionStrategy(QThread):
             thread.join(timeout=5)
         
         # Log summary
-        self.log_message.emit(f"🏁 PING DISCOVERY COMPLETE:")
+        self.log_message.emit("🏁 PING DISCOVERY COMPLETE:")
         self.log_message.emit(f"   ✅ Alive devices: {len(alive_devices)}")
         self.log_message.emit(f"   ❌ Unresponsive: {len(failed_ips)}")
         self.log_message.emit(f"   📊 Success rate: {(len(alive_devices)/len(all_ips)*100):.1f}%")
@@ -1303,7 +1296,7 @@ class EnhancedCollectionStrategy(QThread):
                         data=data,
                         data_completeness=completeness
                     )
-            except Exception as e:
+            except Exception:
                 continue
         
         # Fallback to SNMP
@@ -1352,7 +1345,7 @@ class EnhancedCollectionStrategy(QThread):
                         data=data,
                         data_completeness=completeness
                     )
-            except Exception as e:
+            except Exception:
                 continue
         
         return CollectionResult(
@@ -1386,7 +1379,6 @@ class EnhancedCollectionStrategy(QThread):
             try:
                 import socket
                 import os
-                import subprocess
                 
                 # Method 1: DNS reverse lookup for the TARGET IP
                 try:
@@ -1495,7 +1487,7 @@ class EnhancedCollectionStrategy(QThread):
                         data=data,
                         data_completeness=10.0  # Very basic data
                     )
-            except Exception as e:
+            except Exception:
                 pass
         
         return self._basic_fallback_collection(device)
@@ -2810,12 +2802,12 @@ class EnhancedCollectionStrategy(QThread):
                     # SUCCESS - Return comprehensive data
                     return data
                     
-                except Exception as e:
+                except Exception:
                     continue
             
             return None
             
-        except Exception as e:
+        except Exception:
             return None
 
     def _comprehensive_ssh_collection(self, ip: str, username: str, password: str) -> Optional[Dict]:
@@ -2905,7 +2897,7 @@ class EnhancedCollectionStrategy(QThread):
             ssh.close()
             return data
             
-        except Exception as e:
+        except Exception:
             return None
 
     def _comprehensive_snmp_collection(self, ip: str, community: str) -> Optional[Dict]:
@@ -2971,7 +2963,7 @@ class EnhancedCollectionStrategy(QThread):
             
             return data if len(data) > 4 else None  # Return only if we got actual data
             
-        except Exception as e:
+        except Exception:
             return None
 
     def _http_service_detection(self, ip: str) -> Optional[Dict]:
@@ -3020,7 +3012,7 @@ class EnhancedCollectionStrategy(QThread):
             
             return data if 'Device Type' in data or any('Status Code' in k for k in data.keys()) else None
             
-        except Exception as e:
+        except Exception:
             return None
 
     def _calculate_data_completeness(self, data: Dict, collection_type: str) -> float:
@@ -3093,7 +3085,7 @@ class EnhancedCollectionStrategy(QThread):
             
             else:
                 # Fallback to legacy save method if validator not available
-                self.log_message.emit(f"   ⚠️ Smart duplicate validator not available, using legacy save")
+                self.log_message.emit("   ⚠️ Smart duplicate validator not available, using legacy save")
                 return self._legacy_save_to_database(data)
                 
         except Exception as e:

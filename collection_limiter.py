@@ -7,7 +7,6 @@ Prevents massive network scans from hanging the UI
 from PyQt6.QtCore import QObject, pyqtSignal, QTimer
 from PyQt6.QtWidgets import QApplication, QMessageBox
 import ipaddress
-import threading
 
 class CollectionLimiter(QObject):
     """

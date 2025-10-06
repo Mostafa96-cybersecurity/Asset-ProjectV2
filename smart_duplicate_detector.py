@@ -5,10 +5,8 @@ Handles various duplicate scenarios and smart conflict resolution
 """
 
 import sqlite3
-import hashlib
-import json
 from datetime import datetime
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 
@@ -670,8 +668,8 @@ if __name__ == "__main__":
     else:
         print("No duplicates detected - safe to add new device")
     
-    print(f"\n💡 DUPLICATE PREVENTION STRATEGY IMPLEMENTED!")
-    print(f"   • Smart fingerprinting based on multiple identifiers")
-    print(f"   • Confidence-based resolution actions")
-    print(f"   • User transfer and hardware upgrade detection")
-    print(f"   • Automatic conflict resolution with audit trail")
+    print("\n💡 DUPLICATE PREVENTION STRATEGY IMPLEMENTED!")
+    print("   • Smart fingerprinting based on multiple identifiers")
+    print("   • Confidence-based resolution actions")
+    print("   • User transfer and hardware upgrade detection")
+    print("   • Automatic conflict resolution with audit trail")

@@ -7,7 +7,6 @@ Launches the lightweight, fast desktop application
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to Python path
@@ -22,7 +21,6 @@ def main():
     try:
         # Quick checks
         print("Checking PyQt6...")
-        from PyQt6.QtWidgets import QApplication
         print("✓ PyQt6 available")
         
         print("Checking database...")

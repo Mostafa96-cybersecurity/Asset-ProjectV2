@@ -5,7 +5,6 @@ Shows all populated columns and their values from recent collections
 """
 
 import sqlite3
-from datetime import datetime
 
 def show_collected_columns():
     print('COLLECTED DATABASE COLUMNS ANALYSIS')
@@ -41,7 +40,7 @@ def show_collected_columns():
             else:
                 empty_columns.append(column_name)
         
-        print(f'\nLATEST RECORD ANALYSIS:')
+        print('\nLATEST RECORD ANALYSIS:')
         print(f'Record ID: {latest_record[0]}')
         print(f'IP Address: {latest_record[all_columns.index("ip_address")] if "ip_address" in all_columns else "N/A"}')
         print(f'Hostname: {latest_record[all_columns.index("hostname")] if "hostname" in all_columns else "N/A"}')
@@ -92,15 +91,15 @@ def show_collected_columns():
         other_columns = [(col, val) for col, val in populated_columns if col not in categorized_columns]
         
         if other_columns:
-            print(f'\n📁 OTHER POPULATED COLUMNS:')
+            print('\n📁 OTHER POPULATED COLUMNS:')
             for col_name, value in other_columns:
                 display_value = str(value)
                 if len(display_value) > 100:
                     display_value = display_value[:100] + '...'
                 print(f'   ✓ {col_name}: {display_value}')
         
-        print(f'\n' + '=' * 80)
-        print(f'COLLECTION SUMMARY:')
+        print('\n' + '=' * 80)
+        print('COLLECTION SUMMARY:')
         print(f'✓ Populated Columns: {len(populated_columns)}')
         print(f'✗ Empty Columns: {len(empty_columns)}')
         print(f'📊 Collection Rate: {(len(populated_columns)/len(all_columns)*100):.1f}%')
@@ -112,7 +111,7 @@ def show_collected_columns():
                 important_empty.append(col)
         
         if important_empty:
-            print(f'\n⚠️  IMPORTANT EMPTY COLUMNS (Could be enhanced):')
+            print('\n⚠️  IMPORTANT EMPTY COLUMNS (Could be enhanced):')
             for col in important_empty[:10]:  # Show first 10
                 print(f'   ✗ {col}')
             if len(important_empty) > 10:
@@ -122,7 +121,7 @@ def show_collected_columns():
         cursor.execute('SELECT * FROM assets ORDER BY created_at DESC LIMIT 5')
         recent_records = cursor.fetchall()
         
-        print(f'\nRECENT COLLECTION CONSISTENCY (Last 5 records):')
+        print('\nRECENT COLLECTION CONSISTENCY (Last 5 records):')
         for i, record in enumerate(recent_records):
             populated_count = sum(1 for value in record if value is not None and str(value).strip() != '')
             ip = record[all_columns.index("ip_address")] if "ip_address" in all_columns else "Unknown"

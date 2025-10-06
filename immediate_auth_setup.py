@@ -5,7 +5,6 @@ Get 90%+ data collection in next 2 hours!
 """
 
 import json
-import os
 from pathlib import Path
 
 def create_authentication_setup():
@@ -55,8 +54,8 @@ def create_authentication_setup():
         }
     }
     
-    print(f"      • Edit 'collector_credentials.json' with your domain credentials")
-    print(f"      • Template created: wmi_auth_template.json")
+    print("      • Edit 'collector_credentials.json' with your domain credentials")
+    print("      • Template created: wmi_auth_template.json")
     print()
     
     print("2️⃣ SNMP COMMUNITY STRINGS (MEDIUM PRIORITY)")

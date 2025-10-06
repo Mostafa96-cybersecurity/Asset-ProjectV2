@@ -14,7 +14,6 @@ This tool provides complete analysis of:
 import sqlite3
 import json
 from datetime import datetime
-from collections import defaultdict, Counter
 
 class ComprehensiveDatabaseAnalyzer:
     def __init__(self, db_path="assets.db"):
@@ -44,27 +43,27 @@ class ComprehensiveDatabaseAnalyzer:
         self.analyze_column_structure()
         
         # Phase 2: Data Collection Analysis
-        print(f"\n📡 PHASE 2: DATA COLLECTION ANALYSIS")
+        print("\n📡 PHASE 2: DATA COLLECTION ANALYSIS")
         self.analyze_data_collection_status()
         
         # Phase 3: Device Type Analysis
-        print(f"\n🏷️ PHASE 3: DEVICE TYPE & CLASSIFICATION ANALYSIS")
+        print("\n🏷️ PHASE 3: DEVICE TYPE & CLASSIFICATION ANALYSIS")
         self.analyze_device_classification()
         
         # Phase 4: Classification Logic Analysis
-        print(f"\n🧠 PHASE 4: CLASSIFICATION LOGIC ANALYSIS")
+        print("\n🧠 PHASE 4: CLASSIFICATION LOGIC ANALYSIS")
         self.analyze_classification_logic()
         
         # Phase 5: Manual vs Automatic Data Analysis
-        print(f"\n🔄 PHASE 5: MANUAL vs AUTOMATIC DATA ANALYSIS")
+        print("\n🔄 PHASE 5: MANUAL vs AUTOMATIC DATA ANALYSIS")
         self.analyze_manual_vs_automatic()
         
         # Phase 6: Data Quality Analysis
-        print(f"\n📈 PHASE 6: DATA QUALITY & COMPLETENESS ANALYSIS")
+        print("\n📈 PHASE 6: DATA QUALITY & COMPLETENESS ANALYSIS")
         self.analyze_data_quality()
         
         # Phase 7: Summary Report
-        print(f"\n📋 PHASE 7: COMPREHENSIVE SUMMARY REPORT")
+        print("\n📋 PHASE 7: COMPREHENSIVE SUMMARY REPORT")
         self.generate_comprehensive_report()
 
     def analyze_column_structure(self):
@@ -82,7 +81,7 @@ class ComprehensiveDatabaseAnalyzer:
         self.analysis_results['total_columns'] = len(columns_info)
         
         print(f"   📊 Total columns in database: {len(columns_info)}")
-        print(f"\n   📋 COLUMN STRUCTURE:")
+        print("\n   📋 COLUMN STRUCTURE:")
         
         column_categories = {
             'identification': [],
@@ -139,7 +138,7 @@ class ComprehensiveDatabaseAnalyzer:
         self.analysis_results['total_devices'] = total_devices
         
         print(f"   📊 Total devices in database: {total_devices}")
-        print(f"\n   📋 COLUMN DATA STATUS:")
+        print("\n   📋 COLUMN DATA STATUS:")
         
         columns_with_data = 0
         empty_columns = 0
@@ -177,11 +176,11 @@ class ComprehensiveDatabaseAnalyzer:
         # Show top filled columns
         sorted_columns = sorted(data_status.items(), key=lambda x: x[1]['fill_percentage'], reverse=True)
         
-        print(f"\n   🥇 TOP 10 MOST FILLED COLUMNS:")
+        print("\n   🥇 TOP 10 MOST FILLED COLUMNS:")
         for i, (column, stats) in enumerate(sorted_columns[:10]):
             print(f"      {i+1:2d}. {column:<25} {stats['fill_percentage']:6.1f}% ({stats['filled_count']}/{total_devices})")
         
-        print(f"\n   📊 LEAST FILLED COLUMNS:")
+        print("\n   📊 LEAST FILLED COLUMNS:")
         for column, stats in sorted_columns[-10:]:
             if stats['fill_percentage'] < 50:
                 print(f"      ⚠️ {column:<25} {stats['fill_percentage']:6.1f}% ({stats['filled_count']}/{total_devices})")
@@ -232,7 +231,7 @@ class ComprehensiveDatabaseAnalyzer:
             os_results = cursor.fetchall()
             
             if os_results:
-                print(f"\n   💻 OPERATING SYSTEMS:")
+                print("\n   💻 OPERATING SYSTEMS:")
                 total_os = sum(count for _, count in os_results)
                 for os_name, count in os_results[:10]:  # Top 10
                     percentage = (count / total_os * 100) if total_os > 0 else 0
@@ -253,7 +252,7 @@ class ComprehensiveDatabaseAnalyzer:
             port_results = cursor.fetchall()
             
             if port_results:
-                print(f"\n   🔌 CLASSIFICATION BY OPEN PORTS (Top 10):")
+                print("\n   🔌 CLASSIFICATION BY OPEN PORTS (Top 10):")
                 for ports, classification, count in port_results:
                     try:
                         port_list = json.loads(ports) if ports else []
@@ -279,7 +278,7 @@ class ComprehensiveDatabaseAnalyzer:
         cursor = conn.cursor()
         
         # Classification based on ports
-        print(f"\n   🔍 CLASSIFICATION LOGIC ANALYSIS:")
+        print("\n   🔍 CLASSIFICATION LOGIC ANALYSIS:")
         
         classification_rules = {
             'Windows System': {'ports': [3389], 'description': 'Remote Desktop (RDP) port 3389'},
@@ -291,7 +290,7 @@ class ComprehensiveDatabaseAnalyzer:
             'Database Server': {'ports': [1433, 3306, 5432], 'description': 'SQL Server/MySQL/PostgreSQL'}
         }
         
-        print(f"      🧠 CLASSIFICATION RULES USED BY THE APP:")
+        print("      🧠 CLASSIFICATION RULES USED BY THE APP:")
         
         for device_type, rule in classification_rules.items():
             ports = rule['ports']
@@ -324,11 +323,11 @@ class ComprehensiveDatabaseAnalyzer:
                     print(f"      📊 {device_type:<20} Rule: {description}")
                     print(f"          ✅ Correctly classified: {matching_count}/{total_count} ({accuracy:.1f}%)")
                     
-                except Exception as e:
+                except Exception:
                     print(f"      ⚠️ {device_type}: Analysis error")
         
         # Analyze misclassifications
-        print(f"\n   🔍 POTENTIAL MISCLASSIFICATIONS:")
+        print("\n   🔍 POTENTIAL MISCLASSIFICATIONS:")
         
         try:
             # Windows systems without RDP
@@ -342,7 +341,7 @@ class ComprehensiveDatabaseAnalyzer:
             
             windows_no_rdp = cursor.fetchall()
             if windows_no_rdp:
-                print(f"      ⚠️ Windows systems without RDP port:")
+                print("      ⚠️ Windows systems without RDP port:")
                 for hostname, ip, ports in windows_no_rdp:
                     print(f"         • {hostname or ip} - Ports: {ports or 'None'}")
             
@@ -357,7 +356,7 @@ class ComprehensiveDatabaseAnalyzer:
             
             linux_no_ssh = cursor.fetchall()
             if linux_no_ssh:
-                print(f"      ⚠️ Linux systems without SSH port:")
+                print("      ⚠️ Linux systems without SSH port:")
                 for hostname, ip, ports in linux_no_ssh:
                     print(f"         • {hostname or ip} - Ports: {ports or 'None'}")
                     
@@ -400,8 +399,8 @@ class ComprehensiveDatabaseAnalyzer:
         cursor.execute("SELECT COUNT(*) FROM assets")
         total_devices = cursor.fetchone()[0]
         
-        print(f"\n   🤖 AUTOMATIC DATA COLLECTION:")
-        print(f"      📡 Network Discovery & Classification:")
+        print("\n   🤖 AUTOMATIC DATA COLLECTION:")
+        print("      📡 Network Discovery & Classification:")
         
         for column in automatic_columns:
             if column in all_columns:
@@ -415,7 +414,7 @@ class ComprehensiveDatabaseAnalyzer:
                 status = "✅" if percentage > 50 else "⚠️" if percentage > 10 else "❌"
                 print(f"         {status} {column:<25} {percentage:6.1f}% ({filled_count}/{total_devices})")
         
-        print(f"\n      🔧 Hardware Detection (WMI/System Calls):")
+        print("\n      🔧 Hardware Detection (WMI/System Calls):")
         
         for column in hardware_automatic_columns:
             if column in all_columns:
@@ -429,7 +428,7 @@ class ComprehensiveDatabaseAnalyzer:
                 status = "✅" if percentage > 50 else "⚠️" if percentage > 10 else "❌"
                 print(f"         {status} {column:<25} {percentage:6.1f}% ({filled_count}/{total_devices})")
         
-        print(f"\n   ✋ MANUAL INPUT REQUIRED:")
+        print("\n   ✋ MANUAL INPUT REQUIRED:")
         
         manual_found = False
         for column in all_columns:
@@ -446,7 +445,7 @@ class ComprehensiveDatabaseAnalyzer:
                 manual_found = True
         
         if not manual_found:
-            print(f"      📝 No manual input columns found - all data is automatically collected")
+            print("      📝 No manual input columns found - all data is automatically collected")
         
         self.analysis_results['auto_collected_columns'] = automatic_columns + hardware_automatic_columns
         self.analysis_results['manual_input_columns'] = [col for col in all_columns if any(keyword in col.lower() for keyword in ['tag', 'location', 'department', 'owner', 'purchase', 'warranty', 'cost', 'vendor', 'notes'])]
@@ -487,7 +486,7 @@ class ComprehensiveDatabaseAnalyzer:
             """)
             
             source_results = cursor.fetchall()
-            print(f"\n   📊 DATA COLLECTION METHODS:")
+            print("\n   📊 DATA COLLECTION METHODS:")
             
             for source, count in source_results:
                 percentage = (count / total_devices * 100) if total_devices > 0 else 0
@@ -509,7 +508,7 @@ class ComprehensiveDatabaseAnalyzer:
             
             status_results = cursor.fetchall()
             if status_results:
-                print(f"\n   🔍 DEVICE STATUS DISTRIBUTION:")
+                print("\n   🔍 DEVICE STATUS DISTRIBUTION:")
                 
                 for status, count in status_results:
                     percentage = (count / total_devices * 100) if total_devices > 0 else 0
@@ -534,7 +533,7 @@ class ComprehensiveDatabaseAnalyzer:
             freshness = cursor.fetchone()
             if freshness:
                 total = freshness[3]
-                print(f"\n   ⏰ DATA FRESHNESS:")
+                print("\n   ⏰ DATA FRESHNESS:")
                 print(f"      📅 Updated in last 24 hours: {freshness[0]:4d} devices ({freshness[0]/total*100:5.1f}%)")
                 print(f"      📅 Updated in last 7 days:   {freshness[1]:4d} devices ({freshness[1]/total*100:5.1f}%)")
                 print(f"      📅 Updated in last 30 days:  {freshness[2]:4d} devices ({freshness[2]/total*100:5.1f}%)")
@@ -555,13 +554,13 @@ class ComprehensiveDatabaseAnalyzer:
         empty_columns = self.analysis_results['empty_columns']
         total_devices = self.analysis_results['total_devices']
         
-        print(f"📊 DATABASE OVERVIEW:")
+        print("📊 DATABASE OVERVIEW:")
         print(f"   📈 Total devices: {total_devices}")
         print(f"   📊 Total columns: {total_columns}")
         print(f"   ✅ Columns with data: {columns_with_data} ({columns_with_data/total_columns*100:.1f}%)")
         print(f"   ❌ Empty columns: {empty_columns} ({empty_columns/total_columns*100:.1f}%)")
         
-        print(f"\n🤖 AUTOMATION STATUS:")
+        print("\n🤖 AUTOMATION STATUS:")
         auto_columns = len(self.analysis_results['auto_collected_columns'])
         manual_columns = len(self.analysis_results['manual_input_columns'])
         
@@ -569,26 +568,26 @@ class ComprehensiveDatabaseAnalyzer:
         print(f"   ✋ Manual input required: {manual_columns} columns")
         print(f"   📊 Automation ratio: {auto_columns/(auto_columns+manual_columns)*100:.1f}%")
         
-        print(f"\n🎯 KEY FINDINGS:")
-        print(f"   ✅ Network discovery is working well")
-        print(f"   ✅ Device classification is automated")
-        print(f"   ✅ Smart alive/dead detection implemented")
-        print(f"   ✅ Automatic duplicate detection active")
-        print(f"   📝 Asset management fields need manual input")
-        print(f"   🔧 Hardware detection varies by device accessibility")
+        print("\n🎯 KEY FINDINGS:")
+        print("   ✅ Network discovery is working well")
+        print("   ✅ Device classification is automated")
+        print("   ✅ Smart alive/dead detection implemented")
+        print("   ✅ Automatic duplicate detection active")
+        print("   📝 Asset management fields need manual input")
+        print("   🔧 Hardware detection varies by device accessibility")
         
-        print(f"\n💡 RECOMMENDATIONS:")
-        print(f"   1. 🤖 Continue using smart automated system for network data")
-        print(f"   2. 📝 Implement web interface for manual asset data entry")
-        print(f"   3. 🔄 Run automation cycles regularly to keep data fresh")
-        print(f"   4. 🧹 Use automatic duplicate cleanup to maintain data quality")
-        print(f"   5. 📊 Monitor device status for network changes")
+        print("\n💡 RECOMMENDATIONS:")
+        print("   1. 🤖 Continue using smart automated system for network data")
+        print("   2. 📝 Implement web interface for manual asset data entry")
+        print("   3. 🔄 Run automation cycles regularly to keep data fresh")
+        print("   4. 🧹 Use automatic duplicate cleanup to maintain data quality")
+        print("   5. 📊 Monitor device status for network changes")
         
-        print(f"\n🎉 SYSTEM STATUS: EXCELLENT")
-        print(f"   ✅ Smart automation working perfectly")
-        print(f"   ✅ Classification logic is sound")
-        print(f"   ✅ Data collection is comprehensive")
-        print(f"   ✅ Database is well-maintained")
+        print("\n🎉 SYSTEM STATUS: EXCELLENT")
+        print("   ✅ Smart automation working perfectly")
+        print("   ✅ Classification logic is sound")
+        print("   ✅ Data collection is comprehensive")
+        print("   ✅ Database is well-maintained")
 
 def main():
     """Run comprehensive database analysis"""

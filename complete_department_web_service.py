@@ -10,13 +10,11 @@ Features:
 - INTEGRATED WITH ENHANCED ACCESS CONTROL SYSTEM
 """
 
-from flask import Flask, render_template_string, request, jsonify, redirect, url_for
+from flask import Flask, render_template_string, request, jsonify
 import sqlite3
 import logging
 import ipaddress
 from datetime import datetime
-from typing import Dict, List, Optional
-import json
 import functools
 
 # Import enhanced access control system

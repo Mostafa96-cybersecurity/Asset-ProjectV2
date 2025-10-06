@@ -20,7 +20,7 @@ def analyze_collection_status():
     cursor = conn.cursor()
     
     # 1. TOTAL DEVICE COUNTS
-    print(f"\n📊 TOTAL DEVICE COUNTS")
+    print("\n📊 TOTAL DEVICE COUNTS")
     print("=" * 50)
     
     cursor.execute("SELECT COUNT(*) FROM assets")
@@ -40,7 +40,7 @@ def analyze_collection_status():
     print(f"📈 Collection Coverage: {collection_percentage:.1f}%")
     
     # 2. DEVICES NEVER COLLECTED
-    print(f"\n❌ DEVICES THAT HAVE NEVER BEEN COLLECTED")
+    print("\n❌ DEVICES THAT HAVE NEVER BEEN COLLECTED")
     print("=" * 50)
     
     cursor.execute("""
@@ -72,7 +72,7 @@ def analyze_collection_status():
         print("🎉 All devices in database have been collected!")
     
     # 3. RECENTLY COLLECTED DEVICES
-    print(f"\n✅ RECENTLY COLLECTED DEVICES")
+    print("\n✅ RECENTLY COLLECTED DEVICES")
     print("=" * 50)
     
     cursor.execute("""
@@ -85,7 +85,7 @@ def analyze_collection_status():
     
     recent_collected = cursor.fetchall()
     
-    print(f"Last 10 devices collected by network scan:")
+    print("Last 10 devices collected by network scan:")
     print(f"\n{'IP Address':<15} | {'Hostname':<35} | {'Type':<25} | {'Collection Time'}")
     print("-" * 100)
     
@@ -97,7 +97,7 @@ def analyze_collection_status():
         print(f"{ip:<15} | {hostname_display:<35} | {type_display:<25} | {time_display}")
     
     # 4. DATA SOURCES ANALYSIS
-    print(f"\n📊 DATA SOURCES ANALYSIS")
+    print("\n📊 DATA SOURCES ANALYSIS")
     print("=" * 50)
     
     cursor.execute("""
@@ -121,7 +121,7 @@ def analyze_collection_status():
         print(f"   📂 {source}: {count} devices ({percentage:.1f}%)")
     
     # 5. DEVICES BY IP RANGE
-    print(f"\n🌐 DEVICES BY IP RANGE")
+    print("\n🌐 DEVICES BY IP RANGE")
     print("=" * 50)
     
     cursor.execute("""
@@ -148,16 +148,16 @@ def analyze_collection_status():
         print(f"   🌐 {ip_range}: {collected}/{total} collected ({collection_rate:.1f}%)")
     
     # 6. COLLECTION RECOMMENDATIONS
-    print(f"\n💡 RECOMMENDATIONS")
+    print("\n💡 RECOMMENDATIONS")
     print("=" * 50)
     
     if never_collected > 0:
         print(f"⚠️  You have {never_collected} devices that have never been scanned")
-        print(f"📋 These devices might be:")
-        print(f"   • Offline/unreachable devices")
-        print(f"   • Devices in different network segments")
-        print(f"   • Manually entered devices")
-        print(f"   • Devices from imports/other sources")
+        print("📋 These devices might be:")
+        print("   • Offline/unreachable devices")
+        print("   • Devices in different network segments")
+        print("   • Manually entered devices")
+        print("   • Devices from imports/other sources")
         
         # Check if there are devices with IPs in different ranges
         cursor.execute("""
@@ -169,28 +169,28 @@ def analyze_collection_status():
         other_networks = cursor.fetchone()[0]
         
         if other_networks > 0:
-            print(f"\n🔍 SUGGESTED ACTIONS:")
-            print(f"   1. Expand network scan to other IP ranges")
+            print("\n🔍 SUGGESTED ACTIONS:")
+            print("   1. Expand network scan to other IP ranges")
             print(f"   2. Check if {other_networks} devices are in different subnets")
-            print(f"   3. Run targeted scans on specific IP ranges")
-            print(f"   4. Verify network connectivity to missing devices")
+            print("   3. Run targeted scans on specific IP ranges")
+            print("   4. Verify network connectivity to missing devices")
     else:
-        print(f"🎉 Excellent! All devices have been collected")
-        print(f"✅ 100% collection coverage achieved")
+        print("🎉 Excellent! All devices have been collected")
+        print("✅ 100% collection coverage achieved")
     
     conn.close()
     
     # 7. SUMMARY
-    print(f"\n🎯 SUMMARY")
+    print("\n🎯 SUMMARY")
     print("=" * 50)
     print(f"📊 Total Devices: {total_devices}")
     print(f"✅ Collected: {collected_devices} ({collection_percentage:.1f}%)")
     print(f"❌ Never Collected: {never_collected}")
     
     if never_collected > 0:
-        print(f"⚠️  Collection Status: PARTIAL - Some devices need scanning")
+        print("⚠️  Collection Status: PARTIAL - Some devices need scanning")
     else:
-        print(f"🏆 Collection Status: COMPLETE - All devices scanned")
+        print("🏆 Collection Status: COMPLETE - All devices scanned")
 
 if __name__ == "__main__":
     analyze_collection_status()

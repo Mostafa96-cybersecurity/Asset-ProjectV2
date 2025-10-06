@@ -38,23 +38,13 @@ ACCURACY FEATURES:
 - Time-based consistency checks
 """
 
-import os
 import sys
 import time
-import socket
-import subprocess
-import platform
-import threading
-import asyncio
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Tuple, Optional, Any, Set
+from typing import List
 import ipaddress
-import re
-import json
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-import statistics
 
 # Add current directory to path
 current_dir = Path(__file__).parent
@@ -433,7 +423,7 @@ class GuaranteedAccuracyValidator:
         print(f"      FP Risk: {guarantee.false_positive_risk:.3f} | FN Risk: {guarantee.false_negative_risk:.3f}")
         
         if guarantee.requires_manual_review:
-            print(f"      🔍 MANUAL REVIEW REQUIRED")
+            print("      🔍 MANUAL REVIEW REQUIRED")
 
     def validate_network_guaranteed(self, targets: List[str], max_workers: int = 20) -> List[ValidationGuarantee]:
         """Validate network with 100% accuracy guarantee"""
@@ -501,7 +491,7 @@ class GuaranteedAccuracyValidator:
         medium_conf = [r for r in results if r.accuracy_level == AccuracyLevel.MEDIUM_CONFIDENCE]
         review_needed = [r for r in results if r.accuracy_level == AccuracyLevel.REQUIRES_REVIEW]
         
-        print(f"📊 VALIDATION SUMMARY:")
+        print("📊 VALIDATION SUMMARY:")
         print(f"   Total Devices: {len(results)}")
         print(f"   🔒 Guaranteed 100%: {len(guaranteed)} ({len(guaranteed)/len(results)*100:.1f}%)")
         print(f"   ✅ High Confidence: {len(high_conf)} ({len(high_conf)/len(results)*100:.1f}%)")
@@ -509,7 +499,7 @@ class GuaranteedAccuracyValidator:
         print(f"   ❓ Requires Review: {len(review_needed)} ({len(review_needed)/len(results)*100:.1f}%)")
         print()
         
-        print(f"🎯 ACCURACY METRICS:")
+        print("🎯 ACCURACY METRICS:")
         print(f"   ⏱️  Total Time: {total_time:.2f} seconds")
         print(f"   🚀 Validation Rate: {len(results)/total_time:.1f} devices/second")
         print(f"   🛡️  False Positives Prevented: {self.accuracy_stats['false_positives_prevented']}")

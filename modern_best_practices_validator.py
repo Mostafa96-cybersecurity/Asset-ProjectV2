@@ -32,14 +32,11 @@ import time
 import platform
 import struct
 import ipaddress
-import logging
 from dataclasses import dataclass, field
-from typing import List, Dict, Set, Optional, Tuple, AsyncGenerator
+from typing import List, Dict, Optional, Tuple
 from enum import Enum
 from collections import defaultdict
-from contextlib import asynccontextmanager
 import weakref
-import sys
 import os
 
 class ValidationMethod(Enum):
@@ -275,7 +272,7 @@ class ModernBestPracticesValidator:
         except (PermissionError, OSError):
             # Fall back to regular socket methods
             pass
-        except Exception as e:
+        except Exception:
             pass
         
         # Fall back to TCP socket check
@@ -465,7 +462,7 @@ class ModernBestPracticesValidator:
                     self.stats['total_validations'] += 1
                     return result
                     
-            except Exception as e:
+            except Exception:
                 continue  # Try next method
         
         # All methods failed
@@ -612,7 +609,7 @@ class ModernBestPracticesValidator:
         
         cached_results = [r for r in results if r.cached]
         
-        log_func(f"📊 VALIDATION RESULTS:")
+        log_func("📊 VALIDATION RESULTS:")
         log_func(f"   Total Devices: {len(results)}")
         log_func(f"   ✅ Definitely Alive: {len(definitely_alive)} ({len(definitely_alive)/len(results)*100:.1f}%)")
         log_func(f"   🟢 Probably Alive: {len(probably_alive)} ({len(probably_alive)/len(results)*100:.1f}%)")
@@ -621,14 +618,14 @@ class ModernBestPracticesValidator:
         log_func(f"   ❌ Definitely Dead: {len(definitely_dead)} ({len(definitely_dead)/len(results)*100:.1f}%)")
         log_func("")
         
-        log_func(f"🚀 MODERN PERFORMANCE METRICS:")
+        log_func("🚀 MODERN PERFORMANCE METRICS:")
         log_func(f"   ⏱️  Total Time: {total_time:.2f} seconds")
         log_func(f"   🚀 Overall Rate: {len(results)/total_time:.1f} devices/second")
         log_func(f"   ⚡ Peak Concurrency: {self.stats['peak_concurrency']} simultaneous operations")
         log_func(f"   📈 Average Latency: {self.stats['average_latency_ms']:.1f}ms per device")
         log_func("")
         
-        log_func(f"🧠 SMART FEATURES PERFORMANCE:")
+        log_func("🧠 SMART FEATURES PERFORMANCE:")
         if self.cache:
             cache_stats = self.cache.get_stats()
             log_func(f"   💾 Cache Hit Rate: {cache_stats['hit_rate']*100:.1f}% ({cache_stats['hits']} hits)")
@@ -648,7 +645,7 @@ class ModernBestPracticesValidator:
                              key=lambda x: x.response_time_ms)[:10]
         
         if fastest_alive:
-            log_func(f"⚡ FASTEST RESPONSIVE DEVICES:")
+            log_func("⚡ FASTEST RESPONSIVE DEVICES:")
             for device in fastest_alive:
                 cache_text = " (cached)" if device.cached else ""
                 method_text = device.method_used.value.replace('_', ' ').title()
@@ -696,10 +693,10 @@ async def main():
         results = await validator.modern_validate_network(test_targets, progress_handler, log_handler)
         total_time = time.time() - start_time
         
-        print(f"\n🎉 MODERN VALIDATION COMPLETED!")
+        print("\n🎉 MODERN VALIDATION COMPLETED!")
         print(f"⚡ Validated {len(results)} devices in {total_time:.2f} seconds")
         print(f"🚀 Rate: {len(results)/total_time:.1f} devices/second")
-        print(f"🏆 Modern best practices: AsyncIO + Raw Sockets + Smart Features!")
+        print("🏆 Modern best practices: AsyncIO + Raw Sockets + Smart Features!")
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -25,7 +25,6 @@ import socket
 import threading
 import hashlib
 from datetime import datetime
-from collections import defaultdict
 
 class PerfectSmartCycle:
     def __init__(self, db_path="assets.db"):
@@ -61,15 +60,15 @@ class PerfectSmartCycle:
             discovered_devices = self.discover_network(network_range)
             
             # Step 2: Process each discovered device
-            print(f"\n🧠 STEP 2: SMART DEVICE PROCESSING")
+            print("\n🧠 STEP 2: SMART DEVICE PROCESSING")
             self.process_devices(discovered_devices)
             
             # Step 3: Remove duplicates only
-            print(f"\n🔍 STEP 3: DUPLICATE DETECTION & REMOVAL")
+            print("\n🔍 STEP 3: DUPLICATE DETECTION & REMOVAL")
             self.remove_duplicates_only()
             
             # Step 4: Show results
-            print(f"\n📊 STEP 4: RESULTS")
+            print("\n📊 STEP 4: RESULTS")
             self.show_results()
             
         except Exception as e:
@@ -218,7 +217,7 @@ class PerfectSmartCycle:
         conn.commit()
         conn.close()
         
-        print(f"\n✅ Device processing complete!")
+        print("\n✅ Device processing complete!")
         print(f"   ➕ New devices added: {self.stats['new_devices_added']}")
         print(f"   🔄 Existing devices updated: {self.stats['existing_devices_updated']}")
 
@@ -284,7 +283,7 @@ class PerfectSmartCycle:
             cursor.execute(query, values)
             print(f"      ✅ Updated {len(updates)} fields")
         else:
-            print(f"      ✅ No new data to update")
+            print("      ✅ No new data to update")
 
     def add_new_device(self, cursor, device_data):
         """Add a completely new device to database"""
@@ -318,7 +317,7 @@ class PerfectSmartCycle:
     def remove_duplicates_only(self):
         """Remove ONLY true duplicates - devices with same serial number"""
         
-        print(f"🔍 Scanning for TRUE DUPLICATES (same serial number)...")
+        print("🔍 Scanning for TRUE DUPLICATES (same serial number)...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -410,9 +409,9 @@ class PerfectSmartCycle:
                 self.stats['duplicates_removed'] = len(devices_to_remove)
                 
                 print(f"\n🗑️ REMOVED {len(devices_to_remove)} duplicate devices")
-                print(f"✅ KEPT the best device from each duplicate group")
+                print("✅ KEPT the best device from each duplicate group")
         else:
-            print(f"✅ No duplicate serial numbers found - database is clean!")
+            print("✅ No duplicate serial numbers found - database is clean!")
         
         conn.commit()
         conn.close()
@@ -448,7 +447,7 @@ class PerfectSmartCycle:
         print(f"🗑️ Duplicate devices removed: {self.stats['duplicates_removed']}")
         print(f"💾 Data preservation: {'✅ SUCCESS' if self.stats['data_preserved'] else '❌ FAILED'}")
         print()
-        print(f"📊 DATABASE SUMMARY:")
+        print("📊 DATABASE SUMMARY:")
         print(f"   📈 Total devices: {total_devices}")
         print(f"   🆕 Smart cycle devices: {smart_cycle_devices}")
         print(f"   📅 Added today: {today_devices}")
@@ -456,10 +455,10 @@ class PerfectSmartCycle:
         print("✅ SMART CYCLE COMPLETED SUCCESSFULLY!")
         print()
         print("🎯 EXACTLY AS YOU REQUESTED:")
-        print(f"   ✅ NEW devices → ADDED to database")
-        print(f"   ✅ EXISTING devices → UPDATED with new data")
-        print(f"   ✅ DUPLICATES → REMOVED (only true duplicates)")
-        print(f"   ✅ DATA → 100% PRESERVED (no data loss)")
+        print("   ✅ NEW devices → ADDED to database")
+        print("   ✅ EXISTING devices → UPDATED with new data")
+        print("   ✅ DUPLICATES → REMOVED (only true duplicates)")
+        print("   ✅ DATA → 100% PRESERVED (no data loss)")
         print()
         print("🚀 Your database is now optimized and up-to-date!")
 

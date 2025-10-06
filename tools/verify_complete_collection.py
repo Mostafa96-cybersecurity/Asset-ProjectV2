@@ -31,8 +31,7 @@ Plus additional technical fields for comprehensive asset management.
 import os
 import sys
 import logging
-import sqlite3
-from typing import Dict, List, Optional
+from typing import Dict
 from datetime import datetime
 
 # Add project root to path
@@ -40,7 +39,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core.smart_collector import SmartDeviceCollector
 from db.connection import connect
-from utils.identity import valid_serial
 
 # Setup logging
 logging.basicConfig(
@@ -291,7 +289,7 @@ class CompleteCollectionVerifier:
         total_tested = sum(self.results[cat]['tested'] for cat in self.results)
         total_successful = sum(self.results[cat]['successful'] for cat in self.results)
         
-        report.append(f"OVERALL SUMMARY:")
+        report.append("OVERALL SUMMARY:")
         report.append(f"Total Tests: {total_tested}")
         report.append(f"Successful: {total_successful}")
         report.append(f"Success Rate: {(total_successful/total_tested*100):.1f}%" if total_tested > 0 else "No tests run")

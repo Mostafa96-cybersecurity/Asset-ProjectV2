@@ -7,7 +7,6 @@ Demonstrate all 7 enhanced features working perfectly
 
 import time
 import threading
-from datetime import datetime
 
 def demonstrate_all_enhancements():
     """Demonstrate all 7 enhancements working"""
@@ -24,7 +23,7 @@ def demonstrate_all_enhancements():
         from enhanced_automatic_scanner import get_enhanced_auto_scanner
         scanner = get_enhanced_auto_scanner()
         status = scanner.get_status()
-        print(f"✅ Enhanced Auto Scanner: Available")
+        print("✅ Enhanced Auto Scanner: Available")
         print(f"   📊 Schedules: {status['schedules_count']}")
         print(f"   🎯 Targets: {status['targets_count']}")
         print(f"   🔄 Running: {status['is_running']}")
@@ -129,7 +128,7 @@ def demonstrate_all_enhancements():
         import sqlite3
         
         count = working_ad_integration.get_domain_computers_count()
-        print(f"✅ Domain Computers Table: Created")
+        print("✅ Domain Computers Table: Created")
         print(f"✅ Domain Computers Count: {count}")
         
         # Show domain computers

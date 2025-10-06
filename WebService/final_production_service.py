@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.append('.')
 
-from flask import Flask, jsonify, render_template, send_from_directory
+from flask import Flask, jsonify, render_template
 import sqlite3
 import traceback
 from datetime import datetime
@@ -25,7 +25,7 @@ def get_db_connection():
             db_path = "D:/Assets-Projects/Asset-Project-Enhanced/assets.db"
         
         if not os.path.exists(db_path):
-            print(f"❌ Database not found at any location")
+            print("❌ Database not found at any location")
             return None
         
         conn = sqlite3.connect(db_path)

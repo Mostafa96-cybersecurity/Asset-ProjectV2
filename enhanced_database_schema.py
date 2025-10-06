@@ -6,7 +6,6 @@ Creates comprehensive database structure for all device fields
 """
 
 import sqlite3
-import os
 import logging
 from datetime import datetime
 
@@ -480,7 +479,7 @@ class DatabaseEnhancer:
             views = cursor.fetchall()
             
             if views:
-                print(f"\nDatabase Views:")
+                print("\nDatabase Views:")
                 print("-" * 40)
                 for view in views:
                     print(f"  - {view[0]}")

@@ -6,7 +6,6 @@ Shows what data is collected, sources, and collection methods
 
 import sqlite3
 from datetime import datetime, timedelta
-import json
 
 def analyze_collected_data():
     """Analyze all collected data and show sources"""

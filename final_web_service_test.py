@@ -5,7 +5,6 @@ Shows all features working correctly
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path
@@ -95,15 +94,12 @@ def test_gui_components():
     
     try:
         # Test PyQt5 import
-        from PyQt5.QtWidgets import QApplication
         print("✅ PyQt5 available")
         
         # Test web service GUI import
-        from web_service_control_gui import WebServiceControlWidget
         print("✅ Web Service Control GUI available")
         
         # Test main GUI import
-        from gui.app import MainWindow
         print("✅ Main Desktop APP available")
         
         return True

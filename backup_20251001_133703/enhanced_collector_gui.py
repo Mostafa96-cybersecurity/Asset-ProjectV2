@@ -7,9 +7,7 @@ Enhanced Data Collector GUI Integration
 import sqlite3
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional
 import json
-import traceback
 from collector_integration import CollectorIntegration
 
 # Set up logging

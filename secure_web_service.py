@@ -5,14 +5,10 @@
 Updated web service with comprehensive security integration
 """
 
-from flask import Flask, request, jsonify, session, render_template_string, redirect, url_for, make_response
+from flask import Flask, request, jsonify, session, render_template_string
 import json
-import os
 import sqlite3
-import logging
-from datetime import datetime, timedelta
-import threading
-import time
+from datetime import datetime
 from pathlib import Path
 
 # Import enhanced access control

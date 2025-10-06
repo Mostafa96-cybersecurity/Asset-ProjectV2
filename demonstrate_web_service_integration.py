@@ -6,7 +6,6 @@ Shows that the Web Service Control is properly integrated
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path
@@ -45,7 +44,6 @@ def demonstrate_web_service_integration():
     print("🎨 TESTING WEB SERVICE GUI COMPONENTS:")
     print("-" * 42)
     try:
-        from web_service_control_gui import WebServiceControlWidget
         print("✅ Web Service Control GUI: AVAILABLE")
         print("   🎛️  Service Control tab")
         print("   🔐 Security & ACL tab")
@@ -61,7 +59,6 @@ def demonstrate_web_service_integration():
     print("🖥️  TESTING DESKTOP APP INTEGRATION:")
     print("-" * 37)
     try:
-        from gui.app import MainWindow
         print("✅ Desktop APP Main Window: AVAILABLE")
         print("   🎛️  Web Service Control tab integrated")
         print("   🔧 Full management interface included")

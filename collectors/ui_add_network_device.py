@@ -337,7 +337,7 @@ def _load_database_rows(sheet: str) -> Tuple[List[str], List[List[str]]]:
         
         return headers, data
         
-    except Exception as e:
+    except Exception:
         # Return empty data if database error
         return ["Hostname", "IP Address", "User", "Classification"], []
 
@@ -889,28 +889,28 @@ class AddNetworkDeviceDialog(QDialog):
         current = {h: (R[trow][H.index(h)] if h in H else "") for h in present}
 
         editor_core = _TwoColumnEditor(present, initial=current, parent=self)
-        scroll = QScrollArea(self);
-        scroll.setWidget(editor_core);
+        scroll = QScrollArea(self)
+        scroll.setWidget(editor_core)
         scroll.setWidgetResizable(True)
 
-        dlg = QDialog(self);
+        dlg = QDialog(self)
         dlg.setWindowTitle("Edit Device")
-        dlg.setModal(True);
+        dlg.setModal(True)
         dlg.resize(760, 540)
         dlg.setWindowFlag(Qt.WindowType.WindowMinMaxButtonsHint, True)
         dlg.setWindowFlag(Qt.WindowType.WindowContextHelpButtonHint, False)
         dlg.setSizeGripEnabled(True)
 
-        v = QVBoxLayout(dlg);
+        v = QVBoxLayout(dlg)
         v.addWidget(scroll, 1)
-        h = QHBoxLayout();
-        bsave = QPushButton("Save", dlg);
+        h = QHBoxLayout()
+        bsave = QPushButton("Save", dlg)
         bcancel = QPushButton("Cancel", dlg)
-        bsave.clicked.connect(dlg.accept);
+        bsave.clicked.connect(dlg.accept)
         bcancel.clicked.connect(dlg.reject)
-        h.addStretch(1);
-        h.addWidget(bsave);
-        h.addWidget(bcancel);
+        h.addStretch(1)
+        h.addWidget(bsave)
+        h.addWidget(bcancel)
         v.addLayout(h)
 
         if dlg.exec() != QDialog.DialogCode.Accepted:
@@ -1098,7 +1098,7 @@ class AddNetworkDeviceDialog(QDialog):
                 import re
                 numbers = re.findall(r'\\d+', memory_text)
                 return float(numbers[0]) if numbers else 0.0
-        except Exception as e:
+        except Exception:
             return 0.0
             
     # Handle any database errors at the method level        

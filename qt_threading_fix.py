@@ -4,8 +4,7 @@ Qt Threading Fix
 Fixes the QObject threading error: "Cannot create children for a parent that is in a different thread"
 """
 
-from PyQt6.QtCore import QThread, QObject, pyqtSignal, QTimer
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QThread, QObject, QTimer
 import threading
 
 

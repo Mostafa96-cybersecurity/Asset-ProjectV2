@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 import ipaddress
-import os
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from PyQt6.QtCore import QThread, pyqtSignal
 
 # ← الاستيرادات الصحيحة حسب هيكل مشروعك الحالي
-from core.collector import collect_any, nmap_discover, is_alive
 from core.smart_collector import SmartDeviceCollector
 # from export.excel_exporter import (  # Disabled - Database-only system
 #     open_assets_workbook, ensure_assets_sheet, ensure_errors_sheet,

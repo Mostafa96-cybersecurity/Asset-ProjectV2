@@ -8,7 +8,6 @@ import socketserver
 import urllib.parse
 import sqlite3
 import os
-import json
 import uuid
 from datetime import datetime
 

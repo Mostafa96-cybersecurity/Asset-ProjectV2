@@ -20,28 +20,28 @@ def show_database_columns_and_data():
     cursor = conn.cursor()
     
     # 1. SHOW ALL DATABASE COLUMNS
-    print(f"\n📋 ALL DATABASE COLUMNS")
+    print("\n📋 ALL DATABASE COLUMNS")
     print("=" * 50)
     
     cursor.execute("PRAGMA table_info(assets)")
     all_columns = cursor.fetchall()
     
     print(f"Total Columns in Database: {len(all_columns)}")
-    print(f"\nComplete Column List:")
+    print("\nComplete Column List:")
     
     for i, (col_id, name, data_type, not_null, default, pk) in enumerate(all_columns, 1):
         pk_indicator = " (PRIMARY KEY)" if pk else ""
         print(f"   {i:3d}. {name:<30} | {data_type:<10} {pk_indicator}")
     
     # 2. CHECK WHICH COLUMNS HAVE DATA
-    print(f"\n\n📊 COLUMNS WITH ACTUAL DATA")
+    print("\n\n📊 COLUMNS WITH ACTUAL DATA")
     print("=" * 50)
     
     cursor.execute("SELECT COUNT(*) FROM assets")
     total_records = cursor.fetchone()[0]
     
     print(f"Total Records: {total_records}")
-    print(f"\nColumns containing data:")
+    print("\nColumns containing data:")
     print(f"{'Column Name':<35} | {'Records':<8} | {'%':<6} | {'Sample Data'}")
     print("-" * 95)
     
@@ -79,12 +79,12 @@ def show_database_columns_and_data():
                 
                 columns_with_data.append((name, count, percentage))
                 print(f"{name:<35} | {count:<8} | {percentage:>5.1f}% | {sample}")
-        except Exception as e:
+        except Exception:
             # Skip columns that cause errors
             continue
     
     # 3. SPECIFICALLY COLLECTED SCAN DATA
-    print(f"\n\n🚀 NETWORK SCAN COLLECTED DATA")
+    print("\n\n🚀 NETWORK SCAN COLLECTED DATA")
     print("=" * 50)
     
     scan_columns = [
@@ -96,7 +96,7 @@ def show_database_columns_and_data():
     scan_records = cursor.fetchone()[0]
     print(f"Records from Network Scan: {scan_records}")
     
-    print(f"\nScan Data Breakdown:")
+    print("\nScan Data Breakdown:")
     for column in scan_columns:
         cursor.execute(f"SELECT COUNT(*) FROM assets WHERE {column} IS NOT NULL AND {column} != ''")
         count = cursor.fetchone()[0]
@@ -118,7 +118,7 @@ def show_database_columns_and_data():
         print(f"   {status} {column:<25}: {count}/{scan_records} ({percentage:>5.1f}%) | {sample}")
     
     # 4. DETAILED DATA EXAMPLES
-    print(f"\n\n📋 DETAILED DATA EXAMPLES")
+    print("\n\n📋 DETAILED DATA EXAMPLES")
     print("=" * 50)
     
     cursor.execute("""
@@ -157,7 +157,7 @@ def show_database_columns_and_data():
             print(f"   🌐 Banner: {banner_display}")
     
     # 5. SUMMARY OF WHAT WAS COLLECTED
-    print(f"\n\n🎯 COLLECTION SUMMARY")
+    print("\n\n🎯 COLLECTION SUMMARY")
     print("=" * 50)
     
     # Device types collected
@@ -211,7 +211,7 @@ def show_database_columns_and_data():
     
     conn.close()
     
-    print(f"\n\n✅ FINAL SUMMARY")
+    print("\n\n✅ FINAL SUMMARY")
     print("=" * 50)
     print(f"📊 Total Database Columns: {len(all_columns)}")
     print(f"📈 Columns with Data: {len(columns_with_data)}")
@@ -219,7 +219,7 @@ def show_database_columns_and_data():
     print(f"🏷️ Device Types Found: {len(device_types)}")
     print(f"🔌 Unique Ports Found: {len(unique_ports)}")
     print(f"🔍 Collection Methods: {len(all_methods)}")
-    print(f"💾 All data successfully stored and accessible!")
+    print("💾 All data successfully stored and accessible!")
 
 if __name__ == "__main__":
     show_database_columns_and_data()

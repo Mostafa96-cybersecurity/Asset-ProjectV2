@@ -17,7 +17,6 @@ USAGE:
 """
 
 import os
-import sys
 import json
 from datetime import datetime
 
@@ -79,7 +78,7 @@ def create_credentials_config():
     print("Let's configure your WMI credentials for working_user collection:")
     
     # WMI Credentials
-    print(f"\n--- WMI/Windows Credentials ---")
+    print("\n--- WMI/Windows Credentials ---")
     while True:
         print(f"\nWMI Credential Set #{len(credentials['wmi_credentials']) + 1}")
         
@@ -109,7 +108,7 @@ def create_credentials_config():
             break
     
     # SSH Credentials (optional)
-    print(f"\n--- SSH/Linux Credentials (Optional) ---")
+    print("\n--- SSH/Linux Credentials (Optional) ---")
     add_ssh = input("Add SSH credentials for Linux devices? (y/n): ").lower()
     
     if add_ssh == 'y':
@@ -159,7 +158,7 @@ def test_credentials_with_network():
     with open('collector_credentials.json', 'r') as f:
         creds = json.load(f)
     
-    print(f"\n🧪 NETWORK CREDENTIALS TEST")
+    print("\n🧪 NETWORK CREDENTIALS TEST")
     print("=" * 35)
     print(f"Found {len(creds['wmi_credentials'])} WMI credential sets")
     
@@ -260,7 +259,7 @@ def test_credentials_with_network():
         json.dump(creds, f, indent=2)
     
     # Show summary
-    print(f"\n📊 TEST SUMMARY")
+    print("\n📊 TEST SUMMARY")
     print("=" * 20)
     
     successful_combos = []
@@ -378,7 +377,7 @@ def main():
         return
     
     while True:
-        print(f"\n📋 CONFIGURATION OPTIONS:")
+        print("\n📋 CONFIGURATION OPTIONS:")
         print("1. 🔧 Configure WMI Credentials")
         print("2. 🧪 Test Credentials with Network") 
         print("3. 🔗 Generate Collector Integration")
@@ -386,7 +385,7 @@ def main():
         print("5. 📚 WMI Permission Help")
         print("6. 🚪 Exit")
         
-        choice = input(f"\nSelect option (1-6): ").strip()
+        choice = input("\nSelect option (1-6): ").strip()
         
         if choice == '1':
             create_credentials_config()
@@ -402,7 +401,7 @@ def main():
                 with open('collector_credentials.json', 'r') as f:
                     creds = json.load(f)
                 
-                print(f"\n📄 CURRENT CONFIGURATION")
+                print("\n📄 CURRENT CONFIGURATION")
                 print("-" * 25)
                 print(f"Created: {creds.get('created', 'Unknown')}")
                 print(f"WMI Credentials: {len(creds.get('wmi_credentials', []))}")

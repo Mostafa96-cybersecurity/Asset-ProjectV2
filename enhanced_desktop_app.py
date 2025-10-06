@@ -16,7 +16,6 @@ import webbrowser
 import os
 import subprocess
 import sys
-import time
 from datetime import datetime
 
 # Import web service integration
@@ -603,7 +602,7 @@ Features:
                 self.update_automation_stats_display()
                 self.update_device_list()
             
-        except Exception as e:
+        except Exception:
             pass  # Fail silently to avoid disrupting UI
         
         # Schedule next update
@@ -649,7 +648,7 @@ Features:
                 
                 self.automation_stats_labels[title] = card_frame
                 
-        except Exception as e:
+        except Exception:
             pass  # Fail silently
     
     def update_device_list(self):
@@ -698,7 +697,7 @@ Features:
                 self.device_tree.tag_configure('medium_completeness', background='#fff3cd')
                 self.device_tree.tag_configure('low_completeness', background='#f8d7da')
                 
-        except Exception as e:
+        except Exception:
             pass  # Fail silently
 
     # Tool methods (placeholders)

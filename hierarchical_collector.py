@@ -13,7 +13,7 @@ Implements intelligent OS-based collection strategy:
 """
 
 import logging
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -84,19 +84,19 @@ class HierarchicalCollector:
         log.info(f"🪟 Windows collection strategy for {profile.ip}")
         
         # Method 1: WMI Collection
-        log.info(f"   1️⃣  Attempting WMI collection...")
+        log.info("   1️⃣  Attempting WMI collection...")
         wmi_result = self._try_wmi_collection(profile)
         if wmi_result.success:
-            log.info(f"   ✅ WMI collection successful!")
+            log.info("   ✅ WMI collection successful!")
             return wmi_result
         else:
             log.warning(f"   ❌ WMI failed: {wmi_result.error}")
         
         # Method 2: SNMP Fallback
-        log.info(f"   2️⃣  Attempting SNMP fallback...")
+        log.info("   2️⃣  Attempting SNMP fallback...")
         snmp_result = self._try_snmp_collection(profile)
         if snmp_result.success:
-            log.info(f"   ✅ SNMP fallback successful!")
+            log.info("   ✅ SNMP fallback successful!")
             return snmp_result
         else:
             log.warning(f"   ❌ SNMP fallback failed: {snmp_result.error}")
@@ -109,19 +109,19 @@ class HierarchicalCollector:
         log.info(f"🐧 Linux collection strategy for {profile.ip}")
         
         # Method 1: SSH Collection
-        log.info(f"   1️⃣  Attempting SSH collection...")
+        log.info("   1️⃣  Attempting SSH collection...")
         ssh_result = self._try_ssh_collection(profile)
         if ssh_result.success:
-            log.info(f"   ✅ SSH collection successful!")
+            log.info("   ✅ SSH collection successful!")
             return ssh_result
         else:
             log.warning(f"   ❌ SSH failed: {ssh_result.error}")
         
         # Method 2: SNMP Fallback
-        log.info(f"   2️⃣  Attempting SNMP fallback...")
+        log.info("   2️⃣  Attempting SNMP fallback...")
         snmp_result = self._try_snmp_collection(profile)
         if snmp_result.success:
-            log.info(f"   ✅ SNMP fallback successful!")
+            log.info("   ✅ SNMP fallback successful!")
             return snmp_result
         else:
             log.warning(f"   ❌ SNMP fallback failed: {snmp_result.error}")
@@ -134,29 +134,29 @@ class HierarchicalCollector:
         log.info(f"🔧 Other device collection strategy for {profile.ip}")
         
         # Method 1: SNMP Collection
-        log.info(f"   1️⃣  Attempting SNMP collection...")
+        log.info("   1️⃣  Attempting SNMP collection...")
         snmp_result = self._try_snmp_collection(profile)
         if snmp_result.success:
-            log.info(f"   ✅ SNMP collection successful!")
+            log.info("   ✅ SNMP collection successful!")
             return snmp_result
         else:
             log.warning(f"   ❌ SNMP failed: {snmp_result.error}")
         
         # Method 2: SSH Fallback
-        log.info(f"   2️⃣  Attempting SSH fallback...")
+        log.info("   2️⃣  Attempting SSH fallback...")
         ssh_result = self._try_ssh_collection(profile)
         if ssh_result.success:
-            log.info(f"   ✅ SSH fallback successful!")
+            log.info("   ✅ SSH fallback successful!")
             return ssh_result
         else:
             log.warning(f"   ❌ SSH fallback failed: {ssh_result.error}")
         
         # Method 3: HTTP/HTTPS for web devices
         if 80 in profile.open_ports or 443 in profile.open_ports:
-            log.info(f"   3️⃣  Attempting HTTP collection...")
+            log.info("   3️⃣  Attempting HTTP collection...")
             http_result = self._try_http_collection(profile)
             if http_result.success:
-                log.info(f"   ✅ HTTP collection successful!")
+                log.info("   ✅ HTTP collection successful!")
                 return http_result
         
         # Return best attempt
@@ -346,12 +346,12 @@ def enhanced_network_discovery_and_collection(
     3. Hierarchical collection
     """
     
-    log.info(f"🚀 Starting Enhanced Hierarchical Collection Strategy")
+    log.info("🚀 Starting Enhanced Hierarchical Collection Strategy")
     log.info(f"   Targets: {len(targets)}")
-    log.info(f"   Strategy: Network Scan → OS Detection → Hierarchical Collection")
+    log.info("   Strategy: Network Scan → OS Detection → Hierarchical Collection")
     
     # Step 1: Network Discovery & OS Detection
-    log.info(f"🔍 Step 1: Network Discovery & OS Detection")
+    log.info("🔍 Step 1: Network Discovery & OS Detection")
     device_profiles = []
     
     from ultra_fast_collector import _nmap_os_detection, _quick_port_check
@@ -389,7 +389,7 @@ def enhanced_network_discovery_and_collection(
     log.info(f"📊 Discovery complete: {len(device_profiles)} alive devices detected")
     
     # Step 2: Hierarchical Collection
-    log.info(f"📡 Step 2: Hierarchical Data Collection")
+    log.info("📡 Step 2: Hierarchical Data Collection")
     
     collector = HierarchicalCollector(
         win_creds=win_creds,
@@ -425,7 +425,7 @@ def enhanced_network_discovery_and_collection(
     
     # Summary
     successful = sum(1 for r in results if r.success)
-    log.info(f"🎉 Collection Strategy Complete:")
+    log.info("🎉 Collection Strategy Complete:")
     log.info(f"   Total Devices: {len(results)}")
     log.info(f"   Successful: {successful}/{len(results)} ({successful/len(results)*100:.1f}%)")
     
@@ -457,6 +457,6 @@ if __name__ == "__main__":
         snmp_communities=snmp_communities
     )
     
-    print(f"\n📊 STRATEGY RESULTS:")
+    print("\n📊 STRATEGY RESULTS:")
     for result in results:
         print(f"  {result.data.get('ip_address', 'Unknown')}: {result.method} ({'SUCCESS' if result.success else 'FAILED'})")

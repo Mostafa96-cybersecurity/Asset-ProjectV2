@@ -19,8 +19,6 @@ import sys
 import os
 import logging
 import asyncio
-import json
-import time
 from datetime import datetime
 from pathlib import Path
 
@@ -141,7 +139,7 @@ class EnhancedCompleteWebService:
                         missing_count = results.get('missing_data_devices', 0)
                         duplicate_count = results.get('duplicates_resolved', 0)
                         
-                        logger.info(f"📊 Collection Cycle Complete:")
+                        logger.info("📊 Collection Cycle Complete:")
                         logger.info(f"   ✅ Devices collected: {collected_count}")
                         logger.info(f"   📋 Missing data resolved: {missing_count}")
                         logger.info(f"   🔄 Duplicates resolved: {duplicate_count}")

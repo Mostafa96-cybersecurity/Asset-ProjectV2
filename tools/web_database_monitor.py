@@ -18,13 +18,10 @@ Access from any browser: http://localhost:5555
 
 from flask import Flask, render_template, jsonify, request, send_file
 import sqlite3
-import json
 import os
 from datetime import datetime
-from typing import Dict, List, Any
 import pandas as pd
 from io import BytesIO
-import tempfile
 
 app = Flask(__name__)
 
@@ -791,7 +788,7 @@ def start_web_server():
     try:
         from waitress import serve
         print("✅ Web server starting...")
-        print(f"🔗 Access your dashboard at: http://localhost:5555")
+        print("🔗 Access your dashboard at: http://localhost:5555")
         print(f"📊 Database location: {DB_PATH}")
         print("=" * 50)
         print("Features available:")

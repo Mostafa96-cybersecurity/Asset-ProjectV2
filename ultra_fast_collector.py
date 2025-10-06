@@ -13,16 +13,14 @@ Key Optimizations:
 - Smart retry logic with exponential backoff
 """
 
-import os
-import sys
 import time
 import socket
 import threading
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
 from queue import Queue, Empty
-from dataclasses import dataclass, field
-from typing import List, Dict, Set, Optional, Tuple, Any
+from dataclasses import dataclass
+from typing import List, Dict, Set, Optional, Any
 from datetime import datetime
 import logging
 
@@ -82,7 +80,7 @@ def _collect_windows_standalone(ip: str, username: str, password: str) -> Option
         print(f"🔍 DEBUG WMI: Attempting connection to {ip} with user '{username}', password: {'***set***' if password else '***empty***'}")
         try:
             conn = wmi.WMI(computer=ip, user=username, password=password)
-            print(f"🔍 DEBUG WMI: Connection successful!")
+            print("🔍 DEBUG WMI: Connection successful!")
         except Exception as wmi_error:
             # Cleanup COM on connection error
             if com_initialized:
@@ -649,7 +647,7 @@ def _enhanced_device_collection(ip: str, os_info: Dict[str, str], win_creds: Opt
     
     # Windows Strategy: WMI → SNMP
     if os_family == 'Windows':
-        log.info(f"   🪟 Windows strategy: WMI → SNMP fallback")
+        log.info("   🪟 Windows strategy: WMI → SNMP fallback")
         
         # Try WMI first
         for i, creds in enumerate(win_creds):
@@ -660,23 +658,23 @@ def _enhanced_device_collection(ip: str, os_info: Dict[str, str], win_creds: Opt
                 if data and data.get('wmi_collection_status') == 'Success':
                     data.update(collection_data)
                     data['collection_strategy'] = 'Windows Hierarchical (WMI Success)'
-                    log.info(f"   ✅ WMI collection successful!")
+                    log.info("   ✅ WMI collection successful!")
                     return data
             except Exception as e:
                 log.debug(f"      WMI attempt {i+1} failed: {e}")
         
         # SNMP fallback
-        log.info(f"   2️⃣  WMI failed, trying SNMP fallback...")
+        log.info("   2️⃣  WMI failed, trying SNMP fallback...")
         snmp_data = _try_snmp_collection(ip, snmp_communities)
         if snmp_data:
             snmp_data.update(collection_data)
             snmp_data['collection_strategy'] = 'Windows Hierarchical (SNMP Fallback)'
-            log.info(f"   ✅ SNMP fallback successful!")
+            log.info("   ✅ SNMP fallback successful!")
             return snmp_data
     
     # Linux Strategy: SSH → SNMP
     elif os_family == 'Linux':
-        log.info(f"   🐧 Linux strategy: SSH → SNMP fallback")
+        log.info("   🐧 Linux strategy: SSH → SNMP fallback")
         
         # Try SSH first
         for i, creds in enumerate(linux_creds):
@@ -687,41 +685,41 @@ def _enhanced_device_collection(ip: str, os_info: Dict[str, str], win_creds: Opt
                 if data and 'SSH Failed' not in str(data.get('wmi_collection_status', '')):
                     data.update(collection_data)
                     data['collection_strategy'] = 'Linux Hierarchical (SSH Success)'
-                    log.info(f"   ✅ SSH collection successful!")
+                    log.info("   ✅ SSH collection successful!")
                     return data
             except Exception as e:
                 log.debug(f"      SSH attempt {i+1} failed: {e}")
         
         # SNMP fallback
-        log.info(f"   2️⃣  SSH failed, trying SNMP fallback...")
+        log.info("   2️⃣  SSH failed, trying SNMP fallback...")
         snmp_data = _try_snmp_collection(ip, snmp_communities)
         if snmp_data:
             snmp_data.update(collection_data)
             snmp_data['collection_strategy'] = 'Linux Hierarchical (SNMP Fallback)'
-            log.info(f"   ✅ SNMP fallback successful!")
+            log.info("   ✅ SNMP fallback successful!")
             return snmp_data
     
     # Other Devices Strategy: SNMP → SSH
     else:
-        log.info(f"   🔧 Other device strategy: SNMP → SSH fallback")
+        log.info("   🔧 Other device strategy: SNMP → SSH fallback")
         
         # Try SNMP first
         snmp_data = _try_snmp_collection(ip, snmp_communities)
         if snmp_data:
             snmp_data.update(collection_data)
             snmp_data['collection_strategy'] = 'Other Hierarchical (SNMP Success)'
-            log.info(f"   ✅ SNMP collection successful!")
+            log.info("   ✅ SNMP collection successful!")
             return snmp_data
         
         # SSH fallback
-        log.info(f"   2️⃣  SNMP failed, trying SSH fallback...")
+        log.info("   2️⃣  SNMP failed, trying SSH fallback...")
         for i, creds in enumerate(linux_creds):
             try:
                 data = _collect_ssh_standalone(ip, creds.get('username', ''), creds.get('password', ''))
                 if data and 'SSH Failed' not in str(data.get('wmi_collection_status', '')):
                     data.update(collection_data)
                     data['collection_strategy'] = 'Other Hierarchical (SSH Fallback)'
-                    log.info(f"   ✅ SSH fallback successful!")
+                    log.info("   ✅ SSH fallback successful!")
                     return data
             except Exception as e:
                 log.debug(f"      SSH fallback attempt {i+1} failed: {e}")
@@ -731,7 +729,7 @@ def _enhanced_device_collection(ip: str, os_info: Dict[str, str], win_creds: Opt
         if http_data:
             http_data.update(collection_data)
             http_data['collection_strategy'] = 'Other Hierarchical (HTTP Fallback)'
-            log.info(f"   ✅ HTTP fallback successful!")
+            log.info("   ✅ HTTP fallback successful!")
             return http_data
     
     # All methods failed
@@ -1731,7 +1729,7 @@ class UltraFastDeviceCollector(QThread):
     def _emit_final_stats(self):
         """Emit final collection statistics"""
         with self.stats_lock:
-            self.log_message.emit(f"📊 FINAL STATISTICS:")
+            self.log_message.emit("📊 FINAL STATISTICS:")
             self.log_message.emit(f"   • Total Time: {self.stats.total_time:.1f}s")
             self.log_message.emit(f"   • Devices Discovered: {self.stats.discovered}")
             self.log_message.emit(f"   • Devices Collected: {self.stats.collected}")
@@ -1831,7 +1829,7 @@ class UltraFastDeviceCollector(QThread):
             # Ensure required fields
             if not device_data.get('hostname') and not device_data.get('ip_address'):
                 if not device_data.get('Hostname') and not device_data.get('IP Address'):
-                    self.log_message.emit(f"❌ Cannot save device: missing hostname and ip_address")
+                    self.log_message.emit("❌ Cannot save device: missing hostname and ip_address")
                     return False
             
             # Get all available columns in the database
@@ -1881,7 +1879,7 @@ class UltraFastDeviceCollector(QThread):
             
             # Ensure we have minimum required data
             if not db_data.get('hostname') and not db_data.get('ip_address'):
-                self.log_message.emit(f"❌ No valid hostname or IP after field mapping")
+                self.log_message.emit("❌ No valid hostname or IP after field mapping")
                 return False
             
             # ENHANCED HARDWARE-BASED DEDUPLICATION STRATEGY

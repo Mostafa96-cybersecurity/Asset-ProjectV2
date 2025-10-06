@@ -7,11 +7,10 @@ with real-time monitoring and error detection.
 """
 
 import logging
-import os
 import json
 import time
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
+from datetime import datetime
+from typing import Dict, List, Any
 from pathlib import Path
 import threading
 from queue import Queue

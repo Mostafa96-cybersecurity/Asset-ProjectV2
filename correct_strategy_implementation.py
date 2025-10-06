@@ -17,7 +17,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from enhanced_ultimate_performance_collector import EnhancedUltimatePerformanceCollector, EnhancedDeviceInfo
 import sqlite3
 import json
-import time
 
 class CorrectStrategyCollector(EnhancedUltimatePerformanceCollector):
     """Enhanced collector with CORRECT comprehensive scan strategy implemented"""
@@ -181,7 +180,7 @@ class CorrectStrategyCollector(EnhancedUltimatePerformanceCollector):
             'method': 'WINDOWS_DEFAULT',
             'os_family': device.os_family,
             'confidence': 0.70,
-            'reasoning': f"Windows OS, default classification"
+            'reasoning': "Windows OS, default classification"
         }
         return "Workstation"
     
@@ -207,7 +206,7 @@ class CorrectStrategyCollector(EnhancedUltimatePerformanceCollector):
             'method': 'LINUX_DEFAULT',
             'os_family': device.os_family,
             'confidence': 0.70,
-            'reasoning': f"Linux OS, default classification"
+            'reasoning': "Linux OS, default classification"
         }
         return "Workstation"
     
@@ -368,17 +367,17 @@ def test_correct_strategy():
             print(f"   ⚠️  WOULD RECLASSIFY: {current_type} → {suggested_type}")
             reclassifications.append((hostname, current_type, suggested_type))
         else:
-            print(f"   ✅ Classification matches")
+            print("   ✅ Classification matches")
         
         print()
     
-    print(f"📊 RESULTS:")
+    print("📊 RESULTS:")
     print(f"   Total tested: {len(devices)}")
     print(f"   Would reclassify: {len(reclassifications)}")
     print(f"   Classification accuracy: {((len(devices)-len(reclassifications))/len(devices))*100:.1f}%")
     
     if reclassifications:
-        print(f"\n🔄 Devices that would be reclassified:")
+        print("\n🔄 Devices that would be reclassified:")
         for hostname, old, new in reclassifications:
             print(f"   • {hostname}: {old} → {new}")
     
@@ -399,12 +398,12 @@ def verify_scan_strategy_compliance():
     cursor.execute('SELECT COUNT(*) FROM assets WHERE nmap_os_family IS NOT NULL')
     nmap_coverage = cursor.fetchone()[0]
     
-    print(f"1️⃣ NMAP OS Detection Coverage:")
+    print("1️⃣ NMAP OS Detection Coverage:")
     print(f"   Total devices: {total_devices}")
     print(f"   With NMAP OS data: {nmap_coverage} ({(nmap_coverage/total_devices)*100:.1f}%)")
     
     # 2. Check collection method by OS type
-    print(f"\n2️⃣ Collection Method by OS Type:")
+    print("\n2️⃣ Collection Method by OS Type:")
     
     cursor.execute('''
         SELECT nmap_os_family, 
@@ -422,16 +421,16 @@ def verify_scan_strategy_compliance():
     for os_family, wmi_rate, ssh_rate, snmp_rate, count in collection_stats:
         print(f"   {os_family} ({count} devices):")
         if os_family == 'Windows':
-            print(f"      ✅ Should use WMI + SNMP")
+            print("      ✅ Should use WMI + SNMP")
             print(f"      📊 WMI Success: {wmi_rate:.1f}%")
             print(f"      📊 SNMP Success: {snmp_rate:.1f}%")
         else:
-            print(f"      ✅ Should use SSH + SNMP")
+            print("      ✅ Should use SSH + SNMP")
             print(f"      📊 SSH Success: {ssh_rate:.1f}%")
             print(f"      📊 SNMP Success: {snmp_rate:.1f}%")
     
     # 3. Check device type distribution
-    print(f"\n3️⃣ Device Type Distribution (NMAP-based):")
+    print("\n3️⃣ Device Type Distribution (NMAP-based):")
     
     cursor.execute('''
         SELECT device_type, nmap_device_type, COUNT(*) 
@@ -452,7 +451,7 @@ def verify_scan_strategy_compliance():
         print(f"   {compliance} {device_type} ← {nmap_dtype}: {count} devices")
     
     # 4. Check hostname consistency  
-    print(f"\n4️⃣ Hostname Feature Verification:")
+    print("\n4️⃣ Hostname Feature Verification:")
     
     cursor.execute('''
         SELECT COUNT(*) as mismatches
@@ -467,13 +466,13 @@ def verify_scan_strategy_compliance():
     print(f"   Hostname mismatches: {hostname_mismatches} devices")
     
     if hostname_mismatches > 0:
-        print(f"   ⚠️ Some devices have hostname inconsistencies")
+        print("   ⚠️ Some devices have hostname inconsistencies")
     else:
-        print(f"   ✅ Hostname consistency maintained")
+        print("   ✅ Hostname consistency maintained")
     
     conn.close()
     
-    print(f"\n✅ STRATEGY COMPLIANCE CHECK COMPLETE")
+    print("\n✅ STRATEGY COMPLIANCE CHECK COMPLETE")
 
 if __name__ == "__main__":
     test_correct_strategy()

@@ -6,7 +6,6 @@ Collect ALL possible WMI data based on database columns
 
 import sqlite3
 import json
-from collections import defaultdict
 
 def analyze_database_schema():
     print("=" * 80)
@@ -211,7 +210,7 @@ def analyze_database_schema():
                 print(f"   ... and {len(fields) - 10} more fields")
             total_wmi_fields += len(fields)
     
-    print(f"\n🔢 SUMMARY:")
+    print("\n🔢 SUMMARY:")
     print(f"   • Total WMI fields: {total_wmi_fields}")
     print(f"   • SSH fields: {len(ssh_columns)}")
     print(f"   • SNMP fields: {len(snmp_columns)}")
@@ -451,7 +450,7 @@ def save_wmi_mapping_to_file(wmi_mapping):
     with open('comprehensive_wmi_mapping.json', 'w') as f:
         json.dump(wmi_mapping, f, indent=2)
     
-    print(f"\n💾 WMI mapping saved to: comprehensive_wmi_mapping.json")
+    print("\n💾 WMI mapping saved to: comprehensive_wmi_mapping.json")
     print(f"   Classes: {len(wmi_mapping)}")
     print(f"   Total field mappings: {sum(len(fields) for fields in wmi_mapping.values())}")
 

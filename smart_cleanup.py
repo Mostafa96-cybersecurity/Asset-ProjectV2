@@ -7,7 +7,6 @@ Analyzes import relationships and usage to safely delete only unused files
 
 import os
 import ast
-import sys
 from pathlib import Path
 
 def find_imports_in_file(file_path):

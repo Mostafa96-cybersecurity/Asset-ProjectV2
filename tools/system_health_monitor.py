@@ -11,12 +11,9 @@ import time
 import json
 import sqlite3
 import importlib
-import threading
-from datetime import datetime, timedelta
-import subprocess
+from datetime import datetime
 import psutil
 import logging
-from pathlib import Path
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

@@ -15,10 +15,8 @@ import socket
 import re
 import logging
 import time
-import threading
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from collections import defaultdict
 from datetime import datetime
 
 from collectors.wmi_collector import collect_windows_wmi
@@ -443,7 +441,7 @@ class EnhancedSmartCollector:
     def _validate_serial_number(self, value: str) -> bool:
         if not value:
             return True  # Serial is optional
-        return len(value) >= 3 and not value.lower() in ['unknown', 'n/a', 'not available']
+        return len(value) >= 3 and value.lower() not in ['unknown', 'n/a', 'not available']
     
     def get_collection_stats(self) -> Dict:
         """Return detailed collection statistics"""

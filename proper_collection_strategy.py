@@ -10,15 +10,12 @@ This replaces the current flawed approach that tries to collect from every IP.
 """
 
 import os
-import sys
 import time
 import socket
 import threading
-import concurrent.futures
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from queue import Queue, Empty
 from dataclasses import dataclass
-from typing import List, Dict, Set, Optional, Tuple, Any
+from typing import List, Dict, Optional, Any
 from datetime import datetime
 import subprocess
 import logging
@@ -126,7 +123,7 @@ class ProperCollectionStrategy(QThread):
         self.os_detected_count = 0
         self.collected_count = 0
         
-        log.info(f"🎯 Proper Collection Strategy initialized")
+        log.info("🎯 Proper Collection Strategy initialized")
         log.info(f"   📡 {ping_workers} ping workers")
         log.info(f"   🔍 {nmap_workers} NMAP workers") 
         log.info(f"   📊 {collection_workers} collection workers")
@@ -594,7 +591,7 @@ class ProperCollectionStrategy(QThread):
                         method='WMI',
                         data=data
                     )
-            except Exception as e:
+            except Exception:
                 continue
         
         return CollectionResult(
@@ -616,7 +613,7 @@ class ProperCollectionStrategy(QThread):
                         method='SSH',
                         data=data
                     )
-            except Exception as e:
+            except Exception:
                 continue
         
         return CollectionResult(
@@ -638,7 +635,7 @@ class ProperCollectionStrategy(QThread):
                         method='SNMP',
                         data=data
                     )
-            except Exception as e:
+            except Exception:
                 continue
         
         return CollectionResult(
@@ -754,7 +751,7 @@ class ProperCollectionStrategy(QThread):
             # Ensure required fields
             if not device_data.get('hostname') and not device_data.get('ip_address'):
                 if not device_data.get('Hostname') and not device_data.get('IP Address'):
-                    self.log_message.emit(f"❌ Cannot save device: missing hostname and ip_address")
+                    self.log_message.emit("❌ Cannot save device: missing hostname and ip_address")
                     return False
             
             # Get all available columns in the database
@@ -804,7 +801,7 @@ class ProperCollectionStrategy(QThread):
             
             # Ensure we have minimum required data
             if not db_data.get('hostname') and not db_data.get('ip_address'):
-                self.log_message.emit(f"❌ No valid hostname or IP after field mapping")
+                self.log_message.emit("❌ No valid hostname or IP after field mapping")
                 return False
             
             # Check for existing device (simple IP-based for now)

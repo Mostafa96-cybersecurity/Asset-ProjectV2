@@ -5,9 +5,6 @@ FINAL PYLANCE CLEANUP - October 1, 2025
 This script addresses the remaining cosmetic Pylance warnings to provide a clean codebase.
 """
 
-from typing import Optional, Dict, Any, List
-import sqlite3
-import logging
 
 def create_type_stubs():
     """Create type stubs for better IDE support"""

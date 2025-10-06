@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import requests
-import json
 
 try:
     response = requests.get('http://127.0.0.1:5000/api/assets', timeout=5)
@@ -24,14 +23,14 @@ try:
         if 'uptime_formatted' in asset:
             print(f'\nuptime_formatted found: {asset["uptime_formatted"]}')
         else:
-            print(f'\nuptime_formatted NOT found in API response')
+            print('\nuptime_formatted NOT found in API response')
             
         # Check for common uptime-related fields
         uptime_fields = [k for k in asset.keys() if 'uptime' in k.lower()]
         if uptime_fields:
             print(f'Uptime-related fields found: {uptime_fields}')
         else:
-            print(f'No uptime-related fields found')
+            print('No uptime-related fields found')
     else:
         print('No assets in response')
         print(f'Response data: {data}')

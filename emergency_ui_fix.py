@@ -4,10 +4,8 @@ Critical UI Hang Fix - Emergency Threading Solution
 Fixes the remaining UI hanging issues during collection
 """
 
-from PyQt6.QtCore import QThread, pyqtSignal, QTimer, QMutex, QObject
+from PyQt6.QtCore import QThread, pyqtSignal, QTimer, QObject
 from PyQt6.QtWidgets import QApplication
-import time
-import threading
 
 class UltraFastCollectionWorker(QThread):
     """

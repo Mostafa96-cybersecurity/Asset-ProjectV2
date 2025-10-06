@@ -4,7 +4,6 @@ Add detailed device view API endpoint to intelligent app
 """
 
 from flask import jsonify
-import sqlite3
 import json
 
 def add_device_detail_endpoint(app, asset_manager):

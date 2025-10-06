@@ -11,7 +11,6 @@ Integrates all error prevention features into the collection workflow:
 """
 
 import logging
-import threading
 from typing import Dict, List, Optional, Callable
 from datetime import datetime
 from PyQt6.QtCore import QThread, pyqtSignal
@@ -20,7 +19,6 @@ from core.enhanced_smart_collector import EnhancedSmartCollector
 from core.advanced_duplicate_manager import DuplicateManager, DataValidator, ErrorRecovery
 # from core.excel_db_sync import ExcelDBSync  # Disabled - Database-only system
 from gui.error_monitor_dashboard import ErrorMonitor
-from collectors.ui_add_network_device import AddNetworkDeviceDialog
 
 log = logging.getLogger(__name__)
 
@@ -125,7 +123,7 @@ class EnhancedDeviceCollectionWorker(QThread):
             
             self.collection_completed.emit(final_stats)
             
-            log.info(f"✅ Enhanced collection completed successfully")
+            log.info("✅ Enhanced collection completed successfully")
             log.info(f"📊 Final Quality Score: {final_stats['final_quality_score']:.1f}%")
             
         except Exception as e:

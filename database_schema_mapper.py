@@ -184,7 +184,7 @@ def create_wmi_to_db_mapping():
     with open('wmi_to_database_mapping.json', 'w') as f:
         json.dump(filtered_mapping, f, indent=2)
     
-    print(f"\n💾 Mapping saved to: wmi_to_database_mapping.json")
+    print("\n💾 Mapping saved to: wmi_to_database_mapping.json")
     
     return filtered_mapping, schema
 

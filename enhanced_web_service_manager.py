@@ -5,7 +5,6 @@
 Fixes all web service button issues and adds comprehensive logging
 """
 
-import threading
 import time
 import subprocess
 import socket
@@ -13,7 +12,7 @@ import webbrowser
 import psutil
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Tuple, Dict, Any, List
+from typing import Tuple, Dict, Any, List
 import json
 import logging
 

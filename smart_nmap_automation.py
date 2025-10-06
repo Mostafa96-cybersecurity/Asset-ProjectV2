@@ -7,13 +7,9 @@ import sqlite3
 import subprocess
 import json
 import time
-import threading
 from datetime import datetime
-import socket
-import ipaddress
 import re
 from concurrent.futures import ThreadPoolExecutor
-import os
 
 class SmartNmapAutomation:
     def __init__(self, db_path='assets.db'):
@@ -375,7 +371,7 @@ class SmartNmapAutomation:
                 except Exception as e:
                     print(f"❌ Scan future error: {e}")
         
-        print(f"\n📊 Automation cycle completed:")
+        print("\n📊 Automation cycle completed:")
         print(f"   🎯 Devices scanned: {len(futures)}")
         print(f"   ✅ Successful identifications: {successful_scans}")
         print(f"   ❌ Failed scans: {len(futures) - successful_scans}")

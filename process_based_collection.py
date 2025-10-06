@@ -8,7 +8,6 @@ import multiprocessing
 import queue
 import time
 import sys
-import os
 from PyQt6.QtCore import QTimer, pyqtSignal, QObject
 from PyQt6.QtWidgets import QApplication
 

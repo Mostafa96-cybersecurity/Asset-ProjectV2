@@ -25,16 +25,11 @@ import platform
 import threading
 import multiprocessing
 import concurrent.futures
-from typing import Dict, List, Set, Optional, Tuple, Union, Any
+from typing import Dict, List, Set, Optional, Tuple, Any
 from dataclasses import dataclass, field
 from collections import defaultdict, deque
 from enum import Enum
-import hashlib
-import json
 import logging
-from pathlib import Path
-import psutil
-import ipaddress
 
 # Try imports for enhanced features
 try:
@@ -600,8 +595,8 @@ class UltimatePerformanceValidator:
             return {}
         
         self.logger.info(f"🚀 Starting ultimate performance validation of {len(ip_addresses)} devices")
-        self.logger.info(f"   ⚡ Your smart strategy: Lightning → Multi-validation for uncertain")
-        self.logger.info(f"   🔧 Modern enhancements: AsyncIO + Raw Sockets + Caching + Circuit Breakers")
+        self.logger.info("   ⚡ Your smart strategy: Lightning → Multi-validation for uncertain")
+        self.logger.info("   🔧 Modern enhancements: AsyncIO + Raw Sockets + Caching + Circuit Breakers")
         
         # Initialize metrics
         self.metrics.total_devices = len(ip_addresses)
@@ -743,7 +738,7 @@ def quick_test():
     metrics = validator.get_performance_metrics()
     cache_stats = validator.get_cache_stats()
     
-    print(f"\n🚀 PERFORMANCE METRICS:")
+    print("\n🚀 PERFORMANCE METRICS:")
     print(f"   ⚡ Speed: {metrics.devices_per_second:.1f} devices/second")
     print(f"   ⏱️  Total time: {total_time:.2f} seconds")
     print(f"   🎯 Accuracy: {100 - metrics.error_rate:.1f}%")

@@ -6,7 +6,6 @@ This tool analyzes what happened with hardware data collection and hostname mism
 """
 
 import sqlite3
-import json
 from datetime import datetime
 
 def check_hardware_collection_status():
@@ -50,7 +49,7 @@ def check_hardware_collection_status():
     print(f"\n📱 TOTAL DEVICES: {total_devices}")
     
     # Check hardware data completeness
-    print(f"\n🔧 HARDWARE DATA COMPLETENESS:")
+    print("\n🔧 HARDWARE DATA COMPLETENESS:")
     print("-" * 50)
     
     key_hardware_fields = ['processor_name', 'total_physical_memory', 'mac_address', 'system_manufacturer', 'serial_number']
@@ -65,7 +64,7 @@ def check_hardware_collection_status():
             print(f"   • {field}: Column not found")
     
     # Check recent collection activity
-    print(f"\n📅 RECENT COLLECTION ACTIVITY:")
+    print("\n📅 RECENT COLLECTION ACTIVITY:")
     print("-" * 50)
     
     # Check for collection timestamps
@@ -78,7 +77,7 @@ def check_hardware_collection_status():
         print(f"   • {col}: {recent_count} devices updated in last 7 days")
     
     # Check hostname mismatch feature
-    print(f"\n🏷️ HOSTNAME MISMATCH ANALYSIS:")
+    print("\n🏷️ HOSTNAME MISMATCH ANALYSIS:")
     print("-" * 50)
     
     # Check if hostname mismatch columns exist
@@ -98,14 +97,14 @@ def check_hardware_collection_status():
     hostname_fields = ['hostname', 'computer_name', 'dns_name', 'netbios_name']
     existing_hostname_fields = [field for field in hostname_fields if field in columns]
     
-    print(f"\n🏷️ HOSTNAME COMPARISON ANALYSIS:")
+    print("\n🏷️ HOSTNAME COMPARISON ANALYSIS:")
     print("-" * 50)
     
     if len(existing_hostname_fields) >= 2:
         print(f"Available hostname fields: {', '.join(existing_hostname_fields)}")
         
         # Compare different hostname fields
-        cursor.execute(f"""
+        cursor.execute("""
             SELECT hostname, computer_name, 
                    CASE WHEN hostname != computer_name THEN 'MISMATCH' ELSE 'MATCH' END as status,
                    COUNT(*) as count
@@ -125,7 +124,7 @@ def check_hardware_collection_status():
         print(f"Not enough hostname fields for comparison. Available: {existing_hostname_fields}")
     
     # Check device status distribution
-    print(f"\n📊 DEVICE STATUS DISTRIBUTION:")
+    print("\n📊 DEVICE STATUS DISTRIBUTION:")
     print("-" * 50)
     
     if 'device_status' in columns:
@@ -136,7 +135,7 @@ def check_hardware_collection_status():
             print(f"   • {status or 'NULL'}: {count} devices ({percentage:.1f}%)")
     
     # Check collection methods
-    print(f"\n🔧 COLLECTION METHODS:")
+    print("\n🔧 COLLECTION METHODS:")
     print("-" * 50)
     
     method_columns = [col for col in columns if 'collection' in col.lower() or 'method' in col.lower()]
@@ -150,7 +149,7 @@ def check_hardware_collection_status():
                 print(f"   • {method}: {count} devices")
     
     # Check for recent errors or issues
-    print(f"\n⚠️ POTENTIAL ISSUES:")
+    print("\n⚠️ POTENTIAL ISSUES:")
     print("-" * 50)
     
     # Check for devices with no hardware data at all
@@ -175,7 +174,7 @@ def check_hardware_collection_status():
         print(f"   • Recently seen but marked offline: {recent_offline} devices")
     
     # Summary
-    print(f"\n📋 SUMMARY:")
+    print("\n📋 SUMMARY:")
     print("-" * 50)
     
     # Calculate overall hardware collection success

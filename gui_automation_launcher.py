@@ -7,7 +7,6 @@ This is the recommended way to run the application with full automation features
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path

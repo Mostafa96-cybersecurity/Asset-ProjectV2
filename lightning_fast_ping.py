@@ -23,14 +23,11 @@ TARGET PERFORMANCE:
 - Burst: 500+ devices/second
 """
 
-import os
-import sys
 import time
 import subprocess
 import platform
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Tuple, Optional
+from typing import List
 import ipaddress
 import re
 from dataclasses import dataclass
@@ -318,7 +315,7 @@ class LightningFastPingValidator:
         log(f"⏱️  Ping timeout: {self.config['alive_timeout_ms']}ms")
         log(f"🔧 Max workers: {min(self.config['max_workers'], len(unique_ips))}")
         log(f"🖥️  OS: {platform.system()}")
-        log(f"📡 Method: Pure system ping only")
+        log("📡 Method: Pure system ping only")
         log("")
         
         start_time = time.time()
@@ -348,13 +345,13 @@ class LightningFastPingValidator:
         log_func("⚡ LIGHTNING-FAST PING VALIDATION RESULTS")
         log_func("=" * 80)
         
-        log_func(f"📊 SCAN RESULTS:")
+        log_func("📊 SCAN RESULTS:")
         log_func(f"   Total Scanned: {len(results)}")
         log_func(f"   ✅ Alive: {len(alive_devices)} ({len(alive_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❌ Dead/Timeout: {len(dead_devices)} ({len(dead_devices)/len(results)*100:.1f}%)")
         log_func("")
         
-        log_func(f"⚡ LIGHTNING PERFORMANCE:")
+        log_func("⚡ LIGHTNING PERFORMANCE:")
         log_func(f"   ⏱️  Total Time: {total_time:.2f} seconds")
         log_func(f"   🚀 Scan Rate: {len(results)/total_time:.1f} devices/second")
         if self.stats['fastest_ping'] < float('inf'):
@@ -371,7 +368,7 @@ class LightningFastPingValidator:
         # Show fastest responding devices
         if alive_devices:
             fastest_devices = sorted(alive_devices, key=lambda x: x.ping_time_ms)[:15]
-            log_func(f"⚡ FASTEST RESPONDING DEVICES:")
+            log_func("⚡ FASTEST RESPONDING DEVICES:")
             for device in fastest_devices:
                 log_func(f"   {device.ip:15} | {device.ping_time_ms:6.1f}ms | {device.details}")
         
@@ -430,7 +427,7 @@ def main():
     results = validator.lightning_validate_network(test_targets, progress_handler, log_handler)
     total_time = time.time() - start_time
     
-    print(f"\n⚡ LIGHTNING VALIDATION COMPLETED!")
+    print("\n⚡ LIGHTNING VALIDATION COMPLETED!")
     print(f"🚀 Scanned {len(results)} devices in {total_time:.2f} seconds")
     print(f"⚡ Rate: {len(results)/total_time:.1f} devices/second")
     if validator.stats['fastest_ping'] < float('inf'):

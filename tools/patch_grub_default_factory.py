@@ -9,7 +9,9 @@ with
 - يضيف: from dataclasses import field (لو ناقص)
 """
 from __future__ import annotations
-import os, sys, re, inspect
+import os
+import sys
+import re
 
 def find_grub_base():
     try:

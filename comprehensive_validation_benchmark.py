@@ -26,16 +26,14 @@ PERFORMANCE BENCHMARKS:
 
 import asyncio
 import time
-import threading
 import subprocess
 import socket
 import platform
 import psutil
 import concurrent.futures
-from typing import List, Dict, Any, Tuple
+from typing import Dict, Tuple
 from dataclasses import dataclass
 from enum import Enum
-import gc
 import tracemalloc
 
 class ValidationMethod(Enum):
@@ -167,7 +165,7 @@ class NetworkValidationBenchmark:
                         elif not alive and ip in self.known_alive:
                             false_negatives += 1
                             
-                    except Exception as e:
+                    except Exception:
                         results.append((ip, False, 1000))
             
             iteration_time = time.time() - start_time
@@ -338,7 +336,7 @@ class NetworkValidationBenchmark:
                         elif not alive and ip in self.known_alive:
                             false_negatives += 1
                             
-                    except Exception as e:
+                    except Exception:
                         results.append((ip, False, 1000))
             
             iteration_time = time.time() - start_time
@@ -429,7 +427,7 @@ class NetworkValidationBenchmark:
                         elif not alive and ip in self.known_alive:
                             false_negatives += 1
                             
-                    except Exception as e:
+                    except Exception:
                         results.append((ip, False, 1000))
             
             iteration_time = time.time() - start_time
@@ -540,8 +538,8 @@ class NetworkValidationBenchmark:
         print("🎯 FOR YOUR CURRENT NEEDS:")
         your_method = self.benchmark_results[ValidationMethod.ULTIMATE_FAST]
         print(f"   Your Ultimate Fast Validator: {your_method.overall_score:.1f}/10 score")
-        print(f"   ✅ Strengths: Reliable, moderate complexity, good performance")
-        print(f"   🔧 Potential improvements: AsyncIO could boost speed significantly")
+        print("   ✅ Strengths: Reliable, moderate complexity, good performance")
+        print("   🔧 Potential improvements: AsyncIO could boost speed significantly")
         
         print("\n💡 BEST PRACTICE RECOMMENDATIONS:")
         
@@ -587,9 +585,9 @@ async def main():
         results = await benchmark.run_comprehensive_benchmark()
         benchmark.print_comprehensive_comparison()
         
-        print(f"\n🎉 BENCHMARK COMPLETED!")
+        print("\n🎉 BENCHMARK COMPLETED!")
         print(f"📊 Tested {len(results)} different validation methods")
-        print(f"🏆 Best overall method determined with scientific analysis")
+        print("🏆 Best overall method determined with scientific analysis")
         
     except Exception as e:
         print(f"❌ Benchmark failed: {e}")

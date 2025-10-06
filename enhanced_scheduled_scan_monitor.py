@@ -356,7 +356,7 @@ class ScheduledScanMonitor:
                 
                 if progress != scan.get('progress', 0):
                     scan['progress'] = progress
-                    update_job_progress(scan['job_id'], progress, f'Scanning in progress')
+                    update_job_progress(scan['job_id'], progress, 'Scanning in progress')
                     
     def _save_status(self, current_time: datetime):
         """Save current status to file"""
@@ -477,7 +477,7 @@ if __name__ == "__main__":
     
     # Show next scans
     next_scans = monitor.get_next_scans()
-    print(f"\nNext scheduled scans:")
+    print("\nNext scheduled scans:")
     for scan in next_scans:
         print(f"  - {scan['name']}: {scan.get('next_run', 'Not scheduled')}")
         

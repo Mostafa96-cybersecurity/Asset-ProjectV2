@@ -34,14 +34,11 @@ USAGE SCENARIOS:
 """
 
 import time
-import threading
 import asyncio
 import subprocess
 import platform
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Dict, Any
-import socket
-import os
 
 class UltraFastNetworkSpeedDemo:
     """Demonstration of ultra-fast network scanning speeds achieved"""
@@ -162,7 +159,7 @@ class UltraFastNetworkSpeedDemo:
     
     def hybrid_speed_test(self) -> Dict[str, Any]:
         """Hybrid speed test - Target: 66+ IPs/second (our best achievement)"""
-        print(f"⚡ Starting hybrid speed test (our optimized approach)...")
+        print("⚡ Starting hybrid speed test (our optimized approach)...")
         start_time = time.time()
         
         # Phase 1: Ultra-fast alive detection

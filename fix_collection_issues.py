@@ -5,8 +5,6 @@ Addresses NMAP and system tool issues to enable full data collection
 """
 
 import subprocess
-import sys
-import os
 from pathlib import Path
 
 def fix_nmap_issue():
@@ -43,11 +41,11 @@ def fix_nmap_issue():
             Path.cwd() / "tools" / "nmap.exe"
         ]
         
-        print(f"\n🔍 Checking common NMAP locations...")
+        print("\n🔍 Checking common NMAP locations...")
         for path in common_paths:
             if Path(path).exists():
                 print(f"   ✅ Found NMAP at: {path}")
-                print(f"   💡 Add this to your PATH or copy to project directory")
+                print("   💡 Add this to your PATH or copy to project directory")
                 return str(path)
             else:
                 print(f"   ❌ Not found: {path}")
@@ -380,19 +378,19 @@ def main():
     print(f"NMAP availability: {'✅' if nmap_ok else '⚠️ Manual installation needed'}")
     print(f"Fallback strategy: {'✅' if fallback_created else '❌'}")
     print(f"NMAP method update: {'✅' if nmap_updated else '❌'}")
-    print(f"Troubleshooting guide: ✅")
+    print("Troubleshooting guide: ✅")
     
     if fallback_created and nmap_updated:
-        print(f"\n🎉 COLLECTION FIXES APPLIED SUCCESSFULLY!")
-        print(f"   • Enhanced fallback scanning when NMAP unavailable")
-        print(f"   • Automatic OS detection via port analysis")
-        print(f"   • Service identification from open ports")
-        print(f"   • Comprehensive error handling and logging")
-        print(f"   • Troubleshooting guide created")
-        print(f"\n🚀 Your collection system will now work even without NMAP!")
+        print("\n🎉 COLLECTION FIXES APPLIED SUCCESSFULLY!")
+        print("   • Enhanced fallback scanning when NMAP unavailable")
+        print("   • Automatic OS detection via port analysis")
+        print("   • Service identification from open ports")
+        print("   • Comprehensive error handling and logging")
+        print("   • Troubleshooting guide created")
+        print("\n🚀 Your collection system will now work even without NMAP!")
     else:
-        print(f"\n⚠️ Some fixes could not be applied")
-        print(f"   Please check the error messages above")
+        print("\n⚠️ Some fixes could not be applied")
+        print("   Please check the error messages above")
 
 if __name__ == "__main__":
     main()

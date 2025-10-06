@@ -9,7 +9,7 @@ import logging
 import platform
 import socket
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 
 log = logging.getLogger(__name__)
 
@@ -562,7 +562,7 @@ def test_enhanced_collection():
     # Test local collection
     result = collect_enhanced_wmi_data('127.0.0.1')
     
-    print(f"\n📊 Collection Results:")
+    print("\n📊 Collection Results:")
     print(f"🖥️  Hostname: {result['hostname']}")
     print(f"👤 Working User: {result['working_user']}")
     print(f"🏢 Domain: {result['domain']}")

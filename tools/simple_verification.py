@@ -8,7 +8,6 @@ and can successfully store complete device data.
 
 import os
 import sys
-import sqlite3
 from datetime import datetime
 
 # Add project root to path
@@ -44,7 +43,7 @@ def test_database_fields():
                 else:
                     missing_fields.append(field)
             
-            print(f"DATABASE SCHEMA TEST RESULTS:")
+            print("DATABASE SCHEMA TEST RESULTS:")
             print(f"Total Technical Fields Required: {len(REQUIRED_FIELDS)}")
             print(f"Fields Found in Database: {len(existing_fields)}")
             print(f"Missing Fields: {len(missing_fields)}")

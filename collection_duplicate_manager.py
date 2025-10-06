@@ -7,8 +7,8 @@ Integrates smart duplicate detection with hierarchical collection
 import sqlite3
 import json
 from datetime import datetime
-from typing import Dict, List, Optional
-from smart_duplicate_detector import SmartDuplicateDetector, DuplicateMatch, ResolutionAction
+from typing import Dict, List
+from smart_duplicate_detector import SmartDuplicateDetector, DuplicateMatch
 
 class CollectionDuplicateManager:
     """Manages duplicates during collection operations"""
@@ -488,7 +488,7 @@ if __name__ == "__main__":
     
     # Show statistics
     stats = manager.get_collection_statistics()
-    print(f"\n📈 STATISTICS:")
+    print("\n📈 STATISTICS:")
     print(f"Total devices: {stats['total_devices']}")
     print(f"Flagged duplicates: {stats['flagged_duplicates']}")
     print(f"Needs review: {stats['needs_review']}")

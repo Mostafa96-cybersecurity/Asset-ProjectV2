@@ -24,14 +24,12 @@ import time
 import socket
 import subprocess
 import platform
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Tuple, Optional, Set
+from typing import List, Optional
 import ipaddress
 import re
 from dataclasses import dataclass
 from enum import Enum
-import os
 
 class DeviceStatus(Enum):
     ALIVE = "ALIVE"
@@ -556,7 +554,7 @@ class UltimateHybridValidator:
         log(f"🔄 AsyncIO enabled: {self.config['use_asyncio']}")
         log(f"🔧 Raw sockets enabled: {self.config['use_raw_sockets']}")
         log(f"💾 Caching enabled: {self.config['enable_caching']}")
-        log(f"🧠 Strategy: Your smart multi-validation + Modern techniques")
+        log("🧠 Strategy: Your smart multi-validation + Modern techniques")
         log("")
         
         start_time = time.time()
@@ -693,14 +691,14 @@ class UltimateHybridValidator:
         multi_devices = [r for r in results if "MULTI" in r.validation_method]
         cached_devices = [r for r in results if r.cached]
         
-        log_func(f"📊 VALIDATION RESULTS:")
+        log_func("📊 VALIDATION RESULTS:")
         log_func(f"   Total Devices: {len(results)}")
         log_func(f"   ✅ Alive: {len(alive_devices)} ({len(alive_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❌ Dead: {len(dead_devices)} ({len(dead_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❓ Uncertain: {len(uncertain_devices)} ({len(uncertain_devices)/len(results)*100:.1f}%)")
         log_func("")
         
-        log_func(f"🚀 HYBRID PERFORMANCE BOOST:")
+        log_func("🚀 HYBRID PERFORMANCE BOOST:")
         log_func(f"   ⚡ Lightning Validation: {len(lightning_devices)} devices ({len(lightning_devices)/len(results)*100:.1f}%)")
         log_func(f"   🔍 Your Smart Multi-Validation: {len(multi_devices)} devices ({len(multi_devices)/len(results)*100:.1f}%)")
         log_func(f"   💾 Cache Hits: {len(cached_devices)} devices ({len(cached_devices)/len(results)*100:.1f}%)")
@@ -709,7 +707,7 @@ class UltimateHybridValidator:
         log_func(f"   💰 Time Saved: ~{self.stats['time_saved']:.0f} seconds vs full validation")
         log_func("")
         
-        log_func(f"🎯 MODERN ENHANCEMENT METRICS:")
+        log_func("🎯 MODERN ENHANCEMENT METRICS:")
         log_func(f"   🔧 Raw Socket Operations: {self.stats['raw_socket_uses']}")
         log_func(f"   🔄 Async Operations: {self.stats['async_operations']}")
         log_func(f"   💾 Cache Hit Rate: {self.stats['cache_hits']}/{len(results)} ({self.stats['cache_hits']/len(results)*100:.1f}%)")
@@ -718,7 +716,7 @@ class UltimateHybridValidator:
         # Show fastest alive devices
         fastest_alive = sorted(alive_devices, key=lambda x: x.ping_time_ms or x.response_time_ms)[:10]
         if fastest_alive:
-            log_func(f"⚡ FASTEST RESPONSIVE DEVICES (Hybrid-Enhanced):")
+            log_func("⚡ FASTEST RESPONSIVE DEVICES (Hybrid-Enhanced):")
             for device in fastest_alive:
                 ping_text = f"{device.ping_time_ms:.1f}ms" if device.ping_time_ms else f"{device.response_time_ms:.1f}ms"
                 skip_text = " (skipped multi)" if not device.needs_multi_validation else ""
@@ -767,10 +765,10 @@ async def main():
     results = await validator.ultimate_hybrid_validate(test_targets, progress_handler, log_handler)
     total_time = time.time() - start_time
     
-    print(f"\n🎉 ULTIMATE HYBRID VALIDATION COMPLETED!")
+    print("\n🎉 ULTIMATE HYBRID VALIDATION COMPLETED!")
     print(f"⚡ Validated {len(results)} devices in {total_time:.2f} seconds")
     print(f"🚀 Rate: {len(results)/total_time:.1f} devices/second")
-    print(f"🏆 Perfect fusion: Your smart strategy + Modern best practices!")
+    print("🏆 Perfect fusion: Your smart strategy + Modern best practices!")
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -47,12 +47,12 @@ def debug_collection_failure():
     try:
         nmap_result = strategy._enhanced_nmap_scan(test_ip)
         if nmap_result:
-            print(f"   ✅ NMAP scan successful")
+            print("   ✅ NMAP scan successful")
             print(f"   📊 OS family: {nmap_result.get('os_family', 'unknown')}")
             print(f"   🔌 Open ports: {nmap_result.get('open_ports', [])}")
             print(f"   🏷️ Hostname: {nmap_result.get('hostname', 'unknown')}")
         else:
-            print(f"   ❌ NMAP scan failed or returned no data")
+            print("   ❌ NMAP scan failed or returned no data")
     except Exception as e:
         print(f"   ❌ NMAP scan error: {e}")
     
@@ -61,12 +61,12 @@ def debug_collection_failure():
     try:
         wmi_result = strategy._comprehensive_wmi_collection(test_ip)
         if wmi_result:
-            print(f"   ✅ WMI collection successful")
+            print("   ✅ WMI collection successful")
             print(f"   📊 Data fields: {len(wmi_result)}")
             print(f"   💻 Computer name: {wmi_result.get('computer_name', 'unknown')}")
             print(f"   🖥️ OS: {wmi_result.get('os_name', 'unknown')}")
         else:
-            print(f"   ❌ WMI collection failed or returned no data")
+            print("   ❌ WMI collection failed or returned no data")
     except Exception as e:
         print(f"   ❌ WMI collection error: {e}")
     
@@ -76,12 +76,12 @@ def debug_collection_failure():
         # Use credentials from strategy
         ssh_result = strategy._comprehensive_ssh_collection(test_ip, credentials['username'], credentials['password'])
         if ssh_result:
-            print(f"   ✅ SSH collection successful")
+            print("   ✅ SSH collection successful")
             print(f"   📊 Data fields: {len(ssh_result)}")
             print(f"   💻 Hostname: {ssh_result.get('hostname', 'unknown')}")
             print(f"   🖥️ OS: {ssh_result.get('os_name', 'unknown')}")
         else:
-            print(f"   ❌ SSH collection failed or returned no data")
+            print("   ❌ SSH collection failed or returned no data")
     except Exception as e:
         print(f"   ❌ SSH collection error: {e}")
     
@@ -91,11 +91,11 @@ def debug_collection_failure():
         # Use default SNMP community
         snmp_result = strategy._comprehensive_snmp_collection(test_ip, 'public')
         if snmp_result:
-            print(f"   ✅ SNMP collection successful")
+            print("   ✅ SNMP collection successful")
             print(f"   📊 Data fields: {len(snmp_result)}")
             print(f"   🏷️ System description: {snmp_result.get('system_description', 'unknown')}")
         else:
-            print(f"   ❌ SNMP collection failed or returned no data")
+            print("   ❌ SNMP collection failed or returned no data")
     except Exception as e:
         print(f"   ❌ SNMP collection error: {e}")
     
@@ -104,12 +104,12 @@ def debug_collection_failure():
     try:
         http_result = strategy._http_service_detection(test_ip)
         if http_result:
-            print(f"   ✅ HTTP detection successful")
+            print("   ✅ HTTP detection successful")
             print(f"   📊 Services found: {len(http_result)}")
             for service, details in http_result.items():
                 print(f"      • {service}: {details}")
         else:
-            print(f"   ❌ HTTP detection failed or found no services")
+            print("   ❌ HTTP detection failed or found no services")
     except Exception as e:
         print(f"   ❌ HTTP detection error: {e}")
     

@@ -21,21 +21,15 @@ SPEED BENEFITS:
 - Overall: 10x faster than full multi-validation
 """
 
-import os
-import sys
 import time
 import socket
 import subprocess
 import platform
-import threading
-import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import List, Dict, Tuple, Optional, Any, Set
+from typing import List, Dict, Tuple, Optional, Any
 import ipaddress
 import re
 from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
 
 @dataclass
 class QuickCheckResult:
@@ -450,7 +444,7 @@ class SmartMultiValidator:
         log("=" * 50)
         log("⚡ Ultra-fast alive detection with smart multi-validation")
         log(f"🎯 Target devices: {len(unique_ips)}")
-        log(f"📊 Strategy: Quick check → Multi-validation only for uncertain cases")
+        log("📊 Strategy: Quick check → Multi-validation only for uncertain cases")
         log("")
         
         start_time = time.time()
@@ -629,14 +623,14 @@ class SmartMultiValidator:
         quick_validated = [r for r in results if r.validation_level == "QUICK"]
         multi_validated = [r for r in results if r.validation_level == "MULTI"]
         
-        print(f"📊 VALIDATION SUMMARY:")
+        print("📊 VALIDATION SUMMARY:")
         print(f"   Total Devices: {len(results)}")
         print(f"   ✅ Alive: {len(alive_devices)}")
         print(f"   ❌ Dead: {len(dead_devices)}")
         print(f"   ❓ Uncertain: {len(uncertain_devices)}")
         print()
         
-        print(f"⚡ SMART OPTIMIZATION RESULTS:")
+        print("⚡ SMART OPTIMIZATION RESULTS:")
         print(f"   🚀 Quick Validation: {len(quick_validated)} devices ({len(quick_validated)/len(results)*100:.1f}%)")
         print(f"   🔍 Multi-Validation: {len(multi_validated)} devices ({len(multi_validated)/len(results)*100:.1f}%)")
         print(f"   ⏱️  Total Time: {total_time:.2f} seconds")
@@ -644,7 +638,7 @@ class SmartMultiValidator:
         print(f"   💰 Time Saved: ~{self.stats['time_saved']:.0f} seconds vs full multi-validation")
         print()
         
-        print(f"📈 PERFORMANCE BREAKDOWN:")
+        print("📈 PERFORMANCE BREAKDOWN:")
         if 'quick_validation' in self.stats['phase_times']:
             quick_rate = len(results) / self.stats['phase_times']['quick_validation']
             print(f"   ⚡ Quick Validation Rate: {quick_rate:.1f} devices/second")
@@ -706,9 +700,9 @@ def main():
     results = validator.smart_validate_network(test_targets, progress_handler, log_handler)
     total_time = time.time() - start_time
     
-    print(f"\n🎉 SMART VALIDATION COMPLETED!")
+    print("\n🎉 SMART VALIDATION COMPLETED!")
     print(f"⚡ Validated {len(results)} devices in {total_time:.2f} seconds")
-    print(f"🎯 Smart optimization: Multi-validation used only where needed")
+    print("🎯 Smart optimization: Multi-validation used only where needed")
 
 if __name__ == "__main__":
     main()

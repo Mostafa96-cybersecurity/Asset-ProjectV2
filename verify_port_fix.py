@@ -9,8 +9,6 @@ import os
 import sys
 import subprocess
 import requests
-import time
-from pathlib import Path
 
 def main():
     """Main verification function"""

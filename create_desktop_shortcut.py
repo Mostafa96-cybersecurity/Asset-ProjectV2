@@ -5,7 +5,6 @@ Creates desktop shortcuts for easy access to the production system
 """
 
 import os
-import sys
 from pathlib import Path
 
 def create_desktop_shortcut():

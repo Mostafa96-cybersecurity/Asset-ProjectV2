@@ -26,8 +26,7 @@ import threading
 import hashlib
 import time
 import schedule
-from datetime import datetime, timedelta
-from collections import defaultdict
+from datetime import datetime
 
 class SmartAutomatedSystem:
     def __init__(self, db_path="assets.db"):
@@ -55,7 +54,7 @@ class SmartAutomatedSystem:
         print("=" * 70)
         print(f"🌐 Network range: {network_range}")
         print(f"⏰ Schedule: Every {schedule_minutes} minutes")
-        print(f"🧠 Smart features: ALIVE/DEAD detection, Auto duplicate fixing")
+        print("🧠 Smart features: ALIVE/DEAD detection, Auto duplicate fixing")
         print()
         
         # Schedule the automation
@@ -76,7 +75,7 @@ class SmartAutomatedSystem:
                 schedule.run_pending()
                 time.sleep(60)  # Check every minute
         except KeyboardInterrupt:
-            print(f"\n⏹️ Automation stopped by user")
+            print("\n⏹️ Automation stopped by user")
             self.show_automation_summary()
 
     def run_smart_automation_cycle(self, network_range):
@@ -91,27 +90,27 @@ class SmartAutomatedSystem:
         
         try:
             # Phase 1: Smart device discovery (alive vs dead)
-            print(f"\n🧠 PHASE 1: SMART DEVICE DISCOVERY")
+            print("\n🧠 PHASE 1: SMART DEVICE DISCOVERY")
             alive_devices, dead_devices = self.smart_device_discovery(network_range)
             
             # Phase 2: Update device states in database
-            print(f"\n📊 PHASE 2: UPDATE DEVICE STATES")
+            print("\n📊 PHASE 2: UPDATE DEVICE STATES")
             self.update_device_states(alive_devices, dead_devices)
             
             # Phase 3: Collect data ONLY from alive devices
-            print(f"\n📡 PHASE 3: SMART DATA COLLECTION")
+            print("\n📡 PHASE 3: SMART DATA COLLECTION")
             self.smart_data_collection(alive_devices)
             
             # Phase 4: Automatic duplicate detection and fixing
-            print(f"\n🔧 PHASE 4: AUTOMATIC DUPLICATE FIXING")
+            print("\n🔧 PHASE 4: AUTOMATIC DUPLICATE FIXING")
             self.automatic_duplicate_fixing()
             
             # Phase 5: Database optimization
-            print(f"\n⚡ PHASE 5: DATABASE OPTIMIZATION")
+            print("\n⚡ PHASE 5: DATABASE OPTIMIZATION")
             self.smart_database_optimization()
             
             # Phase 6: Show results
-            print(f"\n📈 PHASE 6: CYCLE RESULTS")
+            print("\n📈 PHASE 6: CYCLE RESULTS")
             self.show_cycle_results()
             
         except Exception as e:
@@ -202,7 +201,7 @@ class SmartAutomatedSystem:
             self.stats['alive_devices'] = len(alive_devices)
             self.stats['dead_devices'] = len(dead_devices)
             
-            print(f"\n🎯 Smart discovery complete:")
+            print("\n🎯 Smart discovery complete:")
             print(f"   📊 Total checked: {len(ip_list)}")
             print(f"   ✅ ALIVE: {len(alive_devices)} (will collect data)")
             print(f"   💀 DEAD: {len(dead_devices)} (will skip)")
@@ -276,7 +275,7 @@ class SmartAutomatedSystem:
     def update_device_states(self, alive_devices, dead_devices):
         """Update device states in database - mark alive/dead"""
         
-        print(f"📊 Updating device states in database...")
+        print("📊 Updating device states in database...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -350,7 +349,7 @@ class SmartAutomatedSystem:
         conn.commit()
         conn.close()
         
-        print(f"   ✅ Data collection complete!")
+        print("   ✅ Data collection complete!")
         print(f"   🔄 Updated: {self.stats['devices_updated']}")
         print(f"   ➕ Added: {self.stats['new_devices_added']}")
 
@@ -428,7 +427,7 @@ class SmartAutomatedSystem:
     def automatic_duplicate_fixing(self):
         """Automatically detect and fix duplicates - no manual intervention"""
         
-        print(f"🔧 Automatic duplicate detection and fixing...")
+        print("🔧 Automatic duplicate detection and fixing...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -522,7 +521,7 @@ class SmartAutomatedSystem:
                 self.stats['duplicates_fixed'] = len(devices_to_remove)
                 print(f"   ✅ Automatically fixed {len(devices_to_remove)} duplicates")
         else:
-            print(f"   ✅ No duplicates found - database is clean!")
+            print("   ✅ No duplicates found - database is clean!")
         
         conn.commit()
         conn.close()
@@ -609,7 +608,7 @@ class SmartAutomatedSystem:
     def smart_database_optimization(self):
         """Smart database optimization"""
         
-        print(f"⚡ Smart database optimization...")
+        print("⚡ Smart database optimization...")
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -632,7 +631,7 @@ class SmartAutomatedSystem:
         
         if old_deleted > 0:
             print(f"   🗑️ Cleaned up {old_deleted} very old dead devices")
-        print(f"   ✅ Database optimized")
+        print("   ✅ Database optimized")
 
     def show_cycle_results(self):
         """Show automation cycle results"""
@@ -654,7 +653,7 @@ class SmartAutomatedSystem:
         
         conn.close()
         
-        print(f"📈 SMART AUTOMATION CYCLE RESULTS")
+        print("📈 SMART AUTOMATION CYCLE RESULTS")
         print("=" * 70)
         print(f"⏱️  Cycle duration: {duration}")
         print(f"🔍 Devices checked: {self.stats['devices_checked']}")
@@ -664,7 +663,7 @@ class SmartAutomatedSystem:
         print(f"🔄 Devices updated: {self.stats['devices_updated']}")
         print(f"🔧 Duplicates fixed: {self.stats['duplicates_fixed']}")
         print()
-        print(f"📊 DATABASE STATUS:")
+        print("📊 DATABASE STATUS:")
         print(f"   📈 Total devices: {total_devices}")
         print(f"   ✅ Alive: {alive_count}")
         print(f"   💀 Dead: {dead_count}")
@@ -677,13 +676,13 @@ class SmartAutomatedSystem:
     def show_automation_summary(self):
         """Show overall automation summary"""
         
-        print(f"\n📊 AUTOMATION SUMMARY")
+        print("\n📊 AUTOMATION SUMMARY")
         print("=" * 70)
         print(f"🔄 Total automation cycles: {self.stats['automation_cycles']}")
-        print(f"🤖 Fully automated - no manual work required")
-        print(f"🧠 Smart ALIVE/DEAD device detection")
-        print(f"🔧 Automatic duplicate detection and fixing")
-        print(f"⚡ Optimized for performance and accuracy")
+        print("🤖 Fully automated - no manual work required")
+        print("🧠 Smart ALIVE/DEAD device detection")
+        print("🔧 Automatic duplicate detection and fixing")
+        print("⚡ Optimized for performance and accuracy")
 
 def main():
     """Start the smart automated system"""

@@ -8,7 +8,6 @@ Starts the web service with proper error handling and encoding support.
 
 import os
 import sys
-import io
 
 def setup_console_encoding():
     """Setup console encoding to handle Unicode properly on Windows"""

@@ -7,13 +7,7 @@ Professional Web Service Management Interface
 Complete GUI for web service control and monitoring
 """
 
-import sys
-import os
-import json
-import time
-import threading
 from datetime import datetime
-from typing import Dict, List, Any
 
 try:
     from PyQt6.QtWidgets import *

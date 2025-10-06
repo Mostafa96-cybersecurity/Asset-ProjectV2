@@ -15,20 +15,17 @@ Key Features:
 - Thread-safe database operations
 """
 
-import os
-import sys
 import time
 import socket
 import ipaddress
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from queue import Queue, Empty
-from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from typing import List, Dict, Set, Optional, Tuple, Any
+from typing import List, Dict, Set, Optional
 from datetime import datetime
 
-from PyQt6.QtCore import QThread, pyqtSignal, QObject
+from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtWidgets import QWidget
 
 # Import collection components

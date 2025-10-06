@@ -17,21 +17,15 @@ Features:
 ✅ Enhanced error handling and logging
 """
 
-import subprocess
 import json
 import sqlite3
 import socket
 import platform
 import psutil
-import os
-import sys
 import wmi
-import requests
 import time
 from datetime import datetime
 import logging
-import threading
-import queue
 import uuid
 
 # Configure logging

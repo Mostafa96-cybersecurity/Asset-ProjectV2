@@ -10,9 +10,7 @@ Author: Enhanced Asset Collection System
 Date: October 2025
 """
 
-from enhanced_collection_strategy import EnhancedCollectionStrategy
 import sqlite3
-from datetime import datetime
 
 def demo_dns_validation():
     """Demonstrate DNS hostname validation scenarios"""

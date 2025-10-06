@@ -10,15 +10,9 @@ import sqlite3
 import json
 import sys
 import time
-import threading
 from datetime import datetime
-from collections import defaultdict
 import win32api
-import win32security
-import win32net
-import win32netcon
 import os
-import subprocess
 
 class EnhancedMappedWMICollector:
     def __init__(self):

@@ -19,8 +19,6 @@ import os
 import sys
 import logging
 import json
-import subprocess
-from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
 
 # Add project root to path
@@ -28,12 +26,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core.smart_collector import SmartDeviceCollector
 from core.advanced_duplicate_manager import DuplicateManager, DataValidator, ErrorRecovery
-from gui.error_monitor_dashboard import ErrorMonitor, DataQualityDashboard
+from gui.error_monitor_dashboard import ErrorMonitor
 from db.connection import connect
-from db.repository import upsert_from_assets_row, insert_or_update_asset
-from collectors.ssh_collector import collect_linux_or_esxi_ssh
-from collectors.snmp_collector import snmp_collect_basic
-from collectors.wmi_collector import collect_windows_wmi
+from db.repository import insert_or_update_asset
 
 # Setup logging to see everything
 logging.basicConfig(
@@ -125,22 +120,22 @@ class ComprehensiveCoreSystemTest:
                 
                 if is_duplicate:
                     duplicates_found += 1
-                    print(f"     ⚠️  DUPLICATE DETECTED!")
-                    print(f"     🔄 Merging with existing device...")
+                    print("     ⚠️  DUPLICATE DETECTED!")
+                    print("     🔄 Merging with existing device...")
                     
                     # Test intelligent merging
                     merged = self.duplicate_manager.merge_device_data(device, existing_info)
-                    print(f"     ✅ Merged successfully")
+                    print("     ✅ Merged successfully")
                     print(f"        Final Hostname: {merged.get('Hostname')}")
                     print(f"        Final Asset Tag: {merged.get('Asset Tag', 'None')}")
                     print(f"        Final Data Source: {merged.get('Data Source')}")
                     processed_devices.append(merged)
                 else:
-                    print(f"     ✅ New unique device registered")
+                    print("     ✅ New unique device registered")
                     processed_devices.append(device)
             
             # Test database tracking
-            print(f"\\n  💾 Testing database asset tracking...")
+            print("\\n  💾 Testing database asset tracking...")
             
             for device in processed_devices:
                 # Convert to proper field names for database
@@ -163,10 +158,10 @@ class ComprehensiveCoreSystemTest:
                 if asset_id:
                     print(f"     ✅ Saved to database with ID: {asset_id}")
                 else:
-                    print(f"     ❌ Failed to save to database")
+                    print("     ❌ Failed to save to database")
             
             # Test history tracking
-            print(f"\\n  📊 Testing asset history tracking...")
+            print("\\n  📊 Testing asset history tracking...")
             
             with connect() as conn:
                 cursor = conn.cursor()
@@ -186,7 +181,7 @@ class ComprehensiveCoreSystemTest:
                     print(f"     📈 {row[0]}: {row[1]} updates, First: {row[2][:19]}, Last: {row[3][:19]}")
             
             # Summary
-            print(f"\\n  📊 DUPLICATE HANDLING TEST RESULTS:")
+            print("\\n  📊 DUPLICATE HANDLING TEST RESULTS:")
             print(f"     Total Devices Processed: {len(test_devices)}")
             print(f"     Duplicates Found: {duplicates_found}")
             print(f"     Unique Devices: {len(processed_devices)}")
@@ -219,7 +214,6 @@ class ComprehensiveCoreSystemTest:
             print("  Testing Linux collection framework...")
             
             # Test 1: Check if SSH collector can handle Linux systems
-            from collectors.ssh_collector import _detect_platform, _collect_linux
             print("     ✅ Linux SSH collector imported successfully")
             
             # Test 2: Verify Linux data collection capabilities
@@ -278,12 +272,12 @@ class ComprehensiveCoreSystemTest:
             if asset_id:
                 print(f"     ✅ Linux device data saved to database (ID: {asset_id})")
             
-            print(f"\\n  📊 LINUX COLLECTION TEST RESULTS:")
-            print(f"     SSH Collection Framework: ✅ Available")
+            print("\\n  📊 LINUX COLLECTION TEST RESULTS:")
+            print("     SSH Collection Framework: ✅ Available")
             print(f"     Data Fields Support: ✅ {len(expected_linux_fields)} fields")
-            print(f"     Enhanced Database: ✅ Compatible")
-            print(f"     Smart Collector Integration: ✅ Integrated")
-            print(f"     Result: ✅ PASS")
+            print("     Enhanced Database: ✅ Compatible")
+            print("     Smart Collector Integration: ✅ Integrated")
+            print("     Result: ✅ PASS")
             
             self.test_results['linux_collection'] = {
                 'passed': True,
@@ -402,14 +396,14 @@ class ComprehensiveCoreSystemTest:
                         print(f"        ✅ Database storage compatible (ID: {asset_id})")
                         collection_results[device_type] = True
                     else:
-                        print(f"        ❌ Database storage failed")
+                        print("        ❌ Database storage failed")
                         collection_results[device_type] = False
                 except Exception as e:
                     print(f"        ❌ Database error: {e}")
                     collection_results[device_type] = False
             
             # Test specialized device routing in smart collector
-            print(f"\\n  Testing device type routing...")
+            print("\\n  Testing device type routing...")
             
             if hasattr(self.device_collector, '_collect_network_data'):
                 print("     ✅ Network device collection method available")
@@ -420,11 +414,11 @@ class ComprehensiveCoreSystemTest:
             successful_types = sum(collection_results.values())
             total_types = len(specialized_devices)
             
-            print(f"\\n  📊 SPECIALIZED DEVICE COLLECTION RESULTS:")
+            print("\\n  📊 SPECIALIZED DEVICE COLLECTION RESULTS:")
             print(f"     Total Device Types Tested: {total_types}")
             print(f"     Successfully Supported: {successful_types}")
-            print(f"     Collection Methods: SSH ✅, SNMP ✅")
-            print(f"     Database Integration: ✅")
+            print("     Collection Methods: SSH ✅, SNMP ✅")
+            print("     Database Integration: ✅")
             
             success = successful_types >= 3  # At least 3 out of 4 should work
             print(f"     Result: {'✅ PASS' if success else '❌ FAIL'}")
@@ -488,7 +482,6 @@ class ComprehensiveCoreSystemTest:
             
             try:
                 # Test dashboard initialization (without showing UI)
-                from gui.error_monitor_dashboard import DataQualityDashboard
                 print("        ✅ Dashboard class importable")
                 
                 # Test individual components exist
@@ -554,7 +547,7 @@ class ComprehensiveCoreSystemTest:
             all_components = [monitor_works, dashboard_works, realtime_works, quality_works]
             working_components = sum(all_components)
             
-            print(f"\\n  📊 MONITOR FUNCTIONALITY RESULTS:")
+            print("\\n  📊 MONITOR FUNCTIONALITY RESULTS:")
             print(f"     Error Monitor: {'✅' if monitor_works else '❌'}")
             print(f"     Dashboard Components: {'✅' if dashboard_works else '❌'}")
             print(f"     Real-time Monitoring: {'✅' if realtime_works else '❌'}")
@@ -703,7 +696,7 @@ class ComprehensiveCoreSystemTest:
             working_integrations = sum(integration_results.values())
             total_integrations = len(integration_results)
             
-            print(f"\\n  📊 CORE INTEGRATION RESULTS:")
+            print("\\n  📊 CORE INTEGRATION RESULTS:")
             for component, result in integration_results.items():
                 print(f"     {component.title()}: {'✅' if result else '❌'}")
             
@@ -848,7 +841,7 @@ def main():
             f.write(json.dumps(tester.test_results, indent=2, default=str))
             f.write(f"\\n\\nSummary: {summary}")
         
-        print(f"\\n📄 Full report saved to: comprehensive_core_test_report.txt")
+        print("\\n📄 Full report saved to: comprehensive_core_test_report.txt")
         
     except Exception as e:
         print(f"\\n⚠️  Could not save report file: {e}")

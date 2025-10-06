@@ -7,10 +7,8 @@ Implementing the 7 critical enhancements with focus on functionality
 
 import os
 import sqlite3
-import threading
 import json
 from datetime import datetime
-from pathlib import Path
 
 class CoreSystemEnhancements:
     """Core system enhancements implementation"""

@@ -7,7 +7,7 @@ Real-time validation during collection with enterprise-grade duplicate detection
 import sqlite3
 import hashlib
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict
 import json
 
 class SmartDuplicateValidator:
@@ -131,7 +131,7 @@ class SmartDuplicateValidator:
                         'existing_id': existing['id'],
                         'confidence': 0.75,
                         'match_type': 'ip_hostname',
-                        'details': f'IP+Hostname match, merge new hardware data'
+                        'details': 'IP+Hostname match, merge new hardware data'
                     })
                 else:
                     # Possible device replacement or reconfiguration
@@ -141,7 +141,7 @@ class SmartDuplicateValidator:
                         'existing_id': existing['id'],
                         'confidence': 0.60,
                         'match_type': 'ip_hostname_replacement',
-                        'details': f'Same IP+Hostname, possible hardware replacement'
+                        'details': 'Same IP+Hostname, possible hardware replacement'
                     })
                 conn.close()
                 return result

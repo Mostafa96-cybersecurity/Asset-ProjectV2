@@ -6,7 +6,6 @@ Database Inspection and Repair Script
 
 import sqlite3
 import os
-import json
 
 def inspect_database():
     """Inspect the database structure and contents"""
@@ -61,7 +60,7 @@ def inspect_database():
                 print(f"    Error reading table: {e}")
         
         # Test specific queries that the web service uses
-        print(f"\n[INFO] Testing web service queries:")
+        print("\n[INFO] Testing web service queries:")
         
         # Test assets query
         try:

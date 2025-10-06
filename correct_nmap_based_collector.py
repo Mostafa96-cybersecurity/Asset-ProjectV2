@@ -9,7 +9,6 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from enhanced_ultimate_performance_collector import EnhancedUltimatePerformanceCollector, EnhancedDeviceInfo
-import json
 import sqlite3
 
 class CorrectNmapBasedCollector(EnhancedUltimatePerformanceCollector):

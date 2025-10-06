@@ -14,12 +14,9 @@ Features:
 """
 
 import pandas as pd
-import openpyxl
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
-from openpyxl.utils.dataframe import dataframe_to_rows
 from datetime import datetime
-from typing import List, Dict, Any, Optional
-import hashlib
+from typing import List, Dict, Any
 import re
 
 
@@ -141,7 +138,7 @@ class ProfessionalAssetFormatter:
                 })
                 
                 print(f"   🔄 DUPLICATE MERGED: {hostname}")
-                print(f"      → Enhanced data preserved without loss")
+                print("      → Enhanced data preserved without loss")
                 
             else:
                 # New unique device
@@ -150,7 +147,7 @@ class ProfessionalAssetFormatter:
                 print(f"   ✅ NEW DEVICE: {hostname}")
         
         if duplicate_log:
-            print(f"\n📊 DUPLICATE SUMMARY:")
+            print("\n📊 DUPLICATE SUMMARY:")
             for entry in duplicate_log:
                 print(f"   Original: {entry['original']}")
                 print(f"   Merged: {entry['duplicate']} → {entry['merged_into']}")
@@ -330,11 +327,11 @@ class ProfessionalAssetFormatter:
                 for cell in row:
                     cell.border = thin_border
         
-        print(f"✅ Professional Excel exported successfully!")
+        print("✅ Professional Excel exported successfully!")
         print(f"📁 File: {filename}")
-        print(f"🎨 Professional colors and formatting applied")
-        print(f"📊 Auto-adjusted column widths")
-        print(f"🔤 Proper text alignment and wrapping")
+        print("🎨 Professional colors and formatting applied")
+        print("📊 Auto-adjusted column widths")
+        print("🔤 Proper text alignment and wrapping")
         
         return filename
 
@@ -406,11 +403,11 @@ def demo_professional_formatting():
     # Export to Excel
     excel_file = formatter.export_professional_excel(df)
     
-    print(f"\n🎉 PROFESSIONAL FORMATTING COMPLETE!")
+    print("\n🎉 PROFESSIONAL FORMATTING COMPLETE!")
     print(f"📊 Excel file: {excel_file}")
-    print(f"🎨 Beautiful colors and organization applied")
-    print(f"🛡️ Smart duplicate handling completed")
-    print(f"💾 Storage details formatted: Disk 1 = 250GB, Disk 2 = 500GB")
+    print("🎨 Beautiful colors and organization applied")
+    print("🛡️ Smart duplicate handling completed")
+    print("💾 Storage details formatted: Disk 1 = 250GB, Disk 2 = 500GB")
     
     return df, excel_file
 

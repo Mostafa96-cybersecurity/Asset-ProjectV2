@@ -16,7 +16,7 @@ def investigate_database_issue():
     print("   • Database Shows: 222 devices ❌")
     print("   • Missing: 230 devices")
     
-    print(f"\n🗂️ DATABASE FILE ANALYSIS:")
+    print("\n🗂️ DATABASE FILE ANALYSIS:")
     
     # Check database file
     db_file = "assets.db"
@@ -34,7 +34,7 @@ def investigate_database_issue():
         return
     
     # Check for backup databases
-    print(f"\n🔍 CHECKING FOR MULTIPLE DATABASES:")
+    print("\n🔍 CHECKING FOR MULTIPLE DATABASES:")
     backup_files = [f for f in os.listdir('.') if f.endswith('.db') and 'asset' in f.lower()]
     
     for db in backup_files:
@@ -55,7 +55,7 @@ def investigate_database_issue():
             print(f"   ❌ {db}: Error - {e}")
     
     # Check for recent database activity
-    print(f"\n🔍 CHECKING DATABASE ACTIVITY:")
+    print("\n🔍 CHECKING DATABASE ACTIVITY:")
     try:
         conn = sqlite3.connect(db_file)
         cursor = conn.cursor()
@@ -86,21 +86,21 @@ def investigate_database_issue():
     except Exception as e:
         print(f"   ❌ Error checking activity: {e}")
     
-    print(f"\n💡 POSSIBLE CAUSES:")
+    print("\n💡 POSSIBLE CAUSES:")
     print("1. 🔄 **Transaction Not Committed**: Scan data in memory, not saved")
     print("2. 📁 **Wrong Database File**: Writing to different database")
     print("3. 🔒 **Database Lock**: File locked during write")
     print("4. 💥 **Collection Error**: Data collected but not inserted")
     print("5. 🕐 **Timing Issue**: Scan still writing data")
     
-    print(f"\n🔧 SOLUTIONS TO TRY:")
+    print("\n🔧 SOLUTIONS TO TRY:")
     print("1. Wait 1-2 minutes for database commit")
     print("2. Check application logs for errors")
     print("3. Restart application and check again")
     print("4. Force database refresh/commit")
     
     # Try to force a database refresh
-    print(f"\n🔄 ATTEMPTING DATABASE REFRESH:")
+    print("\n🔄 ATTEMPTING DATABASE REFRESH:")
     try:
         conn = sqlite3.connect(db_file)
         conn.execute("PRAGMA synchronous = FULL")

@@ -22,21 +22,15 @@ TARGET PERFORMANCE:
 - Overall: 50+ devices/second sustained
 """
 
-import os
-import sys
 import time
 import socket
 import subprocess
 import platform
-import threading
-import asyncio
-from concurrent.futures import ThreadPoolExecutor, as_completed, ProcessPoolExecutor
-from typing import List, Dict, Tuple, Optional, Any
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import List
 import ipaddress
 import re
 from dataclasses import dataclass
-import struct
-import select
 
 @dataclass
 class SuperFastResult:
@@ -456,13 +450,13 @@ class SuperFastPingValidator:
         log_func("🏆 SUPER-FAST VALIDATION RESULTS")
         log_func("=" * 80)
         
-        log_func(f"📊 RESULTS SUMMARY:")
+        log_func("📊 RESULTS SUMMARY:")
         log_func(f"   Total Devices: {len(results)}")
         log_func(f"   ✅ Alive: {len(alive_devices)} ({len(alive_devices)/len(results)*100:.1f}%)")
         log_func(f"   ❌ Dead: {len(dead_devices)} ({len(dead_devices)/len(results)*100:.1f}%)")
         log_func("")
         
-        log_func(f"⚡ SPEED PERFORMANCE:")
+        log_func("⚡ SPEED PERFORMANCE:")
         log_func(f"   ⏱️  Total Time: {total_time:.2f} seconds")
         log_func(f"   🚀 Overall Rate: {len(results)/total_time:.1f} devices/second")
         log_func(f"   ⚡ Fastest Response: {self.stats['fastest_response']:.1f}ms")
@@ -473,7 +467,7 @@ class SuperFastPingValidator:
         # Show fastest alive devices
         if alive_devices:
             alive_devices_sorted = sorted(alive_devices, key=lambda x: x.response_time_ms)
-            log_func(f"✅ FASTEST ALIVE DEVICES (Top 10):")
+            log_func("✅ FASTEST ALIVE DEVICES (Top 10):")
             for device in alive_devices_sorted[:10]:
                 log_func(f"   {device.ip:15} | {device.response_time_ms:6.1f}ms | {device.method:12} | {device.details}")
             
@@ -510,7 +504,7 @@ def main():
     validator = SuperFastPingValidator()
     
     # Show configuration
-    print(f"⚙️ Configuration:")
+    print("⚙️ Configuration:")
     print(f"   Ping timeout: {validator.config['ping_timeout_ms']}ms")
     print(f"   TCP timeout: {validator.config['tcp_timeout_ms']}ms")
     print(f"   Max workers: {validator.config['max_workers']}")
@@ -529,7 +523,7 @@ def main():
     results = validator.super_fast_validate_network(test_targets, progress_handler, log_handler)
     total_time = time.time() - start_time
     
-    print(f"\n🎉 SUPER-FAST VALIDATION COMPLETED!")
+    print("\n🎉 SUPER-FAST VALIDATION COMPLETED!")
     print(f"⚡ Validated {len(results)} devices in {total_time:.2f} seconds")
     print(f"🚀 Rate: {len(results)/total_time:.1f} devices/second")
     print(f"💨 Average response: {validator.stats['average_response']:.1f}ms per device")

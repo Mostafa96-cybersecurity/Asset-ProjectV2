@@ -13,13 +13,11 @@ Following the correct strategy:
 """
 
 import asyncio
-import concurrent.futures
-import socket
 import subprocess
 import json
 import time
 import sqlite3
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 import logging
@@ -439,7 +437,7 @@ class ComprehensiveScanEngine:
             if WMI_AVAILABLE:
                 # Actual WMI collection would go here
                 device.wmi_data = {
-                    'operating_system': f'Windows (detected via NMAP)',
+                    'operating_system': 'Windows (detected via NMAP)',
                     'computer_name': device.hostname,
                     'collection_method': 'WMI'
                 }
@@ -524,27 +522,27 @@ class ComprehensiveScanEngine:
                 server_ports = [53, 88, 135, 389, 445, 636]
                 if any(port in device.open_ports for port in server_ports):
                     device.classification_confidence = 0.75
-                    device.classification_reasoning = f"Windows OS with server ports"
+                    device.classification_reasoning = "Windows OS with server ports"
                     return "Server"
                 else:
                     device.classification_confidence = 0.70
-                    device.classification_reasoning = f"Windows OS, default to Workstation"
+                    device.classification_reasoning = "Windows OS, default to Workstation"
                     return "Workstation"
                     
             elif 'linux' in os_family:
                 server_ports = [22, 25, 53, 80, 443]
                 if any(port in device.open_ports for port in server_ports):
                     device.classification_confidence = 0.75
-                    device.classification_reasoning = f"Linux OS with server ports"
+                    device.classification_reasoning = "Linux OS with server ports"
                     return "Server"
                 else:
                     device.classification_confidence = 0.70
-                    device.classification_reasoning = f"Linux OS, default to Workstation"
+                    device.classification_reasoning = "Linux OS, default to Workstation"
                     return "Workstation"
                     
             elif 'network' in os_family:
                 device.classification_confidence = 0.80
-                device.classification_reasoning = f"Network OS detected"
+                device.classification_reasoning = "Network OS detected"
                 return "Network Device"
         
         # Fallback: Unknown
@@ -699,7 +697,7 @@ async def test_comprehensive_scan():
     
     devices = await scanner.comprehensive_scan(test_ranges)
     
-    print(f"\n✅ Test Results:")
+    print("\n✅ Test Results:")
     print(f"   Devices found: {len(devices)}")
     
     for device in devices:

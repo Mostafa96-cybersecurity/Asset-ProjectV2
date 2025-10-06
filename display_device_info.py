@@ -4,7 +4,6 @@ Display comprehensive device information collected by Ultimate Comprehensive Col
 """
 
 import sqlite3
-import json
 
 def display_comprehensive_device_info():
     """Display all collected device information"""
@@ -67,7 +66,7 @@ def display_comprehensive_device_info():
         print(f"✅ Populated Fields: {non_null_count}")
         print(f"📈 Data Completeness: {(non_null_count/total_columns)*100:.1f}%")
         
-        print(f"\n🎯 YOUR SYSTEM COLLECTS EVERYTHING:")
+        print("\n🎯 YOUR SYSTEM COLLECTS EVERYTHING:")
         print("✅ Complete Hardware Information (CPU, RAM, Storage, Graphics)")
         print("✅ Connected Monitors/Screens Detection")
         print("✅ All USB Devices and Controllers")

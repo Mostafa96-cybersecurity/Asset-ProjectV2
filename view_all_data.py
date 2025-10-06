@@ -51,7 +51,7 @@ def view_all_collected_data():
         
         print(f"🖥️  DEVICE #{i} (ID: {id})")
         print("-" * 80)
-        print(f"📍 Basic Info:")
+        print("📍 Basic Info:")
         print(f"   • Hostname: {hostname}")
         print(f"   • IP Address: {ip}")
         print(f"   • Device Type: {device_type or 'Unknown'}")
@@ -60,7 +60,7 @@ def view_all_collected_data():
         print(f"   • Collected At: {created_at}")
         print()
         
-        print(f"💻 System Information:")
+        print("💻 System Information:")
         print(f"   • Operating System: {os or 'Not Available'}")
         print(f"   • Windows Edition: {win_edition or 'Not Available'}")
         print(f"   • Manufacturer: {manufacturer or 'Not Available'}")
@@ -68,24 +68,24 @@ def view_all_collected_data():
         print(f"   • BIOS Serial: {bios or 'Not Available'}")
         print()
         
-        print(f"⚡ Hardware Details:")
+        print("⚡ Hardware Details:")
         print(f"   • Processor: {cpu or 'Not Available'}")
         print(f"   • Total Memory: {memory or 'Not Available'}")
         print(f"   • Total Disk Space: {disk_total or 'Not Available'}")
         print(f"   • Free Disk Space: {disk_free or 'Not Available'}")
         print()
         
-        print(f"🌐 Network Information:")
+        print("🌐 Network Information:")
         print(f"   • MAC Addresses: {mac or 'Not Available'}")
         print(f"   • Network Adapters: {network_adapter or 'Not Available'}")
         print(f"   • Domain: {domain or 'Not Available'}")
         print()
         
-        print(f"👤 User Information:")
+        print("👤 User Information:")
         print(f"   • Current User: {user or 'Not Available'}")
         print()
         
-        print(f"📅 System Timing:")
+        print("📅 System Timing:")
         print(f"   • Last Boot Time: {boot_time or 'Not Available'}")
         print(f"   • OS Installation Date: {install_date or 'Not Available'}")
         print()

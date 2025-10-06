@@ -7,12 +7,7 @@ that don't require authentication (LG, Samsung, JAC, etc.)
 
 import requests
 import socket
-import json
 import nmap
-import time
-import xml.etree.ElementTree as ET
-from urllib.parse import urlparse
-import ssl
 import logging
 from datetime import datetime
 
@@ -398,7 +393,7 @@ def main():
     else:
         network_range = "192.168.1.0/24"
     
-    print(f"🎯 SMART DISPLAY COLLECTOR")
+    print("🎯 SMART DISPLAY COLLECTOR")
     print(f"🔍 Scanning network: {network_range}")
     print("=" * 50)
     

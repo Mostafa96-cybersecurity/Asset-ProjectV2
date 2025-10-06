@@ -18,14 +18,14 @@ def force_database_commit():
         # Connect to database with explicit settings
         conn = sqlite3.connect('assets.db', timeout=30)
         
-        print(f"\n🔍 Current database state:")
+        print("\n🔍 Current database state:")
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM assets")
         current_count = cursor.fetchone()[0]
         print(f"   📊 Current assets: {current_count}")
         
         # Force commit any pending transactions
-        print(f"\n🔄 Forcing commit...")
+        print("\n🔄 Forcing commit...")
         conn.commit()
         
         # Check if anything changed
@@ -36,10 +36,10 @@ def force_database_commit():
         if after_commit != current_count:
             print(f"   ✅ Success! {after_commit - current_count} devices committed")
         else:
-            print(f"   ⚠️ No change - data might be lost or in different location")
+            print("   ⚠️ No change - data might be lost or in different location")
         
         # Try to vacuum the database to ensure integrity
-        print(f"\n🧹 Optimizing database...")
+        print("\n🧹 Optimizing database...")
         conn.execute("VACUUM")
         conn.commit()
         
@@ -52,13 +52,13 @@ def force_database_commit():
         """)
         recent = cursor.fetchall()
         
-        print(f"\n🔍 Most recent entries:")
+        print("\n🔍 Most recent entries:")
         for hostname, ip, updated in recent:
             print(f"   • {hostname or ip}: {updated}")
         
         conn.close()
         
-        print(f"\n💡 NEXT STEPS:")
+        print("\n💡 NEXT STEPS:")
         print("1. If count didn't change, data might be in memory only")
         print("2. Try restarting the application")
         print("3. Check if scan is writing to a different database")
@@ -71,7 +71,7 @@ def force_database_commit():
         return None
 
 def check_for_temp_databases():
-    print(f"\n🔍 CHECKING FOR TEMPORARY DATABASES:")
+    print("\n🔍 CHECKING FOR TEMPORARY DATABASES:")
     
     # Look for any database-like files
     db_files = []
@@ -110,8 +110,8 @@ if __name__ == "__main__":
     result = force_database_commit()
     check_for_temp_databases()
     
-    print(f"\n📋 SUMMARY:")
+    print("\n📋 SUMMARY:")
     if result and result > 222:
         print(f"   ✅ Database now has {result} devices!")
     else:
-        print(f"   ⚠️ Issue persists - may need to restart application or check collection process")
+        print("   ⚠️ Issue persists - may need to restart application or check collection process")

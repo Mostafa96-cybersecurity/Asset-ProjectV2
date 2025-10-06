@@ -2,7 +2,6 @@
 # Verify that data is actually being collected and saved to database in English only
 # Test device-specific field collection based on detected OS type
 
-import os
 import sys
 import sqlite3
 import time
@@ -23,7 +22,7 @@ TARGET_IP = "10.0.21.47"
 def verify_database_before_collection():
     """Check database state before collection"""
     
-    print(f"🔍 CHECKING DATABASE STATE BEFORE COLLECTION")
+    print("🔍 CHECKING DATABASE STATE BEFORE COLLECTION")
     print("=" * 60)
     
     try:
@@ -73,21 +72,21 @@ def test_os_detection():
         print("✅ OS detection functions imported successfully")
         
         # Try NMAP first
-        print(f"🔧 Attempting NMAP OS detection...")
+        print("🔧 Attempting NMAP OS detection...")
         nmap_result = _nmap_os_detection(TARGET_IP)
         
         if nmap_result.get('detected_os') != 'Unknown':
-            print(f"✅ NMAP Detection Success:")
+            print("✅ NMAP Detection Success:")
             print(f"   OS: {nmap_result.get('detected_os', 'Unknown')}")
             print(f"   Confidence: {nmap_result.get('os_confidence', 'Unknown')}")
             print(f"   Method: {nmap_result.get('detection_method', 'Unknown')}")
             return nmap_result
         else:
-            print(f"❌ NMAP detection failed, trying port-based detection...")
+            print("❌ NMAP detection failed, trying port-based detection...")
         
         # Fallback to port-based detection
         port_result = _port_based_os_detection(TARGET_IP)
-        print(f"✅ Port-based Detection Result:")
+        print("✅ Port-based Detection Result:")
         print(f"   OS: {port_result.get('detected_os', 'Unknown')}")
         print(f"   Confidence: {port_result.get('os_confidence', 'Unknown')}")
         print(f"   Method: {port_result.get('detection_method', 'Unknown')}")
@@ -133,7 +132,7 @@ def test_data_collection():
             'parent': None
         }
         
-        print(f"🔧 Collection Configuration:")
+        print("🔧 Collection Configuration:")
         print(f"   Target: {TARGET_IP}")
         print(f"   Windows Credentials: {len(collection_config['win_creds'])} sets")
         print(f"   Linux Credentials: {len(collection_config['linux_creds'])} sets")
@@ -165,7 +164,7 @@ def test_data_collection():
         collector.log_message.connect(on_log_message)
         collector.collection_finished.connect(on_collection_finished)
         
-        print(f"\n🚀 Starting collection...")
+        print("\n🚀 Starting collection...")
         collector.start()
         
         # Wait for collection
@@ -182,7 +181,7 @@ def test_data_collection():
             collector.stop()
             collector.wait(5000)
         
-        print(f"\n📊 Collection Results:")
+        print("\n📊 Collection Results:")
         print(f"   Devices collected: {len(collected_devices)}")
         print(f"   Log messages: {len(collection_logs)}")
         
@@ -197,7 +196,7 @@ def test_data_collection():
 def verify_database_after_collection():
     """Verify database state after collection and check for English-only data"""
     
-    print(f"\n💾 VERIFYING DATABASE AFTER COLLECTION")
+    print("\n💾 VERIFYING DATABASE AFTER COLLECTION")
     print("-" * 50)
     
     try:
@@ -216,7 +215,7 @@ def verify_database_after_collection():
             recent_records = cursor.fetchall()
             
             if recent_records:
-                print(f"\n🔍 Recent additions to database:")
+                print("\n🔍 Recent additions to database:")
                 for ip, hostname, device_type, created_at in recent_records:
                     print(f"   {ip} - {hostname} ({device_type}) - {created_at}")
             
@@ -242,7 +241,7 @@ def verify_database_after_collection():
                 'created_at', 'last_updated'
             ]
             
-            print(f"   🎯 Essential Information:")
+            print("   🎯 Essential Information:")
             for field in essential_fields:
                 value = device_data.get(field)
                 if value and str(value).strip() and str(value) not in ['None', 'null', '']:
@@ -265,17 +264,17 @@ def verify_database_after_collection():
             
             # Report language issues
             if arabic_fields:
-                print(f"   ❌ ARABIC TEXT FOUND:")
+                print("   ❌ ARABIC TEXT FOUND:")
                 for field, value in arabic_fields:
                     print(f"      {field}: {value}")
             
             if non_english_fields:
-                print(f"   ⚠️ NON-ASCII TEXT FOUND:")
+                print("   ⚠️ NON-ASCII TEXT FOUND:")
                 for field, value in non_english_fields:
                     print(f"      {field}: {value}")
             
             if not arabic_fields and not non_english_fields:
-                print(f"   ✅ ALL TEXT IS IN ENGLISH")
+                print("   ✅ ALL TEXT IS IN ENGLISH")
             
             # Device-specific field analysis
             device_type = device_data.get('device_type', 'Unknown')
@@ -305,7 +304,7 @@ def verify_database_after_collection():
 def show_device_type_requirements():
     """Show the field requirements for different device types"""
     
-    print(f"\n📋 DEVICE TYPE COLLECTION REQUIREMENTS")
+    print("\n📋 DEVICE TYPE COLLECTION REQUIREMENTS")
     print("=" * 60)
     
     requirements = {
@@ -359,7 +358,7 @@ def main():
     print("=" * 70)
     print(f"Target IP: {TARGET_IP}")
     print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Objective: Verify English-only data collection and database storage")
+    print("Objective: Verify English-only data collection and database storage")
     print("=" * 70)
     
     # Show requirements first
@@ -373,17 +372,17 @@ def main():
     
     # Step 3: Test data collection (if not already collected)
     if existing_records == 0:
-        print(f"\n📥 No existing records found - proceeding with collection")
+        print("\n📥 No existing records found - proceeding with collection")
         collected_devices = test_data_collection()
     else:
-        print(f"\n⏭️ Existing records found - skipping collection, verifying database")
+        print("\n⏭️ Existing records found - skipping collection, verifying database")
         collected_devices = []
     
     # Step 4: Verify database after collection
     verification_success = verify_database_after_collection()
     
     # Summary
-    print(f"\n" + "=" * 70)
+    print("\n" + "=" * 70)
     print("📋 VERIFICATION SUMMARY")
     print("=" * 70)
     
@@ -394,16 +393,16 @@ def main():
     print(f"💾 Database Verification: {'✅ Success' if verification_success else '❌ Failed'}")
     
     if verification_success:
-        print(f"\n✅ VERIFICATION COMPLETE - Data successfully collected and stored")
-        print(f"🌐 All data is in English as required")
-        print(f"📊 Device-specific fields collected based on detected OS")
+        print("\n✅ VERIFICATION COMPLETE - Data successfully collected and stored")
+        print("🌐 All data is in English as required")
+        print("📊 Device-specific fields collected based on detected OS")
     else:
-        print(f"\n❌ VERIFICATION FAILED")
-        print(f"🔧 Recommended actions:")
+        print("\n❌ VERIFICATION FAILED")
+        print("🔧 Recommended actions:")
         print(f"   1. Check network connectivity to {TARGET_IP}")
-        print(f"   2. Verify credentials for Windows/Linux access")
-        print(f"   3. Ensure SNMP is enabled on target device")
-        print(f"   4. Check firewall settings")
+        print("   2. Verify credentials for Windows/Linux access")
+        print("   3. Ensure SNMP is enabled on target device")
+        print("   4. Check firewall settings")
 
 if __name__ == "__main__":
     main()

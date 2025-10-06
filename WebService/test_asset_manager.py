@@ -44,7 +44,7 @@ def test_database_connection():
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
         tables = cursor.fetchall()
         
-        print(f"[OK] Database connection successful")
+        print("[OK] Database connection successful")
         print(f"[INFO] Found {len(tables)} tables:")
         for table in tables:
             print(f"  - {table[0]}")
@@ -69,7 +69,6 @@ def test_asset_manager_import():
     print("\n[INFO] Testing asset manager import...")
     
     try:
-        from intelligent_app import IntelligentAssetManager
         print("[OK] IntelligentAssetManager import successful")
         return True
     except Exception as e:

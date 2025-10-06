@@ -15,7 +15,7 @@ def optimize_timeout_settings():
     print("   • Collection Success: 222/461 (48%)")
     print("   • Needed: Longer timeout for complete collection")
     
-    print(f"\n💡 Recommended Fix:")
+    print("\n💡 Recommended Fix:")
     print("   • Increase collection_timeout from 60 to 300 seconds (5 minutes)")
     print("   • This allows ~39 seconds per device on average")
     print("   • Should cover all 461 devices discovered")
@@ -62,7 +62,7 @@ def optimize_timeout_settings():
         print(f"❌ Error updating timeout: {e}")
         return False
     
-    print(f"\n🚀 Next Steps:")
+    print("\n🚀 Next Steps:")
     print("1. Restart your application (close and relaunch)")
     print("2. Run another Asset Scan")
     print("3. Should now collect all 461 devices")
@@ -86,7 +86,7 @@ def create_timeout_config():
         with open('collection_timeout_config.json', 'w') as f:
             json.dump(config, f, indent=2)
         
-        print(f"\n📁 Created timeout config file: collection_timeout_config.json")
+        print("\n📁 Created timeout config file: collection_timeout_config.json")
         print("   You can adjust these settings as needed")
         
     except Exception as e:
@@ -96,8 +96,8 @@ if __name__ == "__main__":
     success = optimize_timeout_settings()
     if success:
         create_timeout_config()
-        print(f"\n✅ Timeout optimization complete!")
-        print(f"   Restart your application and try scanning again")
+        print("\n✅ Timeout optimization complete!")
+        print("   Restart your application and try scanning again")
     else:
-        print(f"\n❌ Manual adjustment needed")
-        print(f"   Edit gui/app.py line ~1650: change 'collection_timeout': 60 to 300")
+        print("\n❌ Manual adjustment needed")
+        print("   Edit gui/app.py line ~1650: change 'collection_timeout': 60 to 300")

@@ -1,5 +1,4 @@
 import sqlite3
-import json
 
 def check_database_status():
     try:

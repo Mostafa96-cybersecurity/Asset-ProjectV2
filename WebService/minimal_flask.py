@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.append('.')
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 import sqlite3
 
 app = Flask(__name__)

@@ -8,7 +8,7 @@ Integrates enhanced WMI collection and department management with existing syste
 import sqlite3
 import logging
 from datetime import datetime
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 
 from core.enhanced_wmi_collector import collect_enhanced_wmi_data
 from db.connection import connect
@@ -382,7 +382,7 @@ def test_enhanced_integration():
     # Test local machine enhancement
     result = enhance_single_asset('127.0.0.1')
     
-    print(f"\n📊 Enhancement Results:")
+    print("\n📊 Enhancement Results:")
     print(f"🖥️  Hostname: {result.get('hostname', 'N/A')}")
     print(f"👤 Working User: {result.get('working_user', 'N/A')}")
     print(f"🔧 Device Type: {result.get('device_type', 'N/A')}")
@@ -392,7 +392,7 @@ def test_enhanced_integration():
     
     # Get system status
     status = get_system_enhancement_status()
-    print(f"\n📈 System Enhancement Status:")
+    print("\n📈 System Enhancement Status:")
     print(f"Total Assets: {status.get('total_assets', 0)}")
     print(f"Enhanced Assets: {status.get('enhanced_assets', 0)} ({status.get('enhancement_percentage', 0):.1f}%)")
     print(f"Real Hostnames: {status.get('real_hostnames', 0)} ({status.get('real_hostname_percentage', 0):.1f}%)")

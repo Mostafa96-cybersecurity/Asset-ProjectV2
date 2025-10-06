@@ -12,12 +12,12 @@ def analyze_timeout_issue():
     print("   ✅ Devices Collected: 222 (48% success)")
     print("   ❌ Missing: 239 devices (52% timeout)")
     
-    print(f"\n⏱️ Timeout Analysis:")
+    print("\n⏱️ Timeout Analysis:")
     print("   • Large network discovered (461 devices)")
     print("   • Collection taking too long per device")
     print("   • Need to optimize timeout settings")
     
-    print(f"\n💡 SOLUTIONS:")
+    print("\n💡 SOLUTIONS:")
     print("=" * 30)
     
     print("🚀 Option 1: Increase Global Timeout")
@@ -25,29 +25,29 @@ def analyze_timeout_issue():
     print("   • Allow more time for complete collection")
     print("   • Best for comprehensive one-time scan")
     
-    print(f"\n⚡ Option 2: Reduce Per-Device Timeout")
+    print("\n⚡ Option 2: Reduce Per-Device Timeout")
     print("   • Decrease timeout per device (faster skip)")
     print("   • Collect more devices with basic info")
     print("   • Best for quick discovery")
     
-    print(f"\n🎯 Option 3: Smart Incremental Collection")
+    print("\n🎯 Option 3: Smart Incremental Collection")
     print("   • Collect in smaller batches")
     print("   • Resume from where it left off")
     print("   • Best for large networks")
     
-    print(f"\n🔧 Option 4: Adjust Collection Depth")
+    print("\n🔧 Option 4: Adjust Collection Depth")
     print("   • Use lighter collection methods first")
     print("   • Deep collection only for critical devices")
     print("   • Best for performance")
     
-    print(f"\n📋 RECOMMENDED APPROACH:")
+    print("\n📋 RECOMMENDED APPROACH:")
     print("=" * 30)
     print("1. 🔧 Adjust timeout settings for your network size")
     print("2. 🎯 Run incremental collection (50-100 devices at a time)")
     print("3. ⚡ Use faster collection methods for initial discovery")
     print("4. 🚀 Deep collection for critical devices only")
     
-    print(f"\n🛠️ Quick Fix Options:")
+    print("\n🛠️ Quick Fix Options:")
     print("-" * 20)
     print("A) Increase timeout and re-run scan")
     print("B) Run multiple smaller scans by IP range")
@@ -55,7 +55,7 @@ def analyze_timeout_issue():
     print("D) Configure collection priorities")
 
 def suggest_timeout_settings():
-    print(f"\n🔧 RECOMMENDED TIMEOUT SETTINGS:")
+    print("\n🔧 RECOMMENDED TIMEOUT SETTINGS:")
     print("=" * 40)
     
     devices_found = 461
@@ -65,18 +65,18 @@ def suggest_timeout_settings():
     avg_time_per_device = 30  # seconds (estimated)
     total_estimated_time = devices_found * avg_time_per_device / 60  # minutes
     
-    print(f"📊 Network Size Analysis:")
+    print("📊 Network Size Analysis:")
     print(f"   • Devices Found: {devices_found}")
     print(f"   • Estimated Time per Device: {avg_time_per_device}s")
     print(f"   • Total Estimated Time: {total_estimated_time:.1f} minutes")
     
-    print(f"\n⚙️ Suggested Settings:")
+    print("\n⚙️ Suggested Settings:")
     print(f"   • Global Timeout: {total_estimated_time * 1.5:.0f} minutes")
-    print(f"   • Per-Device Timeout: 15-20 seconds")
-    print(f"   • Batch Size: 50-100 devices")
-    print(f"   • Retry Failed: 2-3 attempts")
+    print("   • Per-Device Timeout: 15-20 seconds")
+    print("   • Batch Size: 50-100 devices")
+    print("   • Retry Failed: 2-3 attempts")
     
-    print(f"\n🎯 Optimization Strategy:")
+    print("\n🎯 Optimization Strategy:")
     print("   1. Start with ping discovery (fast)")
     print("   2. Basic info collection (medium)")
     print("   3. Detailed WMI/SSH (slow, critical only)")

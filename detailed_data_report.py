@@ -4,7 +4,6 @@ Detailed Data Collection Report - Fixed SQL queries
 """
 
 import sqlite3
-from datetime import datetime
 
 def detailed_data_report():
     """Generate detailed report of collected data"""

@@ -1,7 +1,5 @@
 """Simple test for web service connectivity issues"""
 import requests
-import time
-import sys
 import os
 
 def test_web_service_connection():

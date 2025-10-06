@@ -6,24 +6,11 @@ Comprehensive data collection system to achieve near 100% data completeness
 import wmi
 import psutil
 import socket
-import subprocess
 import json
-import sqlite3
 import platform
-import winreg
 import os
-import sys
-import threading
 import time
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
-import win32api
-import win32con
-import win32security
-import win32net
-import win32netcon
-import requests
-from pathlib import Path
 
 class Enhanced100PercentCollector:
     def __init__(self, db_path='assets.db'):
@@ -895,7 +882,7 @@ if __name__ == "__main__":
     collector = Enhanced100PercentCollector()
     data = collector.collect_comprehensive_data()
     
-    print(f"\n🎉 ENHANCED 100% DATA COLLECTION COMPLETE!")
+    print("\n🎉 ENHANCED 100% DATA COLLECTION COMPLETE!")
     print(f"   📊 Collected {len([k for k, v in data.items() if v is not None])} fields")
     print(f"   ✅ Data completeness: {data.get('data_completeness_score', 0):.1f}%")
     print(f"   🔧 Collection method: {data.get('collection_method')}")

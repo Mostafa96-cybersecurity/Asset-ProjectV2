@@ -7,7 +7,7 @@ import sys
 import os
 sys.path.append('.')
 
-from flask import Flask, jsonify, render_template, send_from_directory
+from flask import Flask, jsonify, send_from_directory
 import json
 
 # Create Flask app with proper template and static folders
@@ -52,8 +52,8 @@ def production_dashboard():
     try:
         # Serve the static dashboard directly
         return send_from_directory('../static', 'dashboard.html')
-    except Exception as e:
-        return f"""
+    except Exception:
+        return """
         <!DOCTYPE html>
         <html>
         <head>

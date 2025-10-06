@@ -105,7 +105,7 @@ def test_ultimate_dashboard():
         if sample_asset:
             columns = [description[0] for description in cursor.description]
             print(f"✅ Query returns {len(columns)} columns")
-            print(f"✅ Column count matches expected 29 columns for basic + advanced view")
+            print("✅ Column count matches expected 29 columns for basic + advanced view")
             
             # Show sample data
             print("\nSample asset data:")

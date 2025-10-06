@@ -9,7 +9,6 @@ import sys
 import inspect
 import threading
 import time
-import subprocess
 
 # Ensure parent directory is in path for imports
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -180,8 +179,8 @@ from PyQt6.QtGui import QIcon, QPixmap, QFont, QIntValidator
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton,
     QTextEdit, QProgressBar, QFileDialog, QHBoxLayout, QGroupBox, QMessageBox, QCheckBox,
-    QScrollArea, QComboBox, QInputDialog, QDialog, QListWidget, QListWidgetItem,
-    QTableWidget, QTableWidgetItem, QHeaderView
+    QScrollArea, QComboBox, QInputDialog, QDialog, QListWidgetItem,
+    QTableWidgetItem
 )
 
 # Web Service Management System ENABLED - integrated control
@@ -482,7 +481,6 @@ from utils.helpers import which  # which("nmap")
 # Import the manual-entry form helpers
 from collectors.ui_add_network_device import (
     open_add_device_dialog,
-    ensure_workbook_tabs,
 )
 
 NMAP_BIN = which("nmap")
@@ -2009,7 +2007,6 @@ class MainWindow(QMainWindow):
     
     def restart_web_service(self):
         """🛑 Stop the web service with enhanced implementation"""
-        import threading  # Import threading at the beginning
         
         try:
             self.web_service_log.append("🛑 Stopping web service...")
@@ -2039,7 +2036,7 @@ class MainWindow(QMainWindow):
                     # Fallback to original implementation
                     self._stop_web_service_fallback()
                         
-                except Exception as e:
+                except Exception:
                     QTimer.singleShot(0, lambda: self._update_web_service_status_after_stop(False, f"Error: {e}"))
             
             # Stop in background thread
@@ -2085,7 +2082,7 @@ class MainWindow(QMainWindow):
                 
             QTimer.singleShot(0, lambda: self._update_web_service_status_after_stop(True, "Web service stopped (fallback method)"))
             
-        except Exception as e:
+        except Exception:
             QTimer.singleShot(0, lambda: self._update_web_service_status_after_stop(False, f"Fallback stop failed: {e}"))
 
     def restart_web_service(self):
@@ -2150,7 +2147,7 @@ class MainWindow(QMainWindow):
             # Start again
             self._start_web_service_fallback()
             
-        except Exception as e:
+        except Exception:
             QTimer.singleShot(0, lambda: self._update_web_service_status_after_restart(False, f"Fallback restart failed: {e}"))
 
     def open_web_service(self):
@@ -2248,7 +2245,6 @@ class MainWindow(QMainWindow):
         """🎯 Open the Enhanced Dashboard Portal with Amazing UI"""
         try:
             import webbrowser
-            import subprocess
             import threading
             import time
             
@@ -2295,7 +2291,7 @@ class MainWindow(QMainWindow):
                         # Fallback: try to open URL anyway
                         webbrowser.open('http://localhost:3010')
                         
-                except Exception as e:
+                except Exception:
                     QTimer.singleShot(0, lambda: self.web_service_log.append(f"❌ Error starting dashboard: {str(e)}"))
                     # Fallback: try to open URL anyway
                     webbrowser.open('http://localhost:3010')
@@ -2517,8 +2513,7 @@ class MainWindow(QMainWindow):
     def manage_profile_networks(self):
         """Manage networks within a profile"""
         try:
-            from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem
-            import json
+            from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget
             
             profile_name = self.profile_combo.currentText()
             if profile_name == "-- Select Profile --" or not profile_name:
@@ -2860,7 +2855,7 @@ class MainWindow(QMainWindow):
     def open_access_control(self):
         """Open access control configuration dialog"""
         try:
-            from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem
+            from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QListWidget
             
             dialog = QDialog(self)
             dialog.setWindowTitle("🔐 Web Service Access Control")
@@ -3361,7 +3356,7 @@ class MainWindow(QMainWindow):
             else:
                 self.log_output.append(f"❌ Failed to start automatic scanning: {message}")
                 
-        except Exception as e:
+        except Exception:
             # Fallback to original implementation
             try:
                 if hasattr(self, 'automatic_scanner'):
@@ -3392,7 +3387,7 @@ class MainWindow(QMainWindow):
             else:
                 self.log_output.append(f"⚠️ {message}")
                 
-        except Exception as e:
+        except Exception:
             # Fallback to original implementation
             try:
                 if hasattr(self, 'automatic_scanner'):
@@ -3480,7 +3475,7 @@ class MainWindow(QMainWindow):
                 self.scheduled_scan_status.setText("⚠️ Monitor not available")
                 self.scheduled_scan_status.setStyleSheet("color: gray; font-weight: bold; padding: 5px;")
                 
-        except Exception as e:
+        except Exception:
             self.scheduled_scan_status.setText("❌ Monitor error")
             self.scheduled_scan_status.setStyleSheet("color: red; font-weight: bold; padding: 5px;")
             
@@ -3522,7 +3517,7 @@ class MainWindow(QMainWindow):
                     if len(lines) > 20:
                         self.realtime_log.setText('\\n'.join(lines[-20:]))
                         
-        except Exception as e:
+        except Exception:
             pass  # Silently fail for real-time updates
             
     def view_all_logs(self):

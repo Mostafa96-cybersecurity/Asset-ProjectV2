@@ -54,7 +54,7 @@ def run_full_network_scan():
             'save_to_database': True     # Ensure database saving
         }
         
-        print(f"🔧 Configuration:")
+        print("🔧 Configuration:")
         print(f"   📡 Network: {collector_kwargs['ip_ranges']}")
         print(f"   ⏱️ Timeout: {collector_kwargs['collection_timeout']} seconds")
         print(f"   👥 Workers: {collector_kwargs['max_workers']}")
@@ -102,7 +102,7 @@ def run_full_network_scan():
         final_count = check_database_before()
         growth = final_count - initial_count
         
-        print(f"\n📊 SCAN RESULTS:")
+        print("\n📊 SCAN RESULTS:")
         print(f"   ⏱️ Duration: {duration:.1f} seconds")
         print(f"   📈 Database growth: +{growth} devices")
         print(f"   📊 Final count: {final_count} devices")
@@ -111,7 +111,7 @@ def run_full_network_scan():
         if growth > 0:
             print(f"   ✅ SUCCESS: Added {growth} new devices to database!")
         else:
-            print(f"   ⚠️ No new devices added - may need to check network range or credentials")
+            print("   ⚠️ No new devices added - may need to check network range or credentials")
         
         return growth > 0
         
@@ -169,7 +169,7 @@ def alternative_scan_method():
         final_count = len(db.get_all_assets())
         growth = final_count - initial_count
         
-        print(f"\n📊 ALTERNATIVE SCAN RESULTS:")
+        print("\n📊 ALTERNATIVE SCAN RESULTS:")
         print(f"   📈 Database growth: +{growth} devices")
         print(f"   💾 Saved successfully: {saved_count}/{len(devices)}")
         
@@ -193,7 +193,7 @@ if __name__ == "__main__":
         print("\n🔄 Primary method failed, trying alternative...")
         success = alternative_scan_method()
     
-    print(f"\n🎯 FINAL RESULT:")
+    print("\n🎯 FINAL RESULT:")
     if success:
         print("   ✅ SCAN SUCCESSFUL - New devices added to database!")
         print("   📊 Run 'py simple_db_analysis.py' to see updated results")

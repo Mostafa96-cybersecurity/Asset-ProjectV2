@@ -11,15 +11,11 @@ import os
 import sys
 import json
 import time
-import threading
 import subprocess
-import sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Optional, Any
 import logging
 import psutil
-import signal
-from pathlib import Path
 
 class WebServiceManager:
     """Comprehensive Web Service Management System"""
@@ -212,7 +208,7 @@ class WebServiceManager:
                 self.logger.info(f"Web service started successfully with PID {self.service_pid}")
                 return {
                     "success": True,
-                    "message": f"Service started successfully",
+                    "message": "Service started successfully",
                     "pid": self.service_pid,
                     "host": self.config['service']['host'],
                     "port": self.config['service']['port']
@@ -410,7 +406,7 @@ class WebServiceManager:
             
             return {
                 "success": True,
-                "message": f"Cache cleared successfully",
+                "message": "Cache cleared successfully",
                 "items_removed": len(session_files)
             }
             

@@ -25,8 +25,7 @@ def verify_gui_performance_integration():
         from gui.app import (
             ULTIMATE_PERFORMANCE_AVAILABLE,
             ULTIMATE_PERFORMANCE_VALIDATOR_AVAILABLE,
-            ENHANCED_STRATEGY_AVAILABLE,
-            UltimatePerformanceCollectorThread
+            ENHANCED_STRATEGY_AVAILABLE
         )
         
         print("✅ GUI module imported successfully")
@@ -44,8 +43,8 @@ def verify_gui_performance_integration():
             
             # Test thread class
             print("\n🔧 Testing Ultimate Performance Thread Class:")
-            print(f"   ✅ UltimatePerformanceCollectorThread: Available")
-            print(f"   📊 Signals: progress_updated, log_message, collection_finished, device_collected")
+            print("   ✅ UltimatePerformanceCollectorThread: Available")
+            print("   📊 Signals: progress_updated, log_message, collection_finished, device_collected")
             
         elif ENHANCED_STRATEGY_AVAILABLE:
             print("\n🎯 FALLBACK: Enhanced Collection Strategy")

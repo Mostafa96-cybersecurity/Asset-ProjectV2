@@ -7,15 +7,15 @@ Complete department and location management with device assignment
 
 import sqlite3
 from datetime import datetime
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
                              QPushButton, QLineEdit, QTextEdit, QTableWidget,
                              QTableWidgetItem, QGroupBox, QComboBox, QTabWidget,
                              QHeaderView, QMessageBox, QDialog, QDialogButtonBox,
-                             QFormLayout, QSpinBox, QCheckBox, QListWidget,
+                             QFormLayout, QSpinBox, QListWidget,
                              QListWidgetItem, QSplitter, QProgressBar)
-from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtGui import QFont
 
 
 class DepartmentDatabase:
@@ -773,7 +773,7 @@ class DepartmentManagementWidget(QWidget):
                 if count > 0:
                     stats_text += f"  • {dept_name}: {count} devices\n"
             
-            stats_text += f"\n📍 LOCATION DISTRIBUTION:\n"
+            stats_text += "\n📍 LOCATION DISTRIBUTION:\n"
             
             for loc_name, count in sorted(location_distribution.items(), key=lambda x: x[1], reverse=True):
                 if count > 0:
@@ -786,20 +786,20 @@ class DepartmentManagementWidget(QWidget):
                     device_type = assignment.get('device_type', 'Unknown')
                     device_types[device_type] = device_types.get(device_type, 0) + 1
                 
-                stats_text += f"\n💻 DEVICE TYPE ANALYSIS:\n"
+                stats_text += "\n💻 DEVICE TYPE ANALYSIS:\n"
                 for device_type, count in sorted(device_types.items(), key=lambda x: x[1], reverse=True):
                     stats_text += f"  • {device_type}: {count} devices\n"
             
             # Add recommendations
-            stats_text += f"\n💡 RECOMMENDATIONS:\n"
+            stats_text += "\n💡 RECOMMENDATIONS:\n"
             if total_unassigned > 0:
                 stats_text += f"  • {total_unassigned} devices need department/location assignment\n"
             
             if active_departments == 0:
-                stats_text += f"  • Create departments to organize your devices\n"
+                stats_text += "  • Create departments to organize your devices\n"
             
             if total_locations == 0:
-                stats_text += f"  • Add locations to track device physical placement\n"
+                stats_text += "  • Add locations to track device physical placement\n"
             
             self.stats_display.setText(stats_text.strip())
             

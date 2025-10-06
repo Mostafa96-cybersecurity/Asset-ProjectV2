@@ -168,7 +168,7 @@ def analyze_manual_vs_automatic_fields():
         else:
             mixed_or_unknown.append(column)
     
-    print(f"🔍 FIELD ANALYSIS RESULTS:")
+    print("🔍 FIELD ANALYSIS RESULTS:")
     print(f"Total Database Columns: {len(all_columns)}")
     print(f"Manual Entry Required: {len(manual_only)} ({len(manual_only)/len(all_columns)*100:.1f}%)")
     print(f"Auto-Collectible: {len(auto_collectible)} ({len(auto_collectible)/len(all_columns)*100:.1f}%)")

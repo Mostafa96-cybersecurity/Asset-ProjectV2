@@ -13,17 +13,12 @@ Smart Device Collector with Advanced Error Prevention
 6. Error recovery and retry mechanisms
 """
 
-import ipaddress
 import subprocess
 import socket
-import re
 import logging
-import time
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from collections import defaultdict
 
-from core.advanced_duplicate_manager import DuplicateManager, DataValidator, ErrorRecovery
 
 log = logging.getLogger(__name__)
 

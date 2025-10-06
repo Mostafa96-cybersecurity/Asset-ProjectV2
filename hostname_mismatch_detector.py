@@ -85,7 +85,7 @@ class HostnameMismatchDetector:
     def detect_hostname_mismatches(self, cursor):
         """Detect hostname mismatches using comprehensive comparison logic"""
         
-        print(f"\n🔍 DETECTING HOSTNAME MISMATCHES:")
+        print("\n🔍 DETECTING HOSTNAME MISMATCHES:")
         
         # Get all devices with both hostname and computer_name
         cursor.execute("""
@@ -194,7 +194,7 @@ class HostnameMismatchDetector:
     def update_hostname_mismatch_flags(self, cursor):
         """Update database with hostname mismatch flags"""
         
-        print(f"\n💾 UPDATING HOSTNAME MISMATCH FLAGS:")
+        print("\n💾 UPDATING HOSTNAME MISMATCH FLAGS:")
         
         # Get mismatch results
         mismatch_results = self.detect_hostname_mismatches(cursor)
@@ -226,7 +226,7 @@ class HostnameMismatchDetector:
     def generate_mismatch_report(self, cursor):
         """Generate detailed hostname mismatch report"""
         
-        print(f"\n📋 GENERATING MISMATCH REPORT:")
+        print("\n📋 GENERATING MISMATCH REPORT:")
         
         # Get mismatch summary
         cursor.execute("""
@@ -242,7 +242,7 @@ class HostnameMismatchDetector:
         
         summary_results = cursor.fetchall()
         
-        print(f"   📊 Mismatch Summary:")
+        print("   📊 Mismatch Summary:")
         for mismatch_status, mismatch_type, count in summary_results:
             print(f"      • {mismatch_status} ({mismatch_type}): {count} devices")
         
@@ -258,7 +258,7 @@ class HostnameMismatchDetector:
         top_mismatches = cursor.fetchall()
         
         if top_mismatches:
-            print(f"\n   🔍 Top Mismatches (first 10):")
+            print("\n   🔍 Top Mismatches (first 10):")
             for hostname, computer_name, details in top_mismatches:
                 print(f"      • {hostname} ↔ {computer_name}")
                 print(f"        Details: {details}")
@@ -266,7 +266,7 @@ class HostnameMismatchDetector:
     def show_detection_results(self):
         """Show hostname mismatch detection results"""
         
-        print(f"\n📊 HOSTNAME MISMATCH DETECTION RESULTS")
+        print("\n📊 HOSTNAME MISMATCH DETECTION RESULTS")
         print("=" * 70)
         print(f"📱 Total devices analyzed: {self.stats['devices_with_both_names']}")
         print(f"✅ Exact matches: {self.stats['exact_matches']}")
@@ -276,13 +276,13 @@ class HostnameMismatchDetector:
             mismatch_rate = (self.stats['mismatches_found'] / self.stats['devices_with_both_names'] * 100)
             print(f"📈 MISMATCH RATE: {mismatch_rate:.1f}%")
         
-        print(f"\n🔍 MISMATCH BREAKDOWN:")
+        print("\n🔍 MISMATCH BREAKDOWN:")
         print(f"   • Domain mismatches: {self.stats['domain_mismatches']}")
         print(f"   • Case mismatches: {self.stats['case_mismatches']}")  
         print(f"   • Prefix mismatches: {self.stats['prefix_mismatches']}")
         print(f"   • Complete mismatches: {self.stats['mismatches_found'] - self.stats['domain_mismatches'] - self.stats['case_mismatches'] - self.stats['prefix_mismatches']}")
         
-        print(f"\n✅ HOSTNAME MISMATCH DETECTION FEATURE IMPLEMENTED!")
+        print("\n✅ HOSTNAME MISMATCH DETECTION FEATURE IMPLEMENTED!")
         print("   • hostname_mismatch column added")
         print("   • hostname_mismatch_type column added")  
         print("   • hostname_mismatch_details column added")

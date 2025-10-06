@@ -8,8 +8,6 @@ and functional in the main GUI application.
 """
 
 import os
-import sys
-import importlib.util
 
 def test_enhancement_availability():
     """Test that all enhancement modules can be imported"""

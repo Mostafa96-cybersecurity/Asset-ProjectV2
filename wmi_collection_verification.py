@@ -6,7 +6,6 @@ Verify what data was collected and show completeness
 
 import sqlite3
 import json
-from datetime import datetime
 
 def verify_wmi_collection():
     print("=" * 80)
@@ -194,12 +193,12 @@ def verify_wmi_collection():
     overall_percentage = (populated_fields / all_fields) * 100
     wmi_percentage = (wmi_populated / wmi_related_fields) * 100 if wmi_related_fields > 0 else 0
     
-    print(f"📊 OVERALL DATA COMPLETENESS:")
+    print("📊 OVERALL DATA COMPLETENESS:")
     print(f"   • Total fields in database: {all_fields}")
     print(f"   • Fields with data: {populated_fields}")
     print(f"   • Overall completion: {overall_percentage:.1f}%")
     print()
-    print(f"📊 WMI DATA COMPLETENESS:")
+    print("📊 WMI DATA COMPLETENESS:")
     print(f"   • WMI-related fields: {wmi_related_fields}")
     print(f"   • WMI fields populated: {wmi_populated}")
     print(f"   • WMI completion: {wmi_percentage:.1f}%")
@@ -218,7 +217,7 @@ def verify_wmi_collection():
     
     if total_other_devices > 0:
         previous_percentage = (other_devices_with_os / total_other_devices) * 100
-        print(f"📈 IMPROVEMENT ANALYSIS:")
+        print("📈 IMPROVEMENT ANALYSIS:")
         print(f"   • Previous data collection rate: {previous_percentage:.1f}%")
         print(f"   • New WMI collection rate: {wmi_percentage:.1f}%")
         print(f"   • Improvement: +{wmi_percentage - previous_percentage:.1f} percentage points")
@@ -309,7 +308,7 @@ def show_software_summary():
     if software_json:
         try:
             software_list = json.loads(software_json)
-            print(f"\n📋 INSTALLED SOFTWARE (Top 10):")
+            print("\n📋 INSTALLED SOFTWARE (Top 10):")
             for i, software in enumerate(software_list[:10], 1):
                 print(f"   {i}. {software.get('name', 'Unknown')}")
                 print(f"      Version: {software.get('version', 'Unknown')}")

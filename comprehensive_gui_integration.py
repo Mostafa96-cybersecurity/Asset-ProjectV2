@@ -15,12 +15,8 @@ Integrates all enhancements directly into the GUI app with working functionality
 """
 
 import os
-import sys
-import threading
-import time
 import sqlite3
 import json
-from datetime import datetime
 from pathlib import Path
 
 class ComprehensiveGUIIntegration:

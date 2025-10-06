@@ -5,7 +5,6 @@ Shows exactly what data WMI can collect with proper Windows credentials
 """
 
 import wmi
-import logging
 from datetime import datetime
 
 def test_wmi_with_authentication():
@@ -13,8 +12,8 @@ def test_wmi_with_authentication():
     
     print("🔐 WMI AUTHENTICATION COLLECTION ANALYSIS")
     print("=" * 80)
-    print(f"Testing WMI data collection with authentication")
-    print(f"Target: localhost (127.0.0.1)")
+    print("Testing WMI data collection with authentication")
+    print("Target: localhost (127.0.0.1)")
     print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
     
@@ -290,15 +289,15 @@ def test_wmi_with_authentication():
         print("\n📊 WMI COLLECTION SUMMARY:")
         print("=" * 60)
         print(f"✅ Total Data Points Collected: {len(collected_data)}")
-        print(f"🔐 Authentication: Required and Used")
-        print(f"📋 Data Categories:")
-        print(f"   • System Information: ✅")
-        print(f"   • Operating System: ✅")
-        print(f"   • Hardware Details: ✅")
-        print(f"   • Network Configuration: ✅")
-        print(f"   • User Accounts: ✅")
-        print(f"   • Installed Software: ✅")
-        print(f"   • Running Services: ✅")
+        print("🔐 Authentication: Required and Used")
+        print("📋 Data Categories:")
+        print("   • System Information: ✅")
+        print("   • Operating System: ✅")
+        print("   • Hardware Details: ✅")
+        print("   • Network Configuration: ✅")
+        print("   • User Accounts: ✅")
+        print("   • Installed Software: ✅")
+        print("   • Running Services: ✅")
         print()
         
         print("🔑 AUTHENTICATION BENEFITS:")

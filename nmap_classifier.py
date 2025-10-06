@@ -407,16 +407,15 @@ def main():
         return
     
     # Test classification
-    import asyncio
     results = asyncio.run(classifier.classify_unknown_devices_batch(3))
     
-    print(f"\n📊 Classification Results:")
+    print("\n📊 Classification Results:")
     for result in results:
         print(f"  {result['ip_address']} -> {result['classification']['device_type']}")
     
     # Show stats
     stats = classifier.get_classification_stats()
-    print(f"\n📈 Classification Statistics:")
+    print("\n📈 Classification Statistics:")
     print(f"  Device Types: {stats['device_types']}")
     print(f"  Unknown Devices: {stats['unknown_devices']}")
     print(f"  NMAP Available: {stats['nmap_available']}")

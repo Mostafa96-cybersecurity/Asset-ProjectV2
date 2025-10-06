@@ -19,15 +19,12 @@ Author: Enhanced from your excellent foundation
 
 import asyncio
 import time
-import threading
 import multiprocessing
 import concurrent.futures
-from typing import Dict, List, Set, Optional, Tuple, Any, Union
+from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
-from collections import defaultdict, deque
 import json
 import logging
-from pathlib import Path
 import ipaddress
 import socket
 import platform
@@ -36,7 +33,7 @@ import queue
 
 # Import our ultimate performance validator
 from ultimate_performance_validator import (
-    UltimatePerformanceValidator, DeviceStatus, ValidationResult, PerformanceMetrics
+    UltimatePerformanceValidator, DeviceStatus, ValidationResult
 )
 
 # Try imports for enhanced collection
@@ -808,7 +805,7 @@ def demo_collection():
     total_time = time.time() - start_time
     
     # Display results
-    print(f"\n📊 COLLECTION RESULTS:")
+    print("\n📊 COLLECTION RESULTS:")
     print("-" * 60)
     
     for ip, device in devices.items():
@@ -818,7 +815,7 @@ def demo_collection():
     # Metrics
     metrics = collector.get_collection_metrics()
     
-    print(f"\n🚀 PERFORMANCE METRICS:")
+    print("\n🚀 PERFORMANCE METRICS:")
     print(f"   📊 Total devices: {len(test_ips)}")
     print(f"   ✅ Alive devices: {metrics.validated_alive}")
     print(f"   🎯 Successfully collected: {metrics.collection_successful}")
@@ -829,7 +826,7 @@ def demo_collection():
     print(f"   ⏱️  Collection time: {metrics.collection_time:.2f}s")
     print(f"   ⏱️  Total time: {total_time:.2f}s")
     
-    print(f"\n🏆 DEMO COMPLETE - Ultimate performance with enterprise-grade collection!")
+    print("\n🏆 DEMO COMPLETE - Ultimate performance with enterprise-grade collection!")
 
 
 if __name__ == "__main__":

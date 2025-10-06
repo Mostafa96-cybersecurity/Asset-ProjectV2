@@ -10,14 +10,12 @@ import sqlite3
 import json
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from collectors.wmi_collector import collect_windows_wmi
-from collectors.ssh_collector import collect_linux_or_esxi_ssh
-from collectors.snmp_collector import snmp_collect_basic
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -170,10 +168,10 @@ class CompleteDataCollector:
     def display_collected_data(self, db_data: Dict, raw_data: Dict):
         """Display what data was collected and stored"""
         
-        print(f"\n📊 COMPLETE DATA COLLECTION RESULTS")
+        print("\n📊 COMPLETE DATA COLLECTION RESULTS")
         print("="*60)
         
-        print(f"🎯 TARGET TECHNICAL FIELDS - STATUS:")
+        print("🎯 TARGET TECHNICAL FIELDS - STATUS:")
         print("-"*40)
         
         required_fields = {
@@ -199,7 +197,7 @@ class CompleteDataCollector:
             display_value = str(value) if value else 'NOT COLLECTED'
             print(f"{status} {field:<20}: {display_value}")
         
-        print(f"\n🔧 ADDITIONAL TECHNICAL DATA:")
+        print("\n🔧 ADDITIONAL TECHNICAL DATA:")
         print("-"*35)
         
         additional_fields = {
@@ -216,7 +214,7 @@ class CompleteDataCollector:
     def verify_complete_collection(self):
         """Verify that all technical data is now being collected and stored"""
         
-        print(f"\n🔍 VERIFICATION - COMPLETE DATA COLLECTION")
+        print("\n🔍 VERIFICATION - COMPLETE DATA COLLECTION")
         print("="*50)
         
         try:
@@ -281,12 +279,12 @@ def main():
         # Verify the collection
         collector.verify_complete_collection()
         
-        print(f"\n🎯 SUCCESS!")
+        print("\n🎯 SUCCESS!")
         print("="*20)
         print("✅ ALL technical data fields are now being collected")
         print("✅ Data properly stored in dedicated database fields") 
         print("✅ 100% technical data coverage achieved")
-        print(f"\n💡 Your system now collects:")
+        print("\n💡 Your system now collects:")
         print("   • Hostname, Working User, Domain")
         print("   • Device Model, Infrastructure type") 
         print("   • OS Name, RAM capacity, Storage info")

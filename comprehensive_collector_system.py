@@ -10,9 +10,7 @@ Device Types: Windows, Linux, Hypervisor, Network, Printers, Fingerprint
 import os
 import sys
 import sqlite3
-import time
 import socket
-import subprocess
 import json
 from datetime import datetime
 from pathlib import Path
@@ -153,7 +151,7 @@ class EnhancedDeviceCollector:
                                 'source': f'Profile: {profile_name}'
                             })
                 
-                print(f"✅ Loaded credentials from desktop app:")
+                print("✅ Loaded credentials from desktop app:")
                 print(f"   Windows: {len(credentials['windows'])} accounts")
                 print(f"   Linux: {len(credentials['linux'])} accounts")
             
@@ -162,11 +160,11 @@ class EnhancedDeviceCollector:
                 with open('collector_credentials.json', 'r', encoding='utf-8') as f:
                     saved_creds = json.load(f)
                     credentials.update(saved_creds)
-                print(f"✅ Loaded additional credentials from collector file")
+                print("✅ Loaded additional credentials from collector file")
         
         except Exception as e:
             print(f"⚠️ Could not load desktop app credentials: {e}")
-            print(f"💡 Use desktop app to save credentials, or configure manually")
+            print("💡 Use desktop app to save credentials, or configure manually")
         
         return credentials
     
@@ -224,7 +222,7 @@ class EnhancedDeviceCollector:
         # Step 2: Device type classification
         device_type = self._classify_device_type(open_ports)
         
-        print(f"\n📊 DETECTION RESULTS:")
+        print("\n📊 DETECTION RESULTS:")
         print(f"   Open ports: {len(open_ports)}")
         print(f"   Detected type: {device_type}")
         print(f"   Ports found: {list(open_ports.keys())}")
@@ -350,7 +348,7 @@ class EnhancedDeviceCollector:
                     # Local machine credentials  
                     {"username": "localuser", "password": "localpass", "domain": ".", "source": "Manual"},
                 ]
-                print(f"⚠️ No desktop app credentials found, using fallback credentials")
+                print("⚠️ No desktop app credentials found, using fallback credentials")
             else:
                 print(f"✅ Using {len(desktop_app_credentials)} credentials from desktop app")
             
@@ -554,7 +552,7 @@ class EnhancedDeviceCollector:
     def save_to_database(self, device_data):
         """Save collected data to database with English-only validation"""
         
-        print(f"\n💾 SAVING TO DATABASE")
+        print("\n💾 SAVING TO DATABASE")
         print("-" * 50)
         
         try:
@@ -568,7 +566,7 @@ class EnhancedDeviceCollector:
             
             if arabic_fields:
                 print(f"⚠️ WARNING: Arabic text detected in fields: {arabic_fields}")
-                print(f"🔧 Converting to English or removing...")
+                print("🔧 Converting to English or removing...")
                 
                 # Remove or convert Arabic text
                 for field in arabic_fields:
@@ -611,7 +609,7 @@ class EnhancedDeviceCollector:
                 result_msg = "Device updated"
             else:
                 # Insert new device
-                print(f"➕ Inserting new device")
+                print("➕ Inserting new device")
                 device_data['created_at'] = current_time
                 # Implementation would go here  
                 result_msg = "Device created"
@@ -620,7 +618,7 @@ class EnhancedDeviceCollector:
             
             print(f"✅ {result_msg}")
             print(f"📊 Fields saved: {len(device_data)}")
-            print(f"✅ All data is English-only")
+            print("✅ All data is English-only")
             
             return True
             
@@ -635,7 +633,7 @@ class EnhancedDeviceCollector:
         print("=" * 70)
         print(f"Target: {self.target_ip}")
         print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"Goal: English-only comprehensive data collection")
+        print("Goal: English-only comprehensive data collection")
         print("=" * 70)
         
         # Step 1: Detect device type
@@ -659,10 +657,10 @@ class EnhancedDeviceCollector:
             save_success = self.save_to_database(collected_data)
         else:
             save_success = False
-            print(f"❌ No data to save - collection failed")
+            print("❌ No data to save - collection failed")
         
         # Step 5: Summary
-        print(f"\n" + "=" * 70)
+        print("\n" + "=" * 70)
         print("📋 COMPREHENSIVE TEST SUMMARY")
         print("=" * 70)
         
@@ -671,7 +669,7 @@ class EnhancedDeviceCollector:
         print(f"📊 Open Ports: {len(open_ports)}")
         print(f"🔧 Collection Status: {collected_data.get('collection_status', 'Unknown')}")
         print(f"💾 Database Save: {'✅ Success' if save_success else '❌ Failed'}")
-        print(f"🌐 Language: English Only")
+        print("🌐 Language: English Only")
         
         return collected_data
 
@@ -680,11 +678,11 @@ def main():
     collector = EnhancedDeviceCollector()
     results = collector.run_comprehensive_test()
     
-    print(f"\n🎯 NEXT STEPS:")
-    print(f"1. Configure real Windows credentials in _collect_wmi_data()")
-    print(f"2. Configure real SSH credentials in _collect_ssh_data()")
-    print(f"3. Test with actual device credentials")
-    print(f"4. Verify all required fields are collected")
+    print("\n🎯 NEXT STEPS:")
+    print("1. Configure real Windows credentials in _collect_wmi_data()")
+    print("2. Configure real SSH credentials in _collect_ssh_data()")
+    print("3. Test with actual device credentials")
+    print("4. Verify all required fields are collected")
 
 if __name__ == "__main__":
     main()

@@ -6,7 +6,6 @@ Immediate solution to prevent UI hanging during any operation
 
 from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QApplication
-import threading
 
 class InstantUIFix:
     """
@@ -46,7 +45,7 @@ class InstantUIFix:
             if hasattr(self.main_window, 'activateWindow'):
                 self.main_window.update()
                 
-        except Exception as e:
+        except Exception:
             pass  # Silently handle any errors
 
 def apply_instant_ui_fix(main_window):

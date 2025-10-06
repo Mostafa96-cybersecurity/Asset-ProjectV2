@@ -16,7 +16,7 @@ def test_desktop_app_workflow():
     # Step 1: Initialize launcher (like GUI does)
     print("\n1️⃣ Initializing launcher...")
     launcher = FastWebServiceLauncher()
-    print(f"✅ Launcher ready")
+    print("✅ Launcher ready")
     print(f"🚪 Port: {launcher.port}")
     print(f"🌐 URL: {launcher.service_url}")
     

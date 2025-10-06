@@ -1,7 +1,6 @@
 
 import threading
 import time
-import subprocess
 import socket
 from flask import Flask
 
@@ -121,7 +120,7 @@ class GUIIntegratedWebService:
                 if self.gui_app:
                     self.gui_app.web_service_status.setText("🟢 Running")
                     self.gui_app.web_service_url.setText(f"http://localhost:{self.port}")
-                    self.gui_app.web_service_log.append(f"✅ Web service started successfully!")
+                    self.gui_app.web_service_log.append("✅ Web service started successfully!")
                 return True, f"Web service started on http://localhost:{self.port}"
             else:
                 if self.gui_app:

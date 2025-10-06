@@ -105,8 +105,8 @@ def demonstrate_transformation():
     print("   3. Keeps the BEST information from each scan:")
     print(f"      ✅ Storage: Combined both disks → {merged_result['Storage (Hard Disk)']}")
     print(f"      ✅ Monitor: Used more detailed info → {merged_result['Monitor']}")  
-    print(f"      ✅ CPU: Preserved dual CPU information")
-    print(f"      ✅ Sources: Tracked both scan sources")
+    print("      ✅ CPU: Preserved dual CPU information")
+    print("      ✅ Sources: Tracked both scan sources")
     print()
     print("🎯 FINAL RESULT: ONE record with ALL information from BOTH scans!")
     print("   ✅ ZERO data loss")
@@ -124,7 +124,7 @@ def demonstrate_transformation():
     print(f"   Storage: {merged_result['Storage (Hard Disk)']}")  # ← Perfect formatting!
     print(f"   Monitor: {merged_result['Monitor']}")
     print(f"   Status: {merged_result['Status']}")
-    print(f"   Data Quality: Enhanced through intelligent merging")
+    print("   Data Quality: Enhanced through intelligent merging")
     
     print("\\n\\n🎨 PROFESSIONAL EXCEL OUTPUT:")
     print("=" * 50)

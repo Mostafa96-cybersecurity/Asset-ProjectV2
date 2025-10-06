@@ -8,7 +8,7 @@ import sqlite3
 import pandas as pd
 import os
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 from pathlib import Path
 import sys

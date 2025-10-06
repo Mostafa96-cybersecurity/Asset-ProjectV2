@@ -155,7 +155,7 @@ def demonstrate_collection_based_intelligence():
         scan2_unique = scan2_keys - scan1_keys
         common_keys = scan1_keys & scan2_keys
         
-        print(f"\\n📊 Data Analysis:")
+        print("\\n📊 Data Analysis:")
         print(f"   Total fields in Scan 1: {len(scan1_keys)}")
         print(f"   Total fields in Scan 2: {len(scan2_keys)}")
         print(f"   Fields only in Scan 1: {len(scan1_unique)} → {list(scan1_unique) if scan1_unique else 'None'}")
@@ -163,7 +163,7 @@ def demonstrate_collection_based_intelligence():
         print(f"   Common fields: {len(common_keys)}")
         
         # Show intelligent merging decisions
-        print(f"\\n🧠 Smart Merging Decisions:")
+        print("\\n🧠 Smart Merging Decisions:")
         
         # Check for enhanced data in scan 2
         enhanced_fields = []

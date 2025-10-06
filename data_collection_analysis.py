@@ -84,7 +84,7 @@ def analyze_collected_data():
         print(f"      • {field}")
     
     # Check what data is actually populated
-    print(f"\n📈 ACTUAL DATA POPULATION ANALYSIS:")
+    print("\n📈 ACTUAL DATA POPULATION ANALYSIS:")
     
     # Sample a few key fields to see population rate
     key_fields = [

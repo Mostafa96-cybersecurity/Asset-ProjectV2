@@ -4,7 +4,6 @@ Simple Database Check - View collected data in assets.db
 """
 
 import sqlite3
-from datetime import datetime
 
 def check_database():
     """Check database contents"""
@@ -35,7 +34,7 @@ def check_database():
         ''')
         recent_devices = cursor.fetchall()
         
-        print(f"\n🔍 Most Recently Added/Updated Devices:")
+        print("\n🔍 Most Recently Added/Updated Devices:")
         print("=" * 80)
         for i, device in enumerate(recent_devices, 1):
             hostname = device[0] or "Unknown"
@@ -61,7 +60,7 @@ def check_database():
         methods = cursor.fetchall()
         
         if methods:
-            print(f"\n📈 Collection Methods Used:")
+            print("\n📈 Collection Methods Used:")
             print("=" * 40)
             for method, count in methods:
                 print(f"  {method}: {count} devices")
@@ -77,7 +76,7 @@ def check_database():
         device_types = cursor.fetchall()
         
         if device_types:
-            print(f"\n🏷️ Device Types Found:")
+            print("\n🏷️ Device Types Found:")
             print("=" * 40)
             for dtype, count in device_types:
                 print(f"  {dtype}: {count} devices")

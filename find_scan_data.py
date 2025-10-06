@@ -82,7 +82,7 @@ def search_for_temp_databases():
                     print(f"      📊 Contains {count} assets")
                 conn.close()
             except:
-                print(f"      ❓ Not a valid SQLite database or no assets table")
+                print("      ❓ Not a valid SQLite database or no assets table")
                 
         except Exception as e:
             print(f"   ❌ Error checking {file}: {e}")
@@ -116,7 +116,7 @@ def check_memory_cache():
                 data = json.load(f)
                 if isinstance(data, dict):
                     if 'devices' in data or 'assets' in data:
-                        print(f"      🎯 Contains device/asset data!")
+                        print("      🎯 Contains device/asset data!")
                 elif isinstance(data, list) and len(data) > 100:
                     print(f"      📊 Large list with {len(data)} items")
         except:
@@ -142,7 +142,7 @@ def check_application_logs():
                     with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
                         content = f.read()
                         if '452' in content or 'Collected:' in content:
-                            print(f"      🎯 Contains scan completion data!")
+                            print("      🎯 Contains scan completion data!")
                             lines = content.split('\n')
                             for line in lines[-20:]:
                                 if '452' in line or 'Collected:' in line:

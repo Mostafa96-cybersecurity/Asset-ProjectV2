@@ -7,7 +7,6 @@ Guaranteed to work - Simple but functional
 
 from flask import Flask, render_template_string, request, session, jsonify, redirect
 import sqlite3
-import json
 
 # Flask app
 app = Flask(__name__)

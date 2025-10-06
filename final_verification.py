@@ -20,7 +20,7 @@ def final_verification():
         cursor.execute('SELECT COUNT(DISTINCT ip_address) FROM assets')
         unique_ips = cursor.fetchone()[0]
         
-        print(f'DATABASE OVERVIEW:')
+        print('DATABASE OVERVIEW:')
         print(f'  Total Records: {total_records}')
         print(f'  Unique IP Addresses: {unique_ips}')
         print(f'  Duplicate Records: {total_records - unique_ips}')
@@ -39,7 +39,7 @@ def final_verification():
         recent_stats = cursor.fetchone()
         total_recent, with_hostname, with_dns, with_dns_status = recent_stats
         
-        print(f'\nRECENT COLLECTION SUCCESS (Last 24 hours):')
+        print('\nRECENT COLLECTION SUCCESS (Last 24 hours):')
         print(f'  Total Recent Records: {total_recent}')
         print(f'  Records with Hostname: {with_hostname}/{total_recent} ({(with_hostname/total_recent*100) if total_recent > 0 else 0:.1f}%)')
         print(f'  Records with DNS Data: {with_dns}/{total_recent} ({(with_dns/total_recent*100) if total_recent > 0 else 0:.1f}%)')
@@ -52,7 +52,7 @@ def final_verification():
         cursor.execute('PRAGMA table_info(assets)')
         columns = [col[1] for col in cursor.fetchall()]
         
-        print(f'\nLATEST RECORD VERIFICATION:')
+        print('\nLATEST RECORD VERIFICATION:')
         if latest_record:
             populated_count = sum(1 for value in latest_record if value is not None and str(value).strip() != '')
             print(f'  Record ID: {latest_record[0]}')
@@ -72,7 +72,7 @@ def final_verification():
         ''')
         dns_results = cursor.fetchall()
         
-        print(f'\nDNS VALIDATION RESULTS:')
+        print('\nDNS VALIDATION RESULTS:')
         if dns_results:
             for status, count in dns_results:
                 print(f'  {status.upper()}: {count} devices')
@@ -87,11 +87,11 @@ def final_verification():
             mismatches = cursor.fetchall()
             
             if mismatches:
-                print(f'  \n  MISMATCH DETAILS:')
+                print('  \n  MISMATCH DETAILS:')
                 for ip, device_name, dns_name in mismatches:
                     print(f'    {ip}: Device="{device_name}" vs DNS="{dns_name}"')
         else:
-            print(f'  No DNS validation data found')
+            print('  No DNS validation data found')
         
         # 5. Collection method effectiveness
         cursor.execute('''
@@ -104,7 +104,7 @@ def final_verification():
         ''')
         method_stats = cursor.fetchall()
         
-        print(f'\nCOLLECTION METHOD EFFECTIVENESS:')
+        print('\nCOLLECTION METHOD EFFECTIVENESS:')
         for method, count, hostname_success in method_stats:
             print(f'  {method}: {count} records, {hostname_success:.1f}% hostname success')
         

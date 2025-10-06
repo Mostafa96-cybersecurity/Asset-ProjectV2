@@ -5,9 +5,6 @@ Shows exactly what data your Network Assets Collector gathers from all device ty
 """
 
 import sqlite3
-import json
-from collections import defaultdict
-from datetime import datetime
 
 def analyze_collected_data():
     print("🎯 COMPLETE DATA COLLECTION ANALYSIS")
@@ -27,7 +24,7 @@ def analyze_collected_data():
         print(f"{i:2}. {col}")
     
     # Analyze data collection by source
-    print(f"\n🔍 DATA COLLECTION BY SOURCE:")
+    print("\n🔍 DATA COLLECTION BY SOURCE:")
     print("-"*50)
     
     cursor.execute("""
@@ -50,7 +47,7 @@ def analyze_collected_data():
         print(f"   🏷️  Serial Numbers: {serial_count} ({serial_count/total*100:.1f}%)")
     
     # Show sample data for each collection method
-    print(f"\n📋 SAMPLE DATA BY COLLECTION METHOD:")
+    print("\n📋 SAMPLE DATA BY COLLECTION METHOD:")
     print("="*80)
     
     for source, _, _, _, _ in sources:
@@ -187,7 +184,7 @@ def show_collection_capabilities():
         print(f"📝 {info['description']}")
         print(f"🔐 Authentication: {info['authentication']}")
         print(f"📱 Device Types: {', '.join(info['device_types'])}")
-        print(f"\n📊 Data Collected:")
+        print("\n📊 Data Collected:")
         for data_point in info['data_collected']:
             print(f"   {data_point}")
         print("-" * 60)
@@ -255,7 +252,7 @@ def main():
     show_collection_capabilities()
     show_database_fields_mapping()
     
-    print(f"\n🎯 SUMMARY:")
+    print("\n🎯 SUMMARY:")
     print("="*50)
     print("Your Network Assets Collector can gather:")
     print("• 📊 Complete hardware inventory")

@@ -5,19 +5,13 @@ Ultra-optimized for maximum speed with 1000+ IPs
 """
 
 import time
-import asyncio
 import socket
-import struct
-import threading
 import ipaddress
-from queue import Queue, Empty
-from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple, Any, Set
+from typing import List, Dict, Optional, Set
 from datetime import datetime
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
-import sys
 
 # Optional imports with fallbacks
 try:
@@ -114,7 +108,7 @@ class LightningFastCollector:
         
         # Phase 1: Ultra-fast alive detection
         alive_start = time.time()
-        self.log_message(log_callback, f"\n⚡ PHASE 1: LIGHTNING-FAST ALIVE DETECTION")
+        self.log_message(log_callback, "\n⚡ PHASE 1: LIGHTNING-FAST ALIVE DETECTION")
         
         alive_ips = self._lightning_fast_alive_scan(all_ips, progress_callback, log_callback)
         alive_time = time.time() - alive_start
@@ -392,7 +386,7 @@ class LightningFastCollector:
                         
                         self.stats['data_collected'] += 1
                         
-                except Exception as e:
+                except Exception:
                     # Log but don't stop for failures
                     pass
         
@@ -688,7 +682,7 @@ class LightningFastCollector:
         alive_time = self.stats['timing'].get('alive_scan_time', 0)
         detail_time = self.stats['timing'].get('detailed_scan_time', 0)
         
-        self.log_message(log_callback, f"🚀 SPEED PERFORMANCE:")
+        self.log_message(log_callback, "🚀 SPEED PERFORMANCE:")
         self.log_message(log_callback, f"   Total time: {total_time:.1f}s")
         self.log_message(log_callback, f"   Alive scan: {alive_time:.1f}s")
         self.log_message(log_callback, f"   Detail scan: {detail_time:.1f}s")
@@ -700,7 +694,7 @@ class LightningFastCollector:
             self.log_message(log_callback, f"   Overall rate: {total_rate:.1f} IPs/second")
             self.log_message(log_callback, f"   Alive scan rate: {alive_rate:.1f} IPs/second")
         
-        self.log_message(log_callback, f"\n📊 RESULTS:")
+        self.log_message(log_callback, "\n📊 RESULTS:")
         self.log_message(log_callback, f"   Total IPs scanned: {self.stats['total_ips']}")
         self.log_message(log_callback, f"   Alive devices: {self.stats['alive_devices']}")
         self.log_message(log_callback, f"   OS detected: {self.stats['os_detected']}")

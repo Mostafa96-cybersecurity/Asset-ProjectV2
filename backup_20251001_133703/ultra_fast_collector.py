@@ -13,16 +13,14 @@ Key Optimizations:
 - Smart retry logic with exponential backoff
 """
 
-import os
-import sys
 import time
 import socket
 import threading
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
 from queue import Queue, Empty
-from dataclasses import dataclass, field
-from typing import List, Dict, Set, Optional, Tuple, Any
+from dataclasses import dataclass
+from typing import List, Dict, Set, Optional, Any
 from datetime import datetime
 import logging
 
@@ -69,7 +67,7 @@ def _collect_windows_standalone(ip: str, username: str, password: str) -> Option
         # WMI connection with timeout
         print(f"🔍 DEBUG WMI: Attempting connection to {ip} with user '{username}', password: {'***set***' if password else '***empty***'}")
         conn = wmi.WMI(computer=ip, user=username, password=password)
-        print(f"🔍 DEBUG WMI: Connection successful!")
+        print("🔍 DEBUG WMI: Connection successful!")
         
         # Collect comprehensive system information
         data = {
@@ -1021,7 +1019,7 @@ class UltraFastDeviceCollector(QThread):
                     wmi_status = device_data.get('wmi_collection_status', 'N/A')
                     self.log_message.emit(f"🔍 DEBUG: WMI status: {wmi_status}")
                 else:
-                    self.log_message.emit(f"🔍 DEBUG: device_data is None or falsy")
+                    self.log_message.emit("🔍 DEBUG: device_data is None or falsy")
                 
                 if device_data:
                     # Check if this is a successful collection
@@ -1570,7 +1568,7 @@ class UltraFastDeviceCollector(QThread):
     def _emit_final_stats(self):
         """Emit final collection statistics"""
         with self.stats_lock:
-            self.log_message.emit(f"📊 FINAL STATISTICS:")
+            self.log_message.emit("📊 FINAL STATISTICS:")
             self.log_message.emit(f"   • Total Time: {self.stats.total_time:.1f}s")
             self.log_message.emit(f"   • Devices Discovered: {self.stats.discovered}")
             self.log_message.emit(f"   • Devices Collected: {self.stats.collected}")
@@ -1670,7 +1668,7 @@ class UltraFastDeviceCollector(QThread):
             # Ensure required fields
             if not device_data.get('hostname') and not device_data.get('ip_address'):
                 if not device_data.get('Hostname') and not device_data.get('IP Address'):
-                    self.log_message.emit(f"❌ Cannot save device: missing hostname and ip_address")
+                    self.log_message.emit("❌ Cannot save device: missing hostname and ip_address")
                     return False
             
             # Get all available columns in the database
@@ -1720,7 +1718,7 @@ class UltraFastDeviceCollector(QThread):
             
             # Ensure we have minimum required data
             if not db_data.get('hostname') and not db_data.get('ip_address'):
-                self.log_message.emit(f"❌ No valid hostname or IP after field mapping")
+                self.log_message.emit("❌ No valid hostname or IP after field mapping")
                 return False
             
             # ENHANCED HARDWARE-BASED DEDUPLICATION STRATEGY

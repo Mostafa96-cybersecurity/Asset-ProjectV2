@@ -4,7 +4,6 @@ Auto Database Optimizer - Fixes 198.3s save performance
 """
 
 import sqlite3
-from datetime import datetime
 
 def auto_optimize():
     """Automatically optimize database for better performance"""
@@ -49,7 +48,7 @@ def auto_optimize():
     
     for idx_query in indexes:
         cursor.execute(idx_query)
-        print(f"   ✅ Index created")
+        print("   ✅ Index created")
     
     # 3. Optimize SQLite settings for faster writes
     print("\n🔧 OPTIMIZING SQLITE SETTINGS...")
@@ -77,17 +76,17 @@ def auto_optimize():
     cursor.execute('SELECT COUNT(*) FROM assets')
     total_after = cursor.fetchone()[0]
     
-    print(f"\n📈 OPTIMIZATION RESULTS:")
+    print("\n📈 OPTIMIZATION RESULTS:")
     print(f"   Records before: {total_before}")
     print(f"   Records after: {total_after}")
     print(f"   Duplicates removed: {removed}")
-    print(f"   Performance indexes: 5 created")
-    print(f"   SQLite optimizations: Applied")
+    print("   Performance indexes: 5 created")
+    print("   SQLite optimizations: Applied")
     
     conn.close()
     
-    print(f"\n✅ OPTIMIZATION COMPLETE!")
-    print(f"🚀 Database save time should now be under 30s (was 198.3s)")
+    print("\n✅ OPTIMIZATION COMPLETE!")
+    print("🚀 Database save time should now be under 30s (was 198.3s)")
 
 if __name__ == "__main__":
     auto_optimize()

@@ -55,7 +55,7 @@ def test_web_service_complete():
             if response.status_code == 200:
                 print("✅ Dashboard service is running successfully!")
                 print(f"📊 Status Code: {response.status_code}")
-                print(f"🌐 URL: http://localhost:3010")
+                print("🌐 URL: http://localhost:3010")
                 
                 # Test browser opening
                 print("\n3️⃣ Testing browser opening...")
@@ -80,7 +80,7 @@ def test_web_service_complete():
         from desktop_web_service_launcher import FastWebServiceLauncher
         
         launcher = FastWebServiceLauncher()
-        print(f"✅ Launcher initialized")
+        print("✅ Launcher initialized")
         print(f"🚪 Port: {launcher.port}")
         print(f"🌐 Service URL: {launcher.service_url}")
         

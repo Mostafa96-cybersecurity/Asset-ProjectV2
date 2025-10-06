@@ -10,7 +10,6 @@ import sqlite3
 import json
 import sys
 import time
-import threading
 from datetime import datetime
 from collections import defaultdict
 import win32api

@@ -7,8 +7,6 @@ Fixes Unicode/emoji encoding issues in console output on Windows
 
 import sys
 import os
-import codecs
-from pathlib import Path
 
 def set_console_utf8():
     """Set console to UTF-8 encoding for emoji support"""

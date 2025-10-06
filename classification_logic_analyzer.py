@@ -35,7 +35,7 @@ class ClassificationLogicAnalyzer:
         
         all_devices = cursor.fetchall()
         
-        print(f"📊 CLASSIFICATION RULES USED BY THE APP:")
+        print("📊 CLASSIFICATION RULES USED BY THE APP:")
         print("=" * 80)
         
         # Define the exact classification rules used in the smart system
@@ -110,7 +110,7 @@ class ClassificationLogicAnalyzer:
                 """, (class_name, class_name))
                 
                 examples = cursor.fetchall()
-                print(f"   📝 Examples:")
+                print("   📝 Examples:")
                 
                 for hostname, ip, ports, os in examples:
                     try:
@@ -123,7 +123,7 @@ class ClassificationLogicAnalyzer:
                     print(f"        Ports: [{port_str}]")
                     print(f"        OS: {os or 'Unknown'}")
         
-        print(f"\n\n🔍 DETAILED CLASSIFICATION ANALYSIS:")
+        print("\n\n🔍 DETAILED CLASSIFICATION ANALYSIS:")
         print("=" * 80)
         
         # Group devices by their actual port patterns
@@ -151,7 +151,7 @@ class ClassificationLogicAnalyzer:
                     'ports': []
                 })
         
-        print(f"📊 CLASSIFICATION BY PORT PATTERNS:")
+        print("📊 CLASSIFICATION BY PORT PATTERNS:")
         
         # Sort by most common patterns
         sorted_patterns = sorted(port_patterns.items(), key=lambda x: len(x[1]), reverse=True)
@@ -165,43 +165,43 @@ class ClassificationLogicAnalyzer:
             for device in devices:
                 classifications[device['classification']] += 1
             
-            print(f"    Classifications:")
+            print("    Classifications:")
             for class_name, count in sorted(classifications.items(), key=lambda x: x[1], reverse=True):
                 percentage = (count / len(devices)) * 100
                 print(f"      📊 {class_name or 'Unclassified'}: {count} devices ({percentage:.1f}%)")
             
             # Show classification logic for this pattern
             if port_tuple:
-                print(f"    🧠 Classification Logic:")
+                print("    🧠 Classification Logic:")
                 
                 # Check Windows pattern
                 if 135 in port_tuple and 139 in port_tuple and 445 in port_tuple:
                     if 3389 in port_tuple:
-                        print(f"      ✅ Windows Server pattern detected (SMB + RDP)")
+                        print("      ✅ Windows Server pattern detected (SMB + RDP)")
                     else:
-                        print(f"      ✅ Windows System pattern detected (SMB ports)")
+                        print("      ✅ Windows System pattern detected (SMB ports)")
                 
                 # Check Linux pattern
                 elif 22 in port_tuple:
                     if 80 in port_tuple or 443 in port_tuple:
-                        print(f"      ✅ Linux/Web Server pattern detected (SSH + HTTP/HTTPS)")
+                        print("      ✅ Linux/Web Server pattern detected (SSH + HTTP/HTTPS)")
                     else:
-                        print(f"      ✅ Linux/Unix System pattern detected (SSH)")
+                        print("      ✅ Linux/Unix System pattern detected (SSH)")
                 
                 # Check Web Server pattern
                 elif 80 in port_tuple or 443 in port_tuple:
-                    print(f"      ✅ Web Server pattern detected (HTTP/HTTPS)")
+                    print("      ✅ Web Server pattern detected (HTTP/HTTPS)")
                 
                 # Check Network Device pattern
                 elif any(port in port_tuple for port in [23, 161]):
-                    print(f"      ✅ Network Device pattern detected (Telnet/SNMP)")
+                    print("      ✅ Network Device pattern detected (Telnet/SNMP)")
                 
                 else:
-                    print(f"      ⚠️ Unrecognized pattern - needs classification rule")
+                    print("      ⚠️ Unrecognized pattern - needs classification rule")
             else:
-                print(f"    🧠 No open ports - likely Unknown Device or firewall blocking")
+                print("    🧠 No open ports - likely Unknown Device or firewall blocking")
         
-        print(f"\n\n🎯 CLASSIFICATION ACCURACY ANALYSIS:")
+        print("\n\n🎯 CLASSIFICATION ACCURACY ANALYSIS:")
         print("=" * 80)
         
         # Analyze classification accuracy
@@ -255,7 +255,7 @@ class ClassificationLogicAnalyzer:
             except:
                 pass
         
-        print(f"📊 CLASSIFICATION ACCURACY BY TYPE:")
+        print("📊 CLASSIFICATION ACCURACY BY TYPE:")
         
         for class_name, data in classification_accuracy.items():
             if data['total'] > 0:
@@ -271,26 +271,26 @@ class ClassificationLogicAnalyzer:
                         port_str = ', '.join(map(str, pattern['ports']))
                         print(f"   ⚠️ Misclassified pattern: [{port_str}] ({pattern['count']} devices)")
         
-        print(f"\n\n💡 CLASSIFICATION IMPROVEMENTS:")
+        print("\n\n💡 CLASSIFICATION IMPROVEMENTS:")
         print("=" * 80)
         
-        print(f"🔧 CURRENT CLASSIFICATION LOGIC IS WORKING WELL:")
-        print(f"   ✅ Windows detection via SMB ports (135, 139, 445)")
-        print(f"   ✅ Server detection via RDP port (3389)")
-        print(f"   ✅ Linux detection via SSH port (22)")
-        print(f"   ✅ Web server detection via HTTP/HTTPS (80, 443)")
+        print("🔧 CURRENT CLASSIFICATION LOGIC IS WORKING WELL:")
+        print("   ✅ Windows detection via SMB ports (135, 139, 445)")
+        print("   ✅ Server detection via RDP port (3389)")
+        print("   ✅ Linux detection via SSH port (22)")
+        print("   ✅ Web server detection via HTTP/HTTPS (80, 443)")
         
-        print(f"\n📈 SUGGESTED IMPROVEMENTS:")
-        print(f"   1. 🔍 Add OS name validation to port-based classification")
-        print(f"   2. 🏷️ Create sub-categories (Windows 10 vs Windows Server)")
-        print(f"   3. 🌐 Add network device detection via SNMP (161)")
-        print(f"   4. 🛡️ Add firewall detection via security-specific ports")
-        print(f"   5. 📱 Add mobile device detection patterns")
+        print("\n📈 SUGGESTED IMPROVEMENTS:")
+        print("   1. 🔍 Add OS name validation to port-based classification")
+        print("   2. 🏷️ Create sub-categories (Windows 10 vs Windows Server)")
+        print("   3. 🌐 Add network device detection via SNMP (161)")
+        print("   4. 🛡️ Add firewall detection via security-specific ports")
+        print("   5. 📱 Add mobile device detection patterns")
         
-        print(f"\n🎯 CLASSIFICATION CONFIDENCE:")
-        print(f"   🥇 High Confidence: Windows Systems (SMB ports)")
-        print(f"   🥈 Medium Confidence: Linux Systems (SSH port)")
-        print(f"   🥉 Lower Confidence: Network Devices (varied patterns)")
+        print("\n🎯 CLASSIFICATION CONFIDENCE:")
+        print("   🥇 High Confidence: Windows Systems (SMB ports)")
+        print("   🥈 Medium Confidence: Linux Systems (SSH port)")
+        print("   🥉 Lower Confidence: Network Devices (varied patterns)")
         
         conn.close()
 

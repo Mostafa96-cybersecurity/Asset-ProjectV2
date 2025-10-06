@@ -4,8 +4,6 @@ Simple Database Analysis - Fixed version
 """
 
 import sqlite3
-import json
-from datetime import datetime
 
 def simple_database_analysis():
     print("🔍 DATABASE ANALYSIS REPORT")
@@ -29,7 +27,7 @@ def simple_database_analysis():
         print(f"🕐 Updated in last hour: {recent}")
         
         # Collection Methods
-        print(f"\n🔧 COLLECTION METHODS:")
+        print("\n🔧 COLLECTION METHODS:")
         cursor.execute("""
             SELECT collection_method, COUNT(*) 
             FROM assets 
@@ -43,7 +41,7 @@ def simple_database_analysis():
             print(f"   • {method}: {count} devices ({percentage:.1f}%)")
         
         # Device Types
-        print(f"\n🏷️ DEVICE TYPES:")
+        print("\n🏷️ DEVICE TYPES:")
         cursor.execute("""
             SELECT classification, COUNT(*) 
             FROM assets 
@@ -57,7 +55,7 @@ def simple_database_analysis():
             print(f"   • {device_type}: {count} devices ({percentage:.1f}%)")
         
         # Data Quality
-        print(f"\n📊 DATA QUALITY:")
+        print("\n📊 DATA QUALITY:")
         
         cursor.execute("SELECT COUNT(*) FROM assets WHERE operating_system IS NOT NULL AND operating_system != 'Unknown'")
         with_os = cursor.fetchone()[0]
@@ -72,7 +70,7 @@ def simple_database_analysis():
         print(f"   🏭 Manufacturer: {with_manufacturer}/{total_assets} ({with_manufacturer/total_assets*100:.1f}%)")
         
         # Network Analysis (simplified)
-        print(f"\n🌐 NETWORK COVERAGE:")
+        print("\n🌐 NETWORK COVERAGE:")
         cursor.execute("""
             SELECT ip_address FROM assets 
             WHERE ip_address IS NOT NULL 
@@ -92,7 +90,7 @@ def simple_database_analysis():
             print(f"   • {network}: {count} devices")
         
         # Recent Devices
-        print(f"\n🆕 RECENTLY UPDATED DEVICES:")
+        print("\n🆕 RECENTLY UPDATED DEVICES:")
         cursor.execute("""
             SELECT hostname, ip_address, classification, operating_system, last_updated
             FROM assets 
@@ -109,17 +107,17 @@ def simple_database_analysis():
             print(f"      Type: {classification} | OS: {os} | Updated: {updated}")
         
         # Check for scan progress
-        print(f"\n📈 SCAN STATUS ANALYSIS:")
+        print("\n📈 SCAN STATUS ANALYSIS:")
         if recent > 0:
             print(f"   ✅ Active: {recent} devices updated recently")
         else:
-            print(f"   ⚠️ No recent updates - scan may not be running")
+            print("   ⚠️ No recent updates - scan may not be running")
         
         if total_assets < 400:
             print(f"   📊 Expected Growth: {total_assets} → 560+ devices (scan discovery)")
         
         # Sample detailed device info
-        print(f"\n🔍 SAMPLE DEVICE DETAILS:")
+        print("\n🔍 SAMPLE DEVICE DETAILS:")
         cursor.execute("""
             SELECT hostname, ip_address, operating_system, manufacturer, model, 
                    processor, installed_ram_gb, storage, collection_method
@@ -142,17 +140,17 @@ def simple_database_analysis():
         
         conn.close()
         
-        print(f"📋 SUMMARY:")
+        print("📋 SUMMARY:")
         print(f"   • Database contains {total_assets} devices")
         print(f"   • Data quality: {(with_os + with_hostname + with_manufacturer)/(total_assets*3)*100:.1f}% complete")
         print(f"   • Collection methods: {len(methods)} different types")
         print(f"   • Network coverage: {len(networks)} different subnets")
         
         if total_assets == 222:
-            print(f"\n💡 RECOMMENDATION:")
-            print(f"   Your database shows 222 devices, but scans discovered 560+ devices.")
-            print(f"   This suggests the unlimited scan hasn't run yet or is still in progress.")
-            print(f"   Run an Asset Scan to collect all discovered devices!")
+            print("\n💡 RECOMMENDATION:")
+            print("   Your database shows 222 devices, but scans discovered 560+ devices.")
+            print("   This suggests the unlimited scan hasn't run yet or is still in progress.")
+            print("   Run an Asset Scan to collect all discovered devices!")
         
     except Exception as e:
         print(f"❌ Error: {e}")

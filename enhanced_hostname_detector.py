@@ -14,8 +14,6 @@ Features:
 
 import sqlite3
 import socket
-import dns.resolver
-import dns.reversename
 import logging
 from datetime import datetime
 import json

@@ -4,7 +4,6 @@ Asset Scan Monitor - Track database changes during scan
 """
 
 import sqlite3
-import time
 import json
 from datetime import datetime
 
@@ -89,7 +88,7 @@ def main():
         print(f"❌ Error: {baseline['error']}")
         return
     
-    print(f"✅ Baseline captured:")
+    print("✅ Baseline captured:")
     print(f"   📱 Assets: {baseline.get('assets', 0)}")
     print(f"   🚨 Security Events: {baseline.get('security_events', 0)}")
     print(f"   🕐 Recent Assets (1h): {baseline.get('recent_assets', 0)}")
@@ -130,12 +129,12 @@ def main():
     print(f"\n🕐 Recent Assets: {baseline.get('recent_assets', 0)} → {post_scan.get('recent_assets', 0)}")
     
     # Show collection methods
-    print(f"\n🔧 Collection Methods:")
+    print("\n🔧 Collection Methods:")
     for method, count in post_scan.get('collection_methods', {}).items():
         print(f"   • {method}: {count} devices")
     
     # Show device types
-    print(f"\n🏷️ Device Types:")
+    print("\n🏷️ Device Types:")
     for device_type, count in post_scan.get('device_types', {}).items():
         print(f"   • {device_type}: {count} devices")
     

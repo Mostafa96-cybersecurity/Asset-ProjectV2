@@ -31,7 +31,7 @@ def show_complete_database_data():
     cursor = conn.cursor()
     
     # 1. TOTAL COUNTS
-    print(f"\n📊 TOTAL DEVICE COUNTS")
+    print("\n📊 TOTAL DEVICE COUNTS")
     print("=" * 50)
     
     cursor.execute("SELECT COUNT(*) FROM assets")
@@ -47,7 +47,7 @@ def show_complete_database_data():
     print(f"🏷️ Unique Hostnames: {unique_hostnames}")
     
     # 2. COLLECTED DATA STATUS
-    print(f"\n🚀 DATA COLLECTION STATUS")
+    print("\n🚀 DATA COLLECTION STATUS")
     print("=" * 50)
     
     cursor.execute("SELECT COUNT(*) FROM assets WHERE collection_time IS NOT NULL")
@@ -64,7 +64,7 @@ def show_complete_database_data():
         print(f"⏰ Collection Period: {time_range[0][:19]} to {time_range[1][:19]}")
     
     # 3. DEVICE TYPES BREAKDOWN
-    print(f"\n🏷️ DEVICE TYPES BREAKDOWN")
+    print("\n🏷️ DEVICE TYPES BREAKDOWN")
     print("=" * 50)
     
     cursor.execute("""
@@ -86,7 +86,7 @@ def show_complete_database_data():
     print(f"\n   🎯 Classification Success: {total_classified}/{total_records} devices ({(total_classified/total_records*100):.1f}%)")
     
     # 4. NETWORK SERVICES
-    print(f"\n🔌 NETWORK SERVICES & PORTS")
+    print("\n🔌 NETWORK SERVICES & PORTS")
     print("=" * 50)
     
     cursor.execute("SELECT COUNT(*) FROM assets WHERE open_ports IS NOT NULL AND open_ports != '[]'")
@@ -110,7 +110,7 @@ def show_complete_database_data():
         except:
             continue
     
-    print(f"\n   🔝 Most Common Open Ports:")
+    print("\n   🔝 Most Common Open Ports:")
     sorted_ports = sorted(port_frequency.items(), key=lambda x: x[1], reverse=True)[:8]
     for port, count in sorted_ports:
         port_desc = {
@@ -121,7 +121,7 @@ def show_complete_database_data():
         print(f"      {port_desc} ({port}): {count} devices")
     
     # 5. SAMPLE DEVICES DATA
-    print(f"\n📋 SAMPLE COLLECTED DEVICES")
+    print("\n📋 SAMPLE COLLECTED DEVICES")
     print("=" * 50)
     
     cursor.execute("""
@@ -162,7 +162,7 @@ def show_complete_database_data():
             print(f"      HTTP Banner: {banner_short}")
     
     # 6. NETWORK COVERAGE
-    print(f"\n🌐 NETWORK COVERAGE ANALYSIS")
+    print("\n🌐 NETWORK COVERAGE ANALYSIS")
     print("=" * 50)
     
     cursor.execute("""
@@ -182,7 +182,7 @@ def show_complete_database_data():
         print(f"      {subnet}.x: {count} devices")
     
     # 7. DATA COMPLETENESS
-    print(f"\n📈 DATA COMPLETENESS METRICS")
+    print("\n📈 DATA COMPLETENESS METRICS")
     print("=" * 50)
     
     completeness_checks = [
@@ -204,7 +204,7 @@ def show_complete_database_data():
         print(f"   {status} {field_name}: {count}/{total_records} ({percentage:.1f}%)")
     
     # 8. RECENT ACTIVITY
-    print(f"\n🕐 RECENT COLLECTION ACTIVITY")
+    print("\n🕐 RECENT COLLECTION ACTIVITY")
     print("=" * 50)
     
     cursor.execute("""
@@ -224,27 +224,27 @@ def show_complete_database_data():
     """)
     
     recent_activity = cursor.fetchall()
-    print(f"\n   🕐 Latest Collections:")
+    print("\n   🕐 Latest Collections:")
     for ip, hostname, classification, coll_time in recent_activity:
         time_display = coll_time[:19] if coll_time else "Unknown"
         hostname_display = hostname[:25] + "..." if hostname and len(hostname) > 25 else hostname
         print(f"      {time_display} | {ip} | {hostname_display} | {classification}")
     
     # 9. SUMMARY DASHBOARD
-    print(f"\n🎯 SUMMARY DASHBOARD")
+    print("\n🎯 SUMMARY DASHBOARD")
     print("=" * 50)
     
     collection_success = (collected_today / total_records * 100) if total_records > 0 else 0
     classification_success = (total_classified / total_records * 100) if total_records > 0 else 0
     port_data_success = (devices_with_ports / total_records * 100) if total_records > 0 else 0
     
-    print(f"📊 Database Overview:")
+    print("📊 Database Overview:")
     print(f"   📱 Total Devices: {total_records}")
     print(f"   🌐 Unique IPs: {unique_ips}")
     print(f"   🏷️ Unique Hostnames: {unique_hostnames}")
     print(f"   ✅ Active Devices: {active_devices}")
     
-    print(f"\n📈 Data Quality Scores:")
+    print("\n📈 Data Quality Scores:")
     print(f"   🚀 Collection Success: {collection_success:.1f}%")
     print(f"   🏷️ Classification Success: {classification_success:.1f}%")
     print(f"   🔌 Port Data Success: {port_data_success:.1f}%")
@@ -255,13 +255,13 @@ def show_complete_database_data():
     
     conn.close()
     
-    print(f"\n💡 All scan data is available and accessible in the database!")
-    print(f"🎉 Complete network inventory successfully maintained!")
+    print("\n💡 All scan data is available and accessible in the database!")
+    print("🎉 Complete network inventory successfully maintained!")
 
 def show_detailed_device_list():
     """Show detailed list of all devices"""
     
-    print(f"\n\n🔍 DETAILED DEVICE INVENTORY")
+    print("\n\n🔍 DETAILED DEVICE INVENTORY")
     print("=" * 70)
     
     conn = sqlite3.connect("assets.db")
@@ -324,9 +324,9 @@ if __name__ == "__main__":
     show_complete_database_data()
     
     # Ask if user wants detailed device list
-    print(f"\n" + "="*70)
+    print("\n" + "="*70)
     response = input("📋 Show detailed device list? (y/n): ").lower().strip()
     if response in ['y', 'yes']:
         show_detailed_device_list()
     
-    print(f"\n✅ Database analysis complete!")
+    print("\n✅ Database analysis complete!")

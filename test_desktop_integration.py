@@ -4,7 +4,6 @@ Quick test of Desktop APP with Web Service integration
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path
@@ -18,7 +17,6 @@ def test_desktop_app_integration():
     try:
         # Import PyQt5
         from PyQt5.QtWidgets import QApplication
-        from PyQt5.QtCore import QTimer
         
         # Create application
         app = QApplication(sys.argv)

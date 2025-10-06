@@ -9,7 +9,6 @@ import logging
 import json
 import sqlite3
 from datetime import datetime
-from pathlib import Path
 import sys
 import os
 
@@ -373,16 +372,16 @@ class EnhancedCollectionWorkflow:
         print(f"🔐 Authenticated: {summary['authenticated_devices']}")
         print(f"🔓 Credential-less: {summary['credential_less_devices']}")
         
-        print(f"\n📋 Collection Methods:")
+        print("\n📋 Collection Methods:")
         for method, count in summary['collection_methods'].items():
             print(f"   {method}: {count}")
         
-        print(f"\n📱 Device Types:")
+        print("\n📱 Device Types:")
         for device_type, count in summary['device_types'].items():
             print(f"   {device_type}: {count}")
         
         if self.results['failed']:
-            print(f"\n⚠️ Failed Devices:")
+            print("\n⚠️ Failed Devices:")
             for device in self.results['failed']:
                 ip = device.get('ip_address', device.get('ip', 'Unknown'))
                 error = device.get('collection_error', 'Unknown error')

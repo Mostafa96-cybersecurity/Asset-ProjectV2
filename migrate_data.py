@@ -4,9 +4,7 @@ This script migrates the 510 existing assets to the new comprehensive schema
 """
 
 import sqlite3
-import json
 from datetime import datetime
-from comprehensive_schema import COMPREHENSIVE_COLUMNS
 
 def migrate_existing_data():
     print("🔄 MIGRATING EXISTING DATA TO COMPREHENSIVE DATABASE")
@@ -84,9 +82,9 @@ def migrate_existing_data():
     old_conn.close()
     new_conn.close()
     
-    print(f"\n🎉 DATA MIGRATION COMPLETE!")
+    print("\n🎉 DATA MIGRATION COMPLETE!")
     print(f"   ✅ {final_count} assets now in comprehensive database")
-    print(f"   ✅ 520 columns available for each asset")
+    print("   ✅ 520 columns available for each asset")
     
     return final_count
 

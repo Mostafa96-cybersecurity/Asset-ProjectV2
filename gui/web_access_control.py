@@ -12,27 +12,23 @@ Features:
 🎯 Smart Controls: One-click service management
 """
 
-import sys
 import os
 import json
-import socket
-import threading
 import time
 import ipaddress
 import subprocess
 from datetime import datetime
-from typing import Dict, List, Set, Optional, Tuple
+from typing import Dict, List, Set
 import logging
 
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton,
-    QTextEdit, QLineEdit, QListWidget, QListWidgetItem, QMessageBox,
+    QLineEdit, QListWidget, QMessageBox,
     QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView, QSplitter,
-    QFormLayout, QSpinBox, QCheckBox, QFrame, QProgressBar, QComboBox,
-    QGridLayout
+    QFormLayout, QSpinBox, QCheckBox, QGridLayout
 )
-from PyQt6.QtCore import QTimer, pyqtSignal, QThread, QObject, Qt
-from PyQt6.QtGui import QFont, QColor, QPalette
+from PyQt6.QtCore import QTimer, pyqtSignal, QObject, Qt
+from PyQt6.QtGui import QFont, QColor
 
 log = logging.getLogger(__name__)
 

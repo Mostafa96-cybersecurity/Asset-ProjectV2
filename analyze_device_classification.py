@@ -6,7 +6,6 @@ Check current device types and classification strategy
 
 import sqlite3
 import json
-from collections import Counter
 
 def analyze_device_classification():
     # Connect to database

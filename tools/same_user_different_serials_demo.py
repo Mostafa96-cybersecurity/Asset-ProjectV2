@@ -81,29 +81,29 @@ def demonstrate_same_user_different_devices():
     
     print("\\n📱 DEVICE 1 RECORD:")
     print("   " + "-" * 30)
-    print(f"   ID: DEV-001")
+    print("   ID: DEV-001")
     print(f"   Hostname: {device_1['Hostname']}")
     print(f"   User: {device_1['Working User']}")
     print(f"   Serial: {device_1['Serial Number']}")
     print(f"   Type: {device_1['Device_Type']}")
-    print(f"   Status: 🟢 Active - User's Laptop")
+    print("   Status: 🟢 Active - User's Laptop")
     
     print("\\n💻 DEVICE 2 RECORD:")
     print("   " + "-" * 30)
-    print(f"   ID: DEV-002")
+    print("   ID: DEV-002")
     print(f"   Hostname: {device_2['Hostname']}")
     print(f"   User: {device_2['Working User']}")
     print(f"   Serial: {device_2['Serial Number']}")
     print(f"   Type: {device_2['Device_Type']}")
-    print(f"   Status: 🟢 Active - User's Workstation")
+    print("   Status: 🟢 Active - User's Workstation")
     
     print("\\n👤 USER INVENTORY SUMMARY:")
     print("   " + "-" * 35)
     print(f"   User: {device_1['Working User']}")
-    print(f"   Total Devices: 2")
-    print(f"   Device Types: Laptop, Workstation")
+    print("   Total Devices: 2")
+    print("   Device Types: Laptop, Workstation")
     print(f"   Total RAM: {int(device_1['Installed RAM (GB)'].split('.')[0]) + int(device_2['Installed RAM (GB)'].split('.')[0])} GB")
-    print(f"   Relationship: Same user, different devices ✅")
+    print("   Relationship: Same user, different devices ✅")
 
 def demonstrate_edge_cases():
     """Show various edge cases with usernames and serial numbers"""

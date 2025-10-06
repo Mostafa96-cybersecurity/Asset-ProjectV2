@@ -4,16 +4,13 @@ GUI Integration for Enhanced Main Application
 تكامل الواجهة الرسومية مع التطبيق الرئيسي المحسن
 """
 
-import sys
-import sqlite3
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, 
                            QLabel, QProgressBar, QTextEdit, QGroupBox, QGridLayout,
-                           QListWidget, QListWidgetItem, QMessageBox, QDialog,
-                           QDialogButtonBox, QCheckBox, QSpinBox)
+                           QListWidget, QDialog,
+                           QDialogButtonBox)
 from PyQt6.QtCore import QThread, pyqtSignal, Qt
 from PyQt6.QtGui import QFont
 from enhanced_collector_gui import EnhancedCollectorGUI
-import json
 
 class DeviceEnhancementWorker(QThread):
     """Worker thread for device enhancement"""

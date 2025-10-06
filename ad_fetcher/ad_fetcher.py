@@ -10,7 +10,6 @@ import sys
 import os
 from datetime import datetime, date, time
 from ldap3 import Server, Connection, ALL, Tls
-from typing import Optional, Dict, Any, List, Union
 
 # Add current directory to path for AD database integration
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -66,7 +65,7 @@ def ad_fetch_computers(server_host, base_dn, username, password, use_ssl=False, 
         if store_in_db and AD_DB_AVAILABLE:
             try:
                 ad_db = ADDatabase()
-                print(f"✅ AD database connection established")
+                print("✅ AD database connection established")
             except Exception as e:
                 print(f"⚠️  AD database not available: {e}")
                 ad_db = None
@@ -121,9 +120,9 @@ def ad_fetch_computers(server_host, base_dn, username, password, use_ssl=False, 
             print(f"   💾 Stored in AD database: {len(items)}")
             
             # Show sync option
-            print(f"\n💡 Next steps:")
-            print(f"   1. Run ad_db.sync_ad_to_assets_table() to sync with main assets")
-            print(f"   2. Check AD statistics with ad_db.get_ad_statistics()")
+            print("\n💡 Next steps:")
+            print("   1. Run ad_db.sync_ad_to_assets_table() to sync with main assets")
+            print("   2. Check AD statistics with ad_db.get_ad_statistics()")
         
         return items
         

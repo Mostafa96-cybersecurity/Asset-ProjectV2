@@ -1,7 +1,7 @@
 
 import threading
 import concurrent.futures
-from typing import List, Callable, Any
+from typing import List, Callable
 
 class GUIPerformanceManager:
     """Multithreaded performance manager for GUI"""

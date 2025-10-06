@@ -11,8 +11,6 @@ Ensuring the complete scan strategy works correctly:
 """
 
 import sqlite3
-import json
-from collections import Counter, defaultdict
 
 def verify_scan_process():
     """Verify that the scan process follows the correct strategy"""

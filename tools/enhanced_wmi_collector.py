@@ -9,7 +9,7 @@ import os
 import sqlite3
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -216,7 +216,7 @@ class EnhancedCollector:
                 # Map to database format
                 mapped_data = self.mapper.map_wmi_data_to_database(wmi_data, ip or 'localhost')
                 
-                print(f"\n💾 MAPPED DATABASE DATA:")
+                print("\n💾 MAPPED DATABASE DATA:")
                 print("="*40)
                 for key, value in mapped_data.items():
                     if key == 'notes':
@@ -300,7 +300,7 @@ class EnhancedCollector:
         wmi_data, mapped_data = self.test_wmi_collection()
         
         if wmi_data and mapped_data:
-            print(f"\n📋 TECHNICAL FIELDS CAPTURED:")
+            print("\n📋 TECHNICAL FIELDS CAPTURED:")
             technical_fields_found = []
             
             for field in self.mapper.required_technical_fields:

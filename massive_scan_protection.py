@@ -16,12 +16,8 @@ Features:
 Author: Enhanced for Asset Management System
 """
 
-import threading
 import time
-import queue
-from datetime import datetime
-from typing import List, Dict, Any, Optional, Callable
-import concurrent.futures
+from typing import List, Dict
 
 try:
     from PyQt6.QtCore import QObject, pyqtSignal, QTimer, QThread
@@ -181,7 +177,6 @@ class MassiveScanThread(QThread):
         """
         try:
             # Import the ultra-fast collector
-            import ultra_fast_collector
             
             # Calculate optimal chunk size based on network size
             chunk_size = self.calculate_optimal_chunk_size(network)
@@ -440,7 +435,6 @@ def apply_massive_scan_protection(main_window):
                         main_window._original_start_collection()
                         
                         # Brief pause to prevent system overload
-                        from PyQt6.QtCore import QTimer
                         from PyQt6.QtWidgets import QApplication
                         
                         # Process events to keep UI responsive

@@ -34,7 +34,7 @@ class WebServiceMethods:
                     self.web_service_log.append("✅ Web service started successfully!")
                     self.web_service_status.setText("🟢 Running")
                     self.web_service_status.setStyleSheet("color: green; font-weight: bold; padding: 5px;")
-                    self.web_service_log.append(f"🌐 Access URL: http://localhost:8080")
+                    self.web_service_log.append("🌐 Access URL: http://localhost:8080")
                     self.web_service_log.append("🔐 Login: admin/admin123 or user/user123")
                     
                     # Auto-open browser after service is ready

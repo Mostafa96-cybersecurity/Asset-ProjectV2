@@ -6,9 +6,8 @@ Ensures proper data persistence and update-only behavior (no data replacement)
 
 import sqlite3
 import json
-import time
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
+from datetime import datetime
+from typing import Dict, Any
 import hashlib
 
 class DatabaseIntegrityValidator:
@@ -321,12 +320,12 @@ def test_database_operations():
         print(f"   ❌ Errors: {connection_result['errors']}")
     
     # Test 2: Create backup
-    print(f"\n💾 Creating Data Backup...")
+    print("\n💾 Creating Data Backup...")
     backup_success = validator.create_data_backup()
     print(f"   {'✅' if backup_success else '❌'} Backup created")
     
     # Test 3: Data integrity check
-    print(f"\n🔍 Checking Data Integrity...")
+    print("\n🔍 Checking Data Integrity...")
     integrity_result = validator.validate_data_integrity()
     
     print(f"   📊 Total records: {integrity_result['total_records']}")
@@ -350,7 +349,7 @@ def test_database_operations():
             print(f"      • {hostname}: {count} records")
     
     # Test 4: Smart update test
-    print(f"\n🧠 Testing Smart Update System...")
+    print("\n🧠 Testing Smart Update System...")
     
     # Test with sample device data
     test_device = {
@@ -384,7 +383,7 @@ def test_database_operations():
         cursor.execute("DELETE FROM assets WHERE ip_address = '10.0.21.999'")
         conn.commit()
         conn.close()
-        print(f"   🧹 Test record cleaned up")
+        print("   🧹 Test record cleaned up")
     except:
         pass
     
@@ -398,7 +397,7 @@ if __name__ == "__main__":
     
     connection_result, integrity_result = test_database_operations()
     
-    print(f"\n📋 SUMMARY REPORT")
+    print("\n📋 SUMMARY REPORT")
     print("=" * 60)
     
     # Connection status
@@ -421,7 +420,7 @@ if __name__ == "__main__":
     print(f"📊 Total records: {record_count}")
     
     # Recommendations
-    print(f"\n💡 RECOMMENDATIONS:")
+    print("\n💡 RECOMMENDATIONS:")
     if quality_score < 0.8:
         print("   1. Run enhanced collection to improve data completeness")
     

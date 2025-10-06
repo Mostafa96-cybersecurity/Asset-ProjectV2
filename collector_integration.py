@@ -14,7 +14,6 @@ import platform
 import time
 import requests
 from datetime import datetime
-import traceback
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - CollectorIntegration - %(levelname)s - %(message)s')

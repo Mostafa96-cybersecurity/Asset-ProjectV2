@@ -9,12 +9,11 @@ import os
 import threading
 import time
 from datetime import datetime
-from typing import List, Dict
-from PyQt6.QtCore import QTimer, QObject, pyqtSignal, Qt
+from PyQt6.QtCore import QTimer, QObject, pyqtSignal
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
                              QPushButton, QTextEdit, QComboBox, QLineEdit,
-                             QGroupBox, QScrollArea, QTabWidget, QTableWidget,
-                             QTableWidgetItem, QHeaderView, QSplitter)
+                             QGroupBox, QTabWidget, QTableWidget,
+                             QTableWidgetItem, QHeaderView)
 from PyQt6.QtGui import QFont, QTextCursor, QColor
 
 
@@ -71,7 +70,7 @@ class LogMonitor(QObject):
                             self.log_updated.emit(timestamp, level, message)
                 
                 self.file_positions[log_file] = current_size
-        except Exception as e:
+        except Exception:
             pass  # Ignore file access errors
     
     def _extract_log_level(self, line: str) -> str:

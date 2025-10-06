@@ -4,11 +4,9 @@ Critical Threading Fix
 Resolves QObject threading errors and Effect attribute issues
 """
 
-from PyQt6.QtCore import QObject, QThread, pyqtSignal, QTimer, QMutex, QMutexLocker
+from PyQt6.QtCore import QObject, pyqtSignal, QTimer, QMutex, QMutexLocker
 from PyQt6.QtWidgets import QApplication
-import sys
 import threading
-import traceback
 
 class ThreadingErrorFix(QObject):
     """
@@ -79,7 +77,7 @@ class ThreadingErrorFix(QObject):
                     try:
                         if original_connect:
                             return original_connect(*args, **kwargs)
-                    except Exception as e:
+                    except Exception:
                         # Log error but don't block UI
                         if hasattr(main_window, 'log_output'):
                             QTimer.singleShot(0, lambda: main_window.log_output.append(f"🔗 SSH connection handled: {e}"))
@@ -131,7 +129,7 @@ class ThreadingErrorFix(QObject):
                 # Force back to main thread
                 QTimer.singleShot(0, lambda: self.apply_all_critical_fixes(main_window))
             
-        except Exception as e:
+        except Exception:
             pass  # Silent fix
 
 def apply_critical_threading_fix(main_window):

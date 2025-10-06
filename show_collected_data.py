@@ -4,7 +4,6 @@ Show Collected Data Columns and Sample Data
 """
 
 import sqlite3
-import json
 
 def show_collected_data():
     """Show all collected columns and sample data"""
@@ -30,7 +29,7 @@ def show_collected_data():
         'data_source'
     ]
     
-    print(f"\n🔧 KEY HARDWARE COLUMNS:")
+    print("\n🔧 KEY HARDWARE COLUMNS:")
     available_hw_columns = []
     for col in hardware_columns:
         if any(col_info[1] == col for col_info in columns):
@@ -40,7 +39,7 @@ def show_collected_data():
             print(f"   ❌ {col} (not found)")
     
     # Show sample data from recent enhanced collections
-    print(f"\n📋 SAMPLE DATA (Recent Enhanced Collections):")
+    print("\n📋 SAMPLE DATA (Recent Enhanced Collections):")
     
     # Get most recent enhanced records
     cursor.execute("""
@@ -69,7 +68,7 @@ def show_collected_data():
                 print(f"      {field}: {value}")
     
     # Show collection statistics
-    print(f"\n📈 COLLECTION STATISTICS:")
+    print("\n📈 COLLECTION STATISTICS:")
     
     # Data source breakdown
     cursor.execute("SELECT data_source, COUNT(*) FROM assets GROUP BY data_source")
@@ -80,7 +79,7 @@ def show_collected_data():
         print(f"   {source_name}: {count} records")
     
     # Check for enhanced fields with data
-    print(f"\n🔍 ENHANCED DATA AVAILABILITY:")
+    print("\n🔍 ENHANCED DATA AVAILABILITY:")
     
     enhanced_fields = [
         ('Processor Names', 'processor_name'),
@@ -101,13 +100,13 @@ def show_collected_data():
             count = cursor.fetchone()[0]
             percentage = (count / total * 100) if total > 0 else 0
             print(f"   {field_name}: {count}/{total} ({percentage:.1f}%)")
-        except Exception as e:
+        except Exception:
             print(f"   {field_name}: Not available")
     
     conn.close()
     
-    print(f"\n✅ DATA ANALYSIS COMPLETE!")
-    print(f"🚀 Database now optimized for fast saves (<30s vs 198.3s)")
+    print("\n✅ DATA ANALYSIS COMPLETE!")
+    print("🚀 Database now optimized for fast saves (<30s vs 198.3s)")
 
 if __name__ == "__main__":
     show_collected_data()

@@ -6,15 +6,10 @@ This module collects data for all 520 columns using WMI, SSH, SNMP, and Registry
 import wmi
 import psutil
 import socket
-import subprocess
 import json
-import sqlite3
 import platform
-import winreg
 from datetime import datetime
-import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
 from comprehensive_schema import COMPREHENSIVE_COLUMNS
 
 class ComprehensiveDataCollector:
@@ -498,14 +493,14 @@ if __name__ == "__main__":
     collector = ComprehensiveDataCollector()
     data = collector.collect_comprehensive_data()
     
-    print(f"\n🎉 COMPREHENSIVE DATA COLLECTION COMPLETE!")
+    print("\n🎉 COMPREHENSIVE DATA COLLECTION COMPLETE!")
     print(f"   📊 Collected {len([k for k, v in data.items() if v is not None])} fields")
     print(f"   ✅ Data completeness: {data.get('data_completeness_score', 0):.1f}%")
     print(f"   🔧 Collection method: {data.get('collection_method')}")
     print(f"   🕒 Collection time: {data.get('collection_timestamp')}")
     
     # Show sample of collected data
-    print(f"\n📋 Sample collected data:")
+    print("\n📋 Sample collected data:")
     sample_fields = ['hostname', 'system_manufacturer', 'system_model', 'processor_name', 
                     'total_physical_memory_gb', 'total_storage_gb', 'operating_system']
     for field in sample_fields:

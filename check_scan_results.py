@@ -4,7 +4,6 @@ Check for recent database updates after scan
 """
 
 import sqlite3
-from datetime import datetime, timedelta
 
 def check_recent_updates():
     conn = sqlite3.connect('assets.db')
@@ -45,7 +44,7 @@ def check_recent_updates():
     recent_devices = cursor.fetchall()
     
     if recent_devices:
-        print(f"\n📋 Recently Updated Devices:")
+        print("\n📋 Recently Updated Devices:")
         print("-" * 50)
         for hostname, ip, updated, method in recent_devices:
             print(f"   • {hostname or ip} - {updated} ({method or 'Unknown'})")
@@ -62,7 +61,7 @@ def check_recent_updates():
     """)
     methods = cursor.fetchall()
     
-    print(f"\n🔧 Collection Methods:")
+    print("\n🔧 Collection Methods:")
     for method, count in methods:
         print(f"   • {method}: {count} devices")
     
@@ -76,11 +75,11 @@ def check_recent_updates():
     
     conn.close()
     
-    print(f"\n💡 ANALYSIS:")
-    print(f"   🔍 Discovered: 461 devices total")
-    print(f"   ✅ Collected: 222 devices (48% success rate)")
-    print(f"   ⏱️ Issue: Collection timeout")
-    print(f"   💡 Solution: Adjust timeout settings or run incremental scans")
+    print("\n💡 ANALYSIS:")
+    print("   🔍 Discovered: 461 devices total")
+    print("   ✅ Collected: 222 devices (48% success rate)")
+    print("   ⏱️ Issue: Collection timeout")
+    print("   💡 Solution: Adjust timeout settings or run incremental scans")
 
 if __name__ == "__main__":
     check_recent_updates()

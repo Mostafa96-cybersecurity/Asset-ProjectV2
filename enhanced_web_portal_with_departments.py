@@ -9,11 +9,8 @@ Complete web interface with:
 - Performance optimizations
 """
 
-from flask import Flask, render_template_string, request, jsonify, redirect, url_for
+from flask import Flask, render_template_string, jsonify
 import sqlite3
-from datetime import datetime
-from typing import Dict, List, Optional
-import json
 
 class EnhancedDeviceWebInterface:
     """Enhanced web interface with department support"""

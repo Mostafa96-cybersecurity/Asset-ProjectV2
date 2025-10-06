@@ -4,7 +4,6 @@ This script creates the complete database with 520+ columns and migrates existin
 """
 
 import sqlite3
-import json
 import os
 from datetime import datetime
 from comprehensive_schema import COMPREHENSIVE_COLUMNS
@@ -137,7 +136,7 @@ class ComprehensiveDatabaseManager:
         conn.commit()
         conn.close()
         
-        print(f"🎉 COMPREHENSIVE DATABASE CREATED SUCCESSFULLY!")
+        print("🎉 COMPREHENSIVE DATABASE CREATED SUCCESSFULLY!")
         print(f"   📊 Total columns: {len(COMPREHENSIVE_COLUMNS)}")
         print(f"   💾 Database path: {self.db_path}")
         print(f"   📀 Backup path: {self.backup_path}")
@@ -154,7 +153,7 @@ class ComprehensiveDatabaseManager:
             cursor.execute("PRAGMA table_info(assets_enhanced)")
             columns = cursor.fetchall()
             
-            print(f"✅ Database verification:")
+            print("✅ Database verification:")
             print(f"   📊 Total columns: {len(columns)}")
             print(f"   🎯 Expected columns: {len(COMPREHENSIVE_COLUMNS)}")
             
@@ -164,7 +163,7 @@ class ComprehensiveDatabaseManager:
             print(f"   💾 Total assets: {asset_count}")
             
             # Show sample of comprehensive columns
-            print(f"\n📋 Sample of comprehensive columns:")
+            print("\n📋 Sample of comprehensive columns:")
             for i, (col_name, col_type, _, _, _, _) in enumerate(columns[:20]):
                 print(f"   {i+1:3d}. {col_name:30} ({col_type})")
             

@@ -5,7 +5,6 @@ Updates database to support all the new 100% hardware collection features
 """
 
 import sqlite3
-from datetime import datetime
 
 def update_database_schema():
     """Add all the new enhanced collection columns to database"""
@@ -100,7 +99,7 @@ def update_database_schema():
     
     added_count = 0
     
-    print(f"\n🔨 ADDING ENHANCED COLLECTION COLUMNS:")
+    print("\n🔨 ADDING ENHANCED COLLECTION COLUMNS:")
     
     for column_name, column_type, description in new_columns:
         if column_name not in existing_columns:
@@ -119,22 +118,22 @@ def update_database_schema():
     cursor.execute("PRAGMA table_info(assets)")
     final_columns = cursor.fetchall()
     
-    print(f"\n📈 SCHEMA UPDATE RESULTS:")
+    print("\n📈 SCHEMA UPDATE RESULTS:")
     print(f"   Columns before: {len(existing_columns)}")
     print(f"   Columns after: {len(final_columns)}")
     print(f"   New columns added: {added_count}")
     
     conn.close()
     
-    print(f"\n✅ DATABASE SCHEMA UPDATED!")
-    print(f"🚀 Ready for 100% hardware collection!")
+    print("\n✅ DATABASE SCHEMA UPDATED!")
+    print("🚀 Ready for 100% hardware collection!")
     
     return added_count
 
 def verify_enhanced_fields():
     """Verify the new fields are properly added"""
     
-    print(f"\n🔍 VERIFYING ENHANCED FIELDS:")
+    print("\n🔍 VERIFYING ENHANCED FIELDS:")
     
     conn = sqlite3.connect('assets.db')
     cursor = conn.cursor()
@@ -162,8 +161,8 @@ if __name__ == "__main__":
     # Verify fields
     verify_enhanced_fields()
     
-    print(f"\n🎯 SUMMARY:")
+    print("\n🎯 SUMMARY:")
     print(f"   • Added {added_columns} new enhanced collection columns")
-    print(f"   • Database ready for graphics cards, disk formatting, etc.")
-    print(f"   • All 100% hardware collection features supported")
-    print(f"   • Performance optimized (<30s vs 198.3s save time)")
+    print("   • Database ready for graphics cards, disk formatting, etc.")
+    print("   • All 100% hardware collection features supported")
+    print("   • Performance optimized (<30s vs 198.3s save time)")

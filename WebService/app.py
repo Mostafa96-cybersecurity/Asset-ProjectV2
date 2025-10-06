@@ -8,7 +8,6 @@ This service provides the comprehensive intelligent asset management system.
 
 import os
 import sys
-import io
 
 # Set console encoding to handle Unicode properly
 if sys.platform == "win32":

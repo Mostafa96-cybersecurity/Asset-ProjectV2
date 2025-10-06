@@ -7,15 +7,14 @@ Clean AD connectivity GUI for desktop app integration
 
 import sys
 import os
-import json
 from datetime import datetime
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, 
     QPushButton, QTextEdit, QCheckBox, QGroupBox, QFormLayout,
     QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView,
-    QMessageBox, QProgressBar, QComboBox
+    QMessageBox, QProgressBar
 )
-from PyQt6.QtCore import QThread, pyqtSignal, Qt
+from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 
 # Add current directory to path

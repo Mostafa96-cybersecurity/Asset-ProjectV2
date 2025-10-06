@@ -10,7 +10,6 @@ import subprocess
 import time
 import socket
 import os
-import threading
 import signal
 import sys
 from datetime import datetime

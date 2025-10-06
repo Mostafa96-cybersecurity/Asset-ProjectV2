@@ -16,21 +16,16 @@ import sqlite3
 import json
 import time
 import threading
-import asyncio
 import logging
 import os
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor
 import wmi
 import socket
 import subprocess
 import psutil
 import platform
-import uuid
-import winreg
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 import tkinter as tk
-from tkinter import messagebox
 
 # Import advanced notification system
 from advanced_notification_system import AdvancedNotificationSystem, DataCollectionNotifier, NotificationLevel

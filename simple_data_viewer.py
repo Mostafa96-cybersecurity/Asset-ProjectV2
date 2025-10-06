@@ -8,7 +8,6 @@ Shows all collected data in the database.
 import sqlite3
 import json
 from datetime import datetime
-import os
 
 def show_database_summary():
     """Show database summary and all collected data"""
@@ -30,13 +29,13 @@ def show_database_summary():
     cursor.execute("SELECT COUNT(DISTINCT ip_address) FROM assets WHERE ip_address IS NOT NULL")
     unique_ips = cursor.fetchone()[0]
     
-    print(f"\n📊 BASIC STATISTICS")
+    print("\n📊 BASIC STATISTICS")
     print(f"   Total Records: {total}")
     print(f"   Devices with Collection Data: {collected}")
     print(f"   Unique IP Addresses: {unique_ips}")
     
     # Device types
-    print(f"\n🏷️ DEVICE TYPES")
+    print("\n🏷️ DEVICE TYPES")
     cursor.execute("""
         SELECT device_classification, COUNT(*) 
         FROM assets 
@@ -50,7 +49,7 @@ def show_database_summary():
         print(f"   {device_type}: {count}")
     
     # Network activity
-    print(f"\n🌐 NETWORK STATUS")
+    print("\n🌐 NETWORK STATUS")
     cursor.execute("SELECT COUNT(*) FROM assets WHERE open_ports IS NOT NULL AND open_ports != '[]'")
     with_ports = cursor.fetchone()[0]
     
@@ -61,7 +60,7 @@ def show_database_summary():
     print(f"   Web Services Found: {web_services}")
     
     # Show all collected devices
-    print(f"\n📋 ALL COLLECTED DEVICES")
+    print("\n📋 ALL COLLECTED DEVICES")
     print("=" * 60)
     
     cursor.execute("""
@@ -96,7 +95,7 @@ def show_database_summary():
     conn.close()
     
     print(f"\n✅ Total: {len(all_devices)} devices with complete collection data")
-    print(f"🎯 All scan data successfully stored in database!")
+    print("🎯 All scan data successfully stored in database!")
 
 if __name__ == "__main__":
     show_database_summary()

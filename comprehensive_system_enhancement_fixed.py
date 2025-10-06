@@ -6,15 +6,8 @@ Addresses all 7 enhancement requirements with corrected syntax.
 """
 
 import sys
-import os
 import sqlite3
-import threading
-import json
-import time
-from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Any
-import subprocess
 import logging
 
 # Add project root to path

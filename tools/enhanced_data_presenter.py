@@ -98,11 +98,11 @@ class EnhancedDataPresenter:
         
         # Show duplicate summary
         if duplicate_info:
-            print(f"\n📊 DUPLICATE SUMMARY:")
+            print("\n📊 DUPLICATE SUMMARY:")
             for fp, info in duplicate_info.items():
                 print(f"   Original: {info['original']}")
                 print(f"   Merged: {', '.join(info['duplicates'])}")
-                print(f"   Result: Enhanced data with no loss")
+                print("   Result: Enhanced data with no loss")
         
         return processed_devices
 
@@ -348,11 +348,11 @@ def demonstrate_enhanced_presentation():
     # Generate Excel report
     excel_file = presenter.generate_excel_output(formatted_devices)
     
-    print(f"\n🎉 ENHANCED PRESENTATION COMPLETE!")
+    print("\n🎉 ENHANCED PRESENTATION COMPLETE!")
     print(f"📁 Total Devices: {len(sample_data)} → {len(unique_devices)} (after smart duplicate handling)")
     print(f"📊 Excel Report: {excel_file}")
-    print(f"✅ Professional formatting applied")
-    print(f"🛡️ Smart duplicate management completed")
+    print("✅ Professional formatting applied")
+    print("🛡️ Smart duplicate management completed")
 
 
 if __name__ == "__main__":

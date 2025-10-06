@@ -6,7 +6,6 @@ Removes duplicate records while preserving the most complete data
 
 import sqlite3
 from datetime import datetime
-from typing import Dict, List, Tuple
 
 def cleanup_duplicate_records():
     """Clean up duplicate records in the database"""
@@ -129,7 +128,7 @@ def cleanup_duplicate_records():
     
     conn.close()
     
-    print(f"\n📊 CLEANUP RESULTS:")
+    print("\n📊 CLEANUP RESULTS:")
     print(f"   📉 Initial count: {initial_count}")
     print(f"   📈 Final count: {final_count}")
     print(f"   🗑️ Total removed: {cleanup_stats['total_removed']}")
@@ -146,5 +145,5 @@ if __name__ == "__main__":
     
     cleanup_stats = cleanup_duplicate_records()
     
-    print(f"\n✅ Cleanup completed successfully!")
+    print("\n✅ Cleanup completed successfully!")
     print(f"🕐 Finished: {datetime.now()}")

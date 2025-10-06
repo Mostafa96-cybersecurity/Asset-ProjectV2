@@ -11,7 +11,6 @@ from tkinter import ttk, messagebox
 import webbrowser
 import threading
 import time
-from datetime import datetime
 import sys
 import os
 

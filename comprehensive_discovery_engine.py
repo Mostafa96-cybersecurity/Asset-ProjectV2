@@ -36,14 +36,8 @@ except ImportError:
     SNMP_AVAILABLE = False
     print("⚠️ SNMP library not available. Install with: pip install pysnmp")
 
-import ipaddress
-import concurrent.futures
-import threading
-import time
-import json
 import sqlite3
 from datetime import datetime
-import logging
 
 # Enhanced WMI Collection
 def enhanced_wmi_collection(ip_address, username, password):
@@ -182,7 +176,7 @@ def snmp_collection(ip_address, community='public', version=2):
                         elif item == 'location':
                             device_data['location'] = value
                     break
-            except Exception as e:
+            except Exception:
                 continue
         
         # Try to get manufacturer from sysObjectID
@@ -483,7 +477,7 @@ if __name__ == "__main__":
     
     result = multi_protocol_discovery(test_ip, test_credentials)
     if result:
-        print(f"🎉 Discovery successful!")
+        print("🎉 Discovery successful!")
         print(f"📊 Collected {len(result)} fields")
         for key, value in result.items():
             print(f"   {key}: {value}")

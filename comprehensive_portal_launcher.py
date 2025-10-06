@@ -8,7 +8,6 @@ Launches both the secure web service and enhanced dashboard
 import os
 import sys
 import subprocess
-import threading
 import time
 import requests
 from pathlib import Path

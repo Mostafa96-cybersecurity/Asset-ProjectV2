@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # Test database and API endpoint directly
 import sqlite3
-import sys
 import os
 
 def test_database():
@@ -28,7 +27,7 @@ def test_database():
                 if count > 0:
                     cursor.execute("SELECT * FROM assets LIMIT 3")
                     assets = cursor.fetchall()
-                    print(f"  Sample assets:")
+                    print("  Sample assets:")
                     for asset in assets:
                         print(f"    {asset['hostname']} - {asset['ip_address']} - {asset['device_type']}")
                 

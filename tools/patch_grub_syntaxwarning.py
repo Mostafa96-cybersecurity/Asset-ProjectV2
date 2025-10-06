@@ -5,7 +5,9 @@ Patch grub.base SyntaxWarning: replace "\w" or '\w' with raw strings r"\w" / r'\
 - يستخدم دالة استبدال لتفادي مشكلة backslash في re-replacement
 """
 from __future__ import annotations
-import os, sys, re
+import os
+import sys
+import re
 
 def find_grub_base():
     try:

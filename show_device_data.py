@@ -5,7 +5,6 @@ Shows ALL collected data for a specific device
 """
 
 import sqlite3
-import json
 from datetime import datetime
 
 def show_all_device_data(ip_address="10.0.21.47"):
@@ -39,7 +38,7 @@ def show_all_device_data(ip_address="10.0.21.47"):
             cursor.execute('SELECT DISTINCT ip_address FROM assets WHERE ip_address LIKE ? LIMIT 10', (f'{ip_address[:-1]}%',))
             similar_ips = cursor.fetchall()
             if similar_ips:
-                print(f'\\n🔍 Similar IPs found in database:')
+                print('\\n🔍 Similar IPs found in database:')
                 for ip_row in similar_ips:
                     print(f'   {ip_row[0]}')
             return
@@ -136,14 +135,14 @@ def show_all_device_data(ip_address="10.0.21.47"):
                     additional_data[field] = value
             
             if additional_data:
-                print(f'\\n🔧 ADDITIONAL FIELDS:')
+                print('\\n🔧 ADDITIONAL FIELDS:')
                 for field, value in additional_data.items():
                     print(f'   {field}: {value}')
             
             # Summary
             non_empty_fields = sum(1 for v in device_data.values() 
                                  if v is not None and str(v).strip() and str(v).strip().lower() != 'none')
-            print(f'\\n📈 DATA COMPLETENESS:')
+            print('\\n📈 DATA COMPLETENESS:')
             print(f'   Total fields with data: {non_empty_fields}/{len(all_columns)}')
             print(f'   Completion percentage: {(non_empty_fields/len(all_columns)*100):.1f}%')
             

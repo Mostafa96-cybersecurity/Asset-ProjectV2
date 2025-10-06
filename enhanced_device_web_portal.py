@@ -10,10 +10,9 @@ Beautiful, organized web interface with:
 - Integration with intelligent device collector
 """
 
-from flask import Flask, render_template_string, request, jsonify, redirect, url_for
+from flask import Flask, render_template_string, request, jsonify
 import sqlite3
 from datetime import datetime
-from typing import Dict, List, Optional
 import json
 
 class EnhancedDeviceWebInterface:

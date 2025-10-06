@@ -6,9 +6,6 @@ Fixes UI hanging during network scanning and collection operations
 
 from PyQt6.QtCore import QThread, pyqtSignal, QMutex, QTimer, QObject
 from PyQt6.QtWidgets import QApplication, QWidget
-import time
-import threading
-import queue
 from functools import wraps
 from typing import Optional, cast
 

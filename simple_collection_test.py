@@ -5,10 +5,8 @@ Uses existing infrastructure to collect assets and save to database
 """
 
 import sqlite3
-import subprocess
 import sys
 import time
-import json
 from datetime import datetime
 
 def check_database_count():
@@ -235,7 +233,7 @@ if __name__ == "__main__":
     final_count = check_database_count()
     growth = final_count - initial_count
     
-    print(f"\n🎯 RESULTS SUMMARY")
+    print("\n🎯 RESULTS SUMMARY")
     print("=" * 50)
     print(f"📊 Initial count: {initial_count}")
     print(f"📊 Final count: {final_count}")
@@ -243,12 +241,12 @@ if __name__ == "__main__":
     
     if growth > 0:
         print(f"✅ SUCCESS! Added {growth} new devices to database")
-        print(f"💡 Run 'py simple_db_analysis.py' to see detailed results")
+        print("💡 Run 'py simple_db_analysis.py' to see detailed results")
     else:
-        print(f"⚠️ No new devices added to database")
+        print("⚠️ No new devices added to database")
         if success:
-            print(f"💡 Collection worked but may have found duplicate devices")
+            print("💡 Collection worked but may have found duplicate devices")
         else:
-            print(f"💡 Try using the GUI application for a full scan")
+            print("💡 Try using the GUI application for a full scan")
     
     print(f"\n🕐 Completed: {datetime.now()}")

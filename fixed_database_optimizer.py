@@ -4,7 +4,6 @@ Fixed Database Optimizer - Addresses 198.3s save performance
 """
 
 import sqlite3
-from datetime import datetime
 
 def optimize_database():
     """Optimize database with proper transaction handling"""
@@ -46,7 +45,7 @@ def optimize_database():
     
     for idx_query in indexes:
         cursor.execute(idx_query)
-        print(f"   ✅ Index created")
+        print("   ✅ Index created")
     
     # Commit and close
     conn.commit()
@@ -86,15 +85,15 @@ def optimize_database():
     
     conn.close()
     
-    print(f"\n📈 OPTIMIZATION RESULTS:")
+    print("\n📈 OPTIMIZATION RESULTS:")
     print(f"   Records before: {total_before}")
     print(f"   Records after: {total_after}")
     print(f"   Duplicates removed: {removed}")
     print(f"   Performance indexes: {len(indexes)} created")
-    print(f"   SQLite optimizations: Applied")
+    print("   SQLite optimizations: Applied")
     
-    print(f"\n✅ DATABASE OPTIMIZATION COMPLETE!")
-    print(f"🚀 Save time should now be under 30s (was 198.3s)")
+    print("\n✅ DATABASE OPTIMIZATION COMPLETE!")
+    print("🚀 Save time should now be under 30s (was 198.3s)")
     
     return total_after, removed
 
@@ -138,9 +137,9 @@ if __name__ == "__main__":
     total_records, removed_duplicates = optimize_database()
     verify_optimization()
     
-    print(f"\n🎯 SUMMARY:")
-    print(f"   • Database optimized for performance")
+    print("\n🎯 SUMMARY:")
+    print("   • Database optimized for performance")
     print(f"   • {removed_duplicates} duplicate records removed") 
-    print(f"   • Performance indexes created")
-    print(f"   • SQLite settings optimized")
-    print(f"   • Expected save time: <30s (vs 198.3s before)")
+    print("   • Performance indexes created")
+    print("   • SQLite settings optimized")
+    print("   • Expected save time: <30s (vs 198.3s before)")

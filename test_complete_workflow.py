@@ -7,7 +7,6 @@ This simulates the exact workflow when you click "Start Web Service" in Desktop 
 
 import time
 import requests
-import webbrowser
 from desktop_web_service_launcher import FastWebServiceLauncher
 
 def test_complete_workflow():
