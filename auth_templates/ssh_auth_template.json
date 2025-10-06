@@ -1,0 +1,8 @@
+{
+  "ssh_credentials": {
+    "username": "asset-scanner",
+    "private_key_path": "./keys/asset_scanner_key",
+    "connection_timeout": 30,
+    "port": 22
+  }
+}

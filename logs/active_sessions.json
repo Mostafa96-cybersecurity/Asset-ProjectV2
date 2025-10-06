@@ -1,0 +1,92 @@
+{
+  "b20d2faf5cf6d1ae58c197becee7cb59fb3f1c366306f7faf07c3b7b38ab3708": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:10.159832",
+    "last_activity": "2025-10-02T18:56:10.159836",
+    "expires": "2025-10-02T19:56:10.159838"
+  },
+  "bee9e489608a3881e4db9c49ce661cbe6357afbebceb84246da653cd3aec38bc": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:11.385064",
+    "last_activity": "2025-10-02T18:56:11.385074",
+    "expires": "2025-10-02T19:56:11.385077"
+  },
+  "549529edc4a586a9074b233e7175cbd440756f92aaf322abe59de5d0852904bc": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:12.674586",
+    "last_activity": "2025-10-02T18:56:12.674590",
+    "expires": "2025-10-02T19:56:12.674592"
+  },
+  "45452901fd5588ecf56942c322174de0cd3311406a9c21b4acbd397b50a2f3f2": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:13.259035",
+    "last_activity": "2025-10-02T18:56:13.259040",
+    "expires": "2025-10-02T19:56:13.259042"
+  },
+  "9f64449c27f9a43ab91d19ff6894de1cf6906c9d65b31cfb3fc4b8896f284138": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:13.580132",
+    "last_activity": "2025-10-02T18:56:13.580139",
+    "expires": "2025-10-02T19:56:13.580142"
+  },
+  "f276026f9ffade9eadcafb0a0f9972a8d5761a21c59b66a6f4872393c80283e6": {
+    "user_info": {
+      "username": "admin",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ]
+    },
+    "client_ip": "127.0.0.1",
+    "created": "2025-10-02T18:56:13.613396",
+    "last_activity": "2025-10-02T18:56:13.613401",
+    "expires": "2025-10-02T19:56:13.613403"
+  }
+}

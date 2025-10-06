@@ -1,0 +1,180 @@
+{
+  "Win32_ComputerSystem": {
+    "computer_name": "Name",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "system_type": "SystemType",
+    "total_physical_memory": "TotalPhysicalMemory",
+    "domain_name": "Domain",
+    "workgroup": "Workgroup",
+    "primary_owner_name": "PrimaryOwnerName",
+    "system_startup_options": "SystemStartupOptions",
+    "thermal_state": "ThermalState",
+    "power_state": "PowerState"
+  },
+  "Win32_OperatingSystem": {
+    "operating_system": "Caption",
+    "os_version": "Version",
+    "os_build_number": "BuildNumber",
+    "os_service_pack": "ServicePackMajorVersion",
+    "os_architecture": "OSArchitecture",
+    "windows_directory": "WindowsDirectory",
+    "system_directory": "SystemDirectory",
+    "boot_device": "BootDevice",
+    "system_device": "SystemDevice",
+    "install_date": "InstallDate",
+    "last_boot_up_time": "LastBootUpTime",
+    "local_date_time": "LocalDateTime",
+    "locale": "Locale",
+    "country_code": "CountryCode",
+    "time_zone": "CurrentTimeZone",
+    "total_virtual_memory_size": "TotalVirtualMemorySize",
+    "total_visible_memory_size": "TotalVisibleMemorySize",
+    "free_physical_memory": "FreePhysicalMemory",
+    "free_virtual_memory": "FreeVirtualMemory"
+  },
+  "Win32_Processor": {
+    "processor_name": "Name",
+    "processor_manufacturer": "Manufacturer",
+    "processor_architecture": "Architecture",
+    "processor_family": "Family",
+    "processor_speed": "MaxClockSpeed",
+    "processor_cores": "NumberOfCores",
+    "processor_logical_processors": "NumberOfLogicalProcessors",
+    "processor_l2_cache_size": "L2CacheSize",
+    "processor_l3_cache_size": "L3CacheSize",
+    "processor_voltage": "CurrentVoltage",
+    "processor_description": "Description",
+    "processor_socket_designation": "SocketDesignation"
+  },
+  "Win32_PhysicalMemory": {
+    "memory_manufacturer": "Manufacturer",
+    "memory_capacity": "Capacity",
+    "memory_speed": "Speed",
+    "memory_type": "MemoryType",
+    "memory_form_factor": "FormFactor",
+    "memory_device_locator": "DeviceLocator",
+    "memory_bank_label": "BankLabel",
+    "memory_serial_number": "SerialNumber",
+    "memory_part_number": "PartNumber"
+  },
+  "Win32_BIOS": {
+    "bios_version": "SMBIOSBIOSVersion",
+    "bios_manufacturer": "Manufacturer",
+    "bios_name": "Name",
+    "bios_description": "Description",
+    "bios_serial_number": "SerialNumber",
+    "bios_release_date": "ReleaseDate",
+    "bios_version_major": "SMBIOSMajorVersion",
+    "bios_version_minor": "SMBIOSMinorVersion"
+  },
+  "Win32_BaseBoard": {
+    "motherboard_manufacturer": "Manufacturer",
+    "motherboard_model": "Product",
+    "motherboard_version": "Version",
+    "motherboard_serial": "SerialNumber",
+    "motherboard_tag": "Tag"
+  },
+  "Win32_LogicalDisk": {
+    "disk_size": "Size",
+    "disk_free_space": "FreeSpace",
+    "disk_file_system": "FileSystem",
+    "disk_volume_name": "VolumeName",
+    "disk_drive_letter": "DeviceID",
+    "disk_type": "DriveType"
+  },
+  "Win32_DiskDrive": {
+    "hard_drive_model": "Model",
+    "hard_drive_manufacturer": "Manufacturer",
+    "hard_drive_serial": "SerialNumber",
+    "hard_drive_size": "Size",
+    "hard_drive_interface": "InterfaceType",
+    "hard_drive_media_type": "MediaType"
+  },
+  "Win32_NetworkAdapter": {
+    "network_adapter_name": "Name",
+    "network_adapter_manufacturer": "Manufacturer",
+    "network_adapter_type": "AdapterType",
+    "network_adapter_mac": "MACAddress",
+    "network_adapter_speed": "Speed",
+    "network_adapter_status": "NetConnectionStatus"
+  },
+  "Win32_NetworkAdapterConfiguration": {
+    "ip_address": "IPAddress",
+    "subnet_mask": "IPSubnet",
+    "default_gateway": "DefaultIPGateway",
+    "dns_servers": "DNSServerSearchOrder",
+    "dhcp_enabled": "DHCPEnabled",
+    "dhcp_server": "DHCPServer",
+    "wins_primary_server": "WINSPrimaryServer",
+    "wins_secondary_server": "WINSSecondaryServer"
+  },
+  "Win32_VideoController": {
+    "graphics_card_name": "Name",
+    "graphics_card_manufacturer": "AdapterCompatibility",
+    "graphics_card_memory": "AdapterRAM",
+    "graphics_card_driver_version": "DriverVersion",
+    "graphics_card_driver_date": "DriverDate",
+    "graphics_card_resolution": "CurrentHorizontalResolution"
+  },
+  "Win32_SoundDevice": {
+    "audio_device_name": "Name",
+    "audio_device_manufacturer": "Manufacturer",
+    "audio_device_status": "Status"
+  },
+  "Win32_USBController": {
+    "usb_controller_name": "Name",
+    "usb_controller_manufacturer": "Manufacturer",
+    "usb_controller_status": "Status"
+  },
+  "Win32_Product": {
+    "installed_software": "Name",
+    "software_version": "Version",
+    "software_vendor": "Vendor",
+    "software_install_date": "InstallDate"
+  },
+  "Win32_Service": {
+    "service_name": "Name",
+    "service_display_name": "DisplayName",
+    "service_status": "Status",
+    "service_start_mode": "StartMode",
+    "service_path": "PathName",
+    "service_description": "Description"
+  },
+  "Win32_UserAccount": {
+    "user_name": "Name",
+    "user_full_name": "FullName",
+    "user_description": "Description",
+    "user_account_type": "AccountType",
+    "user_disabled": "Disabled",
+    "user_lockout": "Lockout",
+    "user_password_changeable": "PasswordChangeable",
+    "user_password_expires": "PasswordExpires",
+    "user_password_required": "PasswordRequired"
+  },
+  "Win32_Printer": {
+    "printer_name": "Name",
+    "printer_driver_name": "DriverName",
+    "printer_port_name": "PortName",
+    "printer_status": "Status",
+    "printer_shared": "Shared",
+    "printer_share_name": "ShareName"
+  },
+  "Win32_QuickFixEngineering": {
+    "hotfix_id": "HotFixID",
+    "hotfix_description": "Description",
+    "hotfix_installed_by": "InstalledBy",
+    "hotfix_install_date": "InstalledOn"
+  },
+  "Win32_Environment": {
+    "environment_variable_name": "Name",
+    "environment_variable_value": "VariableValue",
+    "environment_variable_user": "UserName"
+  },
+  "Win32_StartupCommand": {
+    "startup_command": "Command",
+    "startup_name": "Name",
+    "startup_location": "Location",
+    "startup_user": "User"
+  }
+}

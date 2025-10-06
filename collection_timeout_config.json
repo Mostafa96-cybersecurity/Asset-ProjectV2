@@ -1,0 +1,9 @@
+{
+  "collection_timeout": 300,
+  "per_device_timeout": 30,
+  "discovery_timeout": 60,
+  "wmi_timeout": 45,
+  "ssh_timeout": 30,
+  "ping_timeout": 3,
+  "port_scan_timeout": 10
+}

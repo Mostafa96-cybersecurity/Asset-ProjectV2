@@ -4,6 +4,6 @@
   ],
   "enable_firewall": true,
   "log_access_attempts": true,
-  "block_suspicious": false,
-  "last_updated": "16:47:00"
+  "block_suspicious": true,
+  "last_updated": "16:32:43"
 }

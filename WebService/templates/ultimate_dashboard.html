@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Asset Management Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --primary-color: #667eea;
+            --secondary-color: #64748b;
+            --success-color: #11998e;
+            --warning-color: #f093fb;
+            --danger-color: #fa709a;
+            --info-color: #4facfe;
+            --dark-color: #2c3e50;
+            --light-color: #f8fafc;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --hover-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            --animation-speed: 0.3s;
+        }
+        
+        body {
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            background: var(--light-color);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 20px;
+            min-height: calc(100vh - 40px);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .navbar-custom {
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 0 5px;
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        
+        .dashboard-content {
+            padding: 30px;
+            background: var(--light-color);
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: none;
+            transition: all var(--animation-speed) ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            box-shadow: var(--hover-shadow);
+            transform: translateY(-5px);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .stat-card.success::before { background: var(--success-gradient); }
+        .stat-card.warning::before { background: var(--warning-gradient); }
+        .stat-card.info::before { background: var(--info-gradient); }
+        .stat-card.danger::before { background: var(--danger-gradient); }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+        
+        .stat-label {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.7;
+            color: var(--primary-color);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .chart-container:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .chart-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        /* Enhanced Table Styles */
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin-top: 30px;
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .table-container:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .table-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px 25px;
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .view-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all var(--animation-speed) ease;
+            cursor: pointer;
+        }
+        
+        .view-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .view-toggle.active {
+            background: white;
+            color: var(--primary-color);
+            border-color: white;
+        }
+        
+        .table-controls {
+            padding: 20px 25px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .search-filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            transition: all var(--animation-speed) ease;
+            min-width: 250px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        .filter-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            transition: all var(--animation-speed) ease;
+            min-width: 150px;
+        }
+        
+        .filter-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        .btn-custom {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all var(--animation-speed) ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+        
+        .btn-success-custom {
+            background: var(--success-gradient);
+            color: white;
+        }
+        
+        .btn-success-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.3);
+            color: white;
+        }
+        
+        .btn-warning-custom {
+            background: var(--warning-gradient);
+            color: white;
+        }
+        
+        .btn-warning-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(240, 147, 251, 0.3);
+            color: white;
+        }
+        
+        .btn-info-custom {
+            background: var(--info-gradient);
+            color: white;
+        }
+        
+        .btn-info-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+        
+        /* Enhanced DataTable Styles */
+        .dataTables_wrapper {
+            padding: 25px;
+        }
+        
+        .dataTables_length select,
+        .dataTables_filter input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .dataTables_length select:focus,
+        .dataTables_filter input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        .dataTables_info {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .dataTables_paginate .paginate_button {
+            padding: 8px 16px;
+            margin: 0 2px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: var(--secondary-color);
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .dataTables_paginate .paginate_button:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-1px);
+        }
+        
+        .dataTables_paginate .paginate_button.current {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Enhanced Table Styles */
+        #assetsTable {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        
+        #assetsTable thead th {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--dark-color);
+            font-weight: 700;
+            padding: 15px 12px;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: center;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        
+        #assetsTable tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        
+        #assetsTable tbody tr {
+            transition: all var(--animation-speed) ease;
+        }
+        
+        #assetsTable tbody tr:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            transform: scale(1.005);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .status-alive {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: var(--success-color);
+            border: 1px solid #86efac;
+        }
+        
+        .status-dead {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: var(--danger-color);
+            border: 1px solid #fca5a5;
+        }
+        
+        .status-unknown {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--secondary-color);
+            border: 1px solid #cbd5e1;
+        }
+        
+        .mismatch-badge {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: var(--warning-color);
+            border: 1px solid #fcd34d;
+        }
+        
+        .match-badge {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: var(--success-color);
+            border: 1px solid #86efac;
+        }
+        
+        /* Advanced View Columns */
+        .advanced-column {
+            display: none;
+        }
+        
+        .advanced-view .advanced-column {
+            display: table-cell;
+        }
+        
+        /* Action Buttons */
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: none;
+            transition: all var(--animation-speed) ease;
+            margin: 0 2px;
+        }
+        
+        .btn-view {
+            background: var(--info-gradient);
+            color: white;
+        }
+        
+        .btn-view:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+        
+        /* Connection Status Indicator */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: var(--success-gradient);
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 1100;
+            box-shadow: var(--card-shadow);
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .connection-status.disconnected {
+            background: var(--danger-gradient);
+        }
+        
+        .connection-status.reconnecting {
+            background: var(--warning-gradient);
+        }
+        
+        /* Loading States */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity var(--animation-speed) ease;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Floating Action Button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all var(--animation-speed) ease;
+            z-index: 1000;
+        }
+        
+        .floating-action-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+                min-height: calc(100vh - 20px);
+            }
+            
+            .navbar-custom {
+                border-radius: 15px 15px 0 0;
+                padding: 15px 20px;
+            }
+            
+            .dashboard-content {
+                padding: 20px;
+            }
+            
+            .search-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input,
+            .filter-select {
+                min-width: auto;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .view-controls {
+                flex-direction: column;
+                gap: 5px;
+                align-items: stretch;
+            }
+            
+            .view-toggle {
+                text-align: center;
+            }
+            
+            .floating-action-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .main-container {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+            }
+            
+            .floating-action-btn,
+            .connection-status {
+                display: none;
+            }
+        }
+        
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Tooltip Styles */
+        .tooltip-inner {
+            background: var(--dark-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+        
+        .tooltip.bs-tooltip-top .tooltip-arrow::before {
+            border-top-color: var(--dark-color);
+        }
+        
+        .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+            border-bottom-color: var(--dark-color);
+        }
+        
+        .tooltip.bs-tooltip-start .tooltip-arrow::before {
+            border-left-color: var(--dark-color);
+        }
+        
+        .tooltip.bs-tooltip-end .tooltip-arrow::before {
+            border-right-color: var(--dark-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Connection Status Indicator -->
+    <div id="connectionStatus" class="connection-status">
+        <i class="fas fa-wifi me-2"></i>Connected
+    </div>
+
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-server me-2"></i>
+                    Ultimate Asset Management
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/assets">
+                                <i class="fas fa-list me-2"></i>Assets List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="refreshDashboard()">
+                                <i class="fas fa-sync-alt me-2"></i>Refresh
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stat-card success fade-in-up">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="stat-number" id="totalDevices">0</h2>
+                                <p class="stat-label">Total Devices</p>
+                                <small class="text-success"><i class="fas fa-arrow-up me-1"></i>Real-time</small>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stat-card info fade-in-up">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="stat-number" id="aliveDevices">0</h2>
+                                <p class="stat-label">Online Devices</p>
+                                <small class="text-info"><i class="fas fa-heartbeat me-1"></i>Active</small>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stat-card warning fade-in-up">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="stat-number" id="hostnameIssues">0</h2>
+                                <p class="stat-label">Hostname Issues</p>
+                                <small class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Attention</small>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stat-card fade-in-up">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="stat-number" id="dataCompleteness">0%</h2>
+                                <p class="stat-label">Data Quality</p>
+                                <small class="text-primary"><i class="fas fa-chart-line me-1"></i>Enhanced</small>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row mb-4">
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <div class="chart-container fade-in-up">
+                        <h5 class="chart-title">
+                            <i class="fas fa-chart-doughnut me-2"></i>
+                            Device Status Distribution
+                        </h5>
+                        <canvas id="statusChart" height="300"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <div class="chart-container fade-in-up">
+                        <h5 class="chart-title">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Operating Systems
+                        </h5>
+                        <canvas id="osChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Assets Table -->
+            <div class="table-container fade-in-up">
+                <div class="table-header">
+                    <span>
+                        <i class="fas fa-table me-2"></i>
+                        Comprehensive Assets Overview
+                    </span>
+                    <div class="view-controls">
+                        <button class="view-toggle active" id="basicViewBtn" onclick="toggleView('basic')">
+                            <i class="fas fa-eye me-1"></i>Basic View
+                        </button>
+                        <button class="view-toggle" id="advancedViewBtn" onclick="toggleView('advanced')">
+                            <i class="fas fa-cogs me-1"></i>Advanced View
+                        </button>
+                        <button class="view-toggle" onclick="exportTableData()">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-controls">
+                    <div class="search-filters">
+                        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search assets by hostname, IP, manufacturer...">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="alive">Online</option>
+                            <option value="dead">Offline</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="workstation">Workstation</option>
+                            <option value="server">Server</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="printer">Printer</option>
+                        </select>
+                        <button class="btn btn-primary-custom btn-custom" onclick="applyFilters()">
+                            <i class="fas fa-filter me-1"></i>Apply Filters
+                        </button>
+                        <button class="btn btn-success-custom btn-custom" onclick="refreshTable()">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div id="tableLoadingOverlay" class="loading-overlay" style="display: none;">
+                    <div class="loading-spinner"></div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="assetsTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- Basic View Columns -->
+                                <th>ID</th>
+                                <th>Hostname</th>
+                                <th>Computer Name</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                                <th>Device Type</th>
+                                <th>Processor</th>
+                                <th>Memory (GB)</th>
+                                <th>Operating System</th>
+                                <th>Manufacturer</th>
+                                <th>Collection Method</th>
+                                <th>Hostname Match</th>
+                                
+                                <!-- Advanced View Columns -->
+                                <th class="advanced-column">Model</th>
+                                <th class="advanced-column">BIOS Version</th>
+                                <th class="advanced-column">OS Version</th>
+                                <th class="advanced-column">OS Build</th>
+                                <th class="advanced-column">CPU Cores</th>
+                                <th class="advanced-column">CPU Logical Cores</th>
+                                <th class="advanced-column">Graphics Cards</th>
+                                <th class="advanced-column">Monitors</th>
+                                <th class="advanced-column">Storage Summary</th>
+                                <th class="advanced-column">Network Adapters</th>
+                                <th class="advanced-column">USB Devices</th>
+                                <th class="advanced-column">Audio Devices</th>
+                                <th class="advanced-column">Installed Software</th>
+                                <th class="advanced-column">Running Services</th>
+                                <th class="advanced-column">Domain/Workgroup</th>
+                                <th class="advanced-column">Current User</th>
+                                <th class="advanced-column">User Profiles</th>
+                                <th class="advanced-column">Antivirus</th>
+                                <th class="advanced-column">Firewall Status</th>
+                                <th class="advanced-column">Windows Updates</th>
+                                <th class="advanced-column">Uptime</th>
+                                <th class="advanced-column">CPU Usage %</th>
+                                <th class="advanced-column">Memory Usage %</th>
+                                <th class="advanced-column">Data Quality %</th>
+                                <th class="advanced-column">Last Seen</th>
+                                
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="assetsTableBody">
+                            <!-- Data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="floating-action-btn" onclick="refreshDashboard()" title="Refresh All Data">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script>
+        // Global Variables
+        let statusChart, osChart;
+        let assetsTable;
+        let currentView = 'basic';
+        let connectionRetries = 0;
+        let maxRetries = 5;
+        let retryDelay = 2000;
+        let isRefreshing = false;
+        
+        // Connection Management
+        function updateConnectionStatus(status) {
+            const statusElement = document.getElementById('connectionStatus');
+            const statusIcon = statusElement.querySelector('i');
+            
+            statusElement.classList.remove('disconnected', 'reconnecting');
+            
+            switch(status) {
+                case 'connected':
+                    statusIcon.className = 'fas fa-wifi me-2';
+                    statusElement.innerHTML = '<i class="fas fa-wifi me-2"></i>Connected';
+                    connectionRetries = 0;
+                    break;
+                case 'disconnected':
+                    statusElement.classList.add('disconnected');
+                    statusIcon.className = 'fas fa-wifi-slash me-2';
+                    statusElement.innerHTML = '<i class="fas fa-wifi-slash me-2"></i>Disconnected';
+                    break;
+                case 'reconnecting':
+                    statusElement.classList.add('reconnecting');
+                    statusIcon.className = 'fas fa-spinner fa-spin me-2';
+                    statusElement.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Reconnecting...';
+                    break;
+            }
+        }
+        
+        // Robust API call with retry mechanism
+        async function robustApiCall(url, options = {}) {
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    updateConnectionStatus('connected');
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    
+                    const response = await fetch(url, {
+                        ...options,
+                        signal: controller.signal,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            ...options.headers
+                        }
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    connectionRetries = 0;
+                    return data;
+                    
+                } catch (error) {
+                    console.warn(`API call attempt ${attempt + 1} failed:`, error);
+                    
+                    if (attempt < maxRetries) {
+                        updateConnectionStatus('reconnecting');
+                        await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
+                        connectionRetries++;
+                    } else {
+                        updateConnectionStatus('disconnected');
+                        throw error;
+                    }
+                }
+            }
+        }
+        
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Ultimate Asset Management Dashboard...');
+            
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+            
+            // Load all data
+            loadDashboardData();
+            initializeTable();
+            
+            // Auto-refresh every 30 seconds for real-time updates
+            setInterval(refreshDashboard, 30000);
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'r':
+                            e.preventDefault();
+                            refreshDashboard();
+                            break;
+                        case 'f':
+                            e.preventDefault();
+                            document.getElementById('searchInput').focus();
+                            break;
+                        case 'a':
+                            e.preventDefault();
+                            toggleView(currentView === 'basic' ? 'advanced' : 'basic');
+                            break;
+                    }
+                }
+            });
+        });
+        
+        // Load Dashboard Statistics
+        async function loadDashboardData() {
+            try {
+                const data = await robustApiCall('/api/enhanced/stats');
+                updateStatistics(data);
+                updateCharts(data);
+                console.log('Dashboard data loaded successfully');
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                showError('Failed to load dashboard statistics. Retrying...');
+                setTimeout(loadDashboardData, 5000);
+            }
+        }
+        
+        // Update Statistics with Animation
+        function updateStatistics(data) {
+            animateValue('totalDevices', 0, data.total_devices || 0, 1000);
+            
+            const aliveCount = data.device_status?.alive || 0;
+            animateValue('aliveDevices', 0, aliveCount, 1000);
+            
+            const hostnameIssues = data.hostname_mismatches || 0;
+            animateValue('hostnameIssues', 0, hostnameIssues, 1000);
+            
+            const avgCompleteness = data.avg_data_completeness || 0;
+            animateValue('dataCompleteness', 0, avgCompleteness, 1000, '%');
+        }
+        
+        // Animate Number Values
+        function animateValue(elementId, start, end, duration, suffix = '') {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.round(start + (end - start) * easeOutQuart);
+                
+                element.textContent = current + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        // Update Charts
+        function updateCharts(data) {
+            updateStatusChart(data);
+            updateOsChart(data);
+        }
+        
+        // Status Chart
+        function updateStatusChart(data) {
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            
+            if (statusChart) {
+                statusChart.destroy();
+            }
+            
+            const statusData = data.device_status || {};
+            
+            statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statusData),
+                    datasets: [{
+                        data: Object.values(statusData),
+                        backgroundColor: [
+                            'rgba(17, 153, 142, 0.8)',
+                            'rgba(250, 112, 154, 0.8)',
+                            'rgba(100, 116, 139, 0.8)',
+                            'rgba(79, 172, 254, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(17, 153, 142, 1)',
+                            'rgba(250, 112, 154, 1)',
+                            'rgba(100, 116, 139, 1)',
+                            'rgba(79, 172, 254, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                font: {
+                                    size: 12,
+                                    weight: '600'
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+        
+        // OS Chart
+        function updateOsChart(data) {
+            const ctx = document.getElementById('osChart').getContext('2d');
+            
+            if (osChart) {
+                osChart.destroy();
+            }
+            
+            const osData = data.operating_systems || [];
+            
+            osChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: osData.map(os => os.name),
+                    datasets: [{
+                        label: 'Device Count',
+                        data: osData.map(os => os.count),
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize DataTable
+        function initializeTable() {
+            assetsTable = $('#assetsTable').DataTable({
+                processing: true,
+                serverSide: false,
+                responsive: true,
+                fixedHeader: true,
+                pageLength: 25,
+                lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                order: [[4, 'asc'], [1, 'asc']],
+                columnDefs: [
+                    {
+                        targets: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+                        visible: false,
+                        className: 'advanced-column'
+                    },
+                    {
+                        targets: [0],
+                        width: '50px'
+                    },
+                    {
+                        targets: [4],
+                        orderable: true,
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                const statusClass = data === 'alive' ? 'status-alive' : 
+                                                  data === 'dead' ? 'status-dead' : 'status-unknown';
+                                return `<span class="status-badge ${statusClass}">${data || 'Unknown'}</span>`;
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        targets: [11],
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                const badgeClass = data === 'MISMATCH' ? 'mismatch-badge' : 'match-badge';
+                                const text = data === 'MISMATCH' ? 'Mismatch' : 'Match';
+                                return `<span class="status-badge ${badgeClass}">${text}</span>`;
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        targets: [-1],
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-action btn-view" onclick="viewAsset(${row[0]})" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>`;
+                        }
+                    }
+                ],
+                dom: '<"row"<"col-sm-6"l><"col-sm-6"f>>rtip',
+                language: {
+                    processing: '<div class="loading-spinner"></div>',
+                    emptyTable: 'No assets found in the database',
+                    zeroRecords: 'No matching assets found',
+                    lengthMenu: 'Show _MENU_ assets per page',
+                    info: 'Showing _START_ to _END_ of _TOTAL_ assets',
+                    infoEmpty: 'No assets available',
+                    infoFiltered: '(filtered from _MAX_ total assets)',
+                    search: 'Quick Search:',
+                    paginate: {
+                        first: 'First',
+                        last: 'Last',
+                        next: 'Next',
+                        previous: 'Previous'
+                    }
+                },
+                initComplete: function() {
+                    console.log('DataTable initialized successfully');
+                    loadTableData();
+                }
+            });
+        }
+        
+        // Load Table Data
+        async function loadTableData() {
+            try {
+                showTableLoading(true);
+                
+                const data = await robustApiCall('/api/enhanced/assets?per_page=1000');
+                
+                // Clear existing data
+                assetsTable.clear();
+                
+                // Process and add new data
+                if (data.assets && data.assets.length > 0) {
+                    data.assets.forEach(asset => {
+                        const row = [
+                            asset.id || '',
+                            asset.hostname || '',
+                            asset.computer_name || '',
+                            asset.ip_address || '',
+                            asset.device_status || 'unknown',
+                            asset.device_type || '',
+                            asset.processor_name || '',
+                            asset.total_physical_memory_gb || '',
+                            asset.operating_system || '',
+                            asset.system_manufacturer || '',
+                            asset.collection_method || '',
+                            asset.hostname_mismatch_status || 'MATCH',
+                            
+                            // Advanced columns - map to actual enhanced table columns
+                            asset.system_model || '',
+                            asset.bios_version || '',
+                            asset.os_version || '',
+                            asset.os_build || '',
+                            asset.processor_cores || '',
+                            asset.processor_logical_cores || '',
+                            Array.isArray(asset.graphics_cards) ? asset.graphics_cards.length : (asset.graphics_cards ? 1 : 0),
+                            asset.connected_monitors || '',
+                            asset.storage_summary || '',
+                            Array.isArray(asset.network_adapters) ? asset.network_adapters.length : (asset.network_adapters ? 1 : 0),
+                            '', // USB Devices - not available in enhanced table
+                            '', // Audio Devices - not available in enhanced table  
+                            Array.isArray(asset.installed_software) ? asset.installed_software.length : (asset.installed_software ? 1 : 0),
+                            '', // Running Services - not available in enhanced table
+                            asset.domain_workgroup || '',
+                            asset.current_user || '',
+                            Array.isArray(asset.user_profiles) ? asset.user_profiles.length : (asset.user_profiles ? 1 : 0),
+                            asset.antivirus_software || '',
+                            asset.firewall_status || '',
+                            '', // Windows Updates - not available
+                            asset.uptime_hours ? `${Math.floor(asset.uptime_hours)}h` : '',
+                            asset.cpu_usage_percent || '',
+                            asset.memory_usage_percent || '',
+                            asset.data_completeness_score || '',
+                            asset.last_seen || ''
+                        ];
+                        
+                        assetsTable.row.add(row);
+                    });
+                }
+                
+                // Draw the table
+                assetsTable.draw();
+                
+                console.log(`Loaded ${data.assets?.length || 0} assets into table`);
+                
+            } catch (error) {
+                console.error('Failed to load table data:', error);
+                showError('Failed to load assets data. Please check your connection.');
+            } finally {
+                showTableLoading(false);
+            }
+        }
+        
+        // Show/Hide Table Loading
+        function showTableLoading(show) {
+            const overlay = document.getElementById('tableLoadingOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+        
+        // Toggle View (Basic/Advanced)
+        function toggleView(view) {
+            currentView = view;
+            
+            const basicBtn = document.getElementById('basicViewBtn');
+            const advancedBtn = document.getElementById('advancedViewBtn');
+            const tableContainer = document.querySelector('.table-container');
+            
+            if (view === 'basic') {
+                basicBtn.classList.add('active');
+                advancedBtn.classList.remove('active');
+                tableContainer.classList.remove('advanced-view');
+                
+                // Hide advanced columns
+                const advancedColumns = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+                advancedColumns.forEach(col => {
+                    assetsTable.column(col).visible(false);
+                });
+            } else {
+                advancedBtn.classList.add('active');
+                basicBtn.classList.remove('active');
+                tableContainer.classList.add('advanced-view');
+                
+                // Show advanced columns
+                const advancedColumns = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+                advancedColumns.forEach(col => {
+                    assetsTable.column(col).visible(true);
+                });
+            }
+            
+            assetsTable.columns.adjust().draw();
+        }
+        
+        // Apply Filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            
+            // Apply global search
+            assetsTable.search(searchTerm);
+            
+            // Apply column-specific filters
+            if (statusFilter) {
+                assetsTable.column(4).search(statusFilter);
+            } else {
+                assetsTable.column(4).search('');
+            }
+            
+            if (typeFilter) {
+                assetsTable.column(5).search(typeFilter);
+            } else {
+                assetsTable.column(5).search('');
+            }
+            
+            assetsTable.draw();
+        }
+        
+        // Clear Filters
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            
+            assetsTable.search('').columns().search('').draw();
+        }
+        
+        // Refresh Table
+        function refreshTable() {
+            if (isRefreshing) return;
+            
+            isRefreshing = true;
+            console.log('Refreshing table data...');
+            
+            loadTableData().finally(() => {
+                isRefreshing = false;
+            });
+        }
+        
+        // Refresh Dashboard
+        function refreshDashboard() {
+            if (isRefreshing) return;
+            
+            isRefreshing = true;
+            console.log('Refreshing dashboard...');
+            
+            // Add visual feedback
+            const refreshButton = document.querySelector('.floating-action-btn i');
+            refreshButton.classList.add('fa-spin');
+            
+            Promise.all([
+                loadDashboardData(),
+                loadTableData()
+            ]).finally(() => {
+                refreshButton.classList.remove('fa-spin');
+                isRefreshing = false;
+                showSuccess('Dashboard refreshed successfully!');
+            });
+        }
+        
+        // Export Table Data
+        function exportTableData() {
+            const data = assetsTable.data().toArray();
+            const headers = assetsTable.columns().header().toArray().map(th => th.textContent);
+            
+            let csv = headers.join(',') + '\n';
+            data.forEach(row => {
+                csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `assets_export_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showSuccess('Data exported successfully!');
+        }
+        
+        // View Asset Details
+        function viewAsset(assetId) {
+            window.open(`/asset/${assetId}`, '_blank');
+        }
+        
+        // Show Success Message
+        function showSuccess(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast position-fixed top-0 start-50 translate-middle-x mt-3';
+            toast.style.zIndex = '1100';
+            toast.innerHTML = `
+                <div class="toast-header bg-success text-white">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong class="me-auto">Success</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">${message}</div>
+            `;
+            
+            document.body.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 5000);
+        }
+        
+        // Show Error Message
+        function showError(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast position-fixed top-0 start-50 translate-middle-x mt-3';
+            toast.style.zIndex = '1100';
+            toast.innerHTML = `
+                <div class="toast-header bg-danger text-white">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong class="me-auto">Error</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">${message}</div>
+            `;
+            
+            document.body.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 5000);
+        }
+        
+        // Keyboard shortcuts help
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F1') {
+                e.preventDefault();
+                alert(`Keyboard Shortcuts:
+                
+Ctrl+R: Refresh Dashboard
+Ctrl+F: Focus Search
+Ctrl+A: Toggle Advanced View
+F1: Show this help`);
+            }
+        });
+        
+        // Page visibility handling for better performance
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Pause auto-refresh when page is hidden
+                console.log('Page hidden, pausing auto-refresh');
+            } else {
+                // Resume and refresh when page becomes visible
+                console.log('Page visible, resuming auto-refresh');
+                refreshDashboard();
+            }
+        });
+        
+        console.log('Ultimate Asset Management Dashboard loaded successfully!');
+    </script>
+</body>
+</html>

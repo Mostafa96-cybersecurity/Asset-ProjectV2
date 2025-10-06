@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management System - Working Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .status-card {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .status-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .navigation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            color: white;
+            text-decoration: none;
+        }
+        .api-status {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Asset Management System</h1>
+            <p>Enterprise Asset Management Dashboard</p>
+        </div>
+
+        <div class="api-status">
+            <h3>System Status</h3>
+            <div id="system-status">
+                <span class="loading"></span> Checking system status...
+            </div>
+        </div>
+
+        <div class="status-grid">
+            <div class="status-card">
+                <span class="status-number" id="total-assets">--</span>
+                <span class="status-label">Total Assets</span>
+            </div>
+            <div class="status-card">
+                <span class="status-number" id="online-devices">--</span>
+                <span class="status-label">Online Devices</span>
+            </div>
+            <div class="status-card">
+                <span class="status-number" id="departments">--</span>
+                <span class="status-label">Departments</span>
+            </div>
+            <div class="status-card">
+                <span class="status-number" id="device-types">--</span>
+                <span class="status-label">Device Types</span>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="/debug" class="nav-button">API Debug Dashboard</a>
+            <a href="/enhanced" class="nav-button">Enhanced Dashboard</a>
+            <a href="/production" class="nav-button">Production Dashboard</a>
+            <a href="/test" class="nav-button">Test Dashboard</a>
+            <button class="nav-button" onclick="refreshData()">Refresh Data</button>
+            <button class="nav-button" onclick="testAllAPIs()">Test All APIs</button>
+            <button class="nav-button" onclick="checkSystemStatus()">System Status</button>
+        </div>
+
+        <div class="api-status">
+            <h3>API Test Results</h3>
+            <div id="api-results">
+                Click "Test All APIs" to run diagnostics
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Asset Management System &copy; 2025 | Status: <span id="service-status">Loading...</span></p>
+        </div>
+    </div>
+
+    <script>
+        console.log('[INFO] Loading Asset Management Dashboard');
+        
+        window.onload = function() {
+            checkSystemStatus();
+            loadDashboardData();
+        };
+
+        function checkSystemStatus() {
+            const statusElement = document.getElementById('system-status');
+            const serviceStatusElement = document.getElementById('service-status');
+            
+            // Test basic connectivity
+            fetch('/')
+                .then(response => {
+                    if (response.ok) {
+                        statusElement.innerHTML = '<span class="success">[OK] Web service is running and responsive</span>';
+                        serviceStatusElement.innerHTML = '<span class="success">Online</span>';
+                    } else {
+                        statusElement.innerHTML = '<span class="error">[ERROR] Service returned HTTP ' + response.status + '</span>';
+                        serviceStatusElement.innerHTML = '<span class="error">Error</span>';
+                    }
+                })
+                .catch(error => {
+                    statusElement.innerHTML = '<span class="error">[ERROR] Cannot connect to service</span>';
+                    serviceStatusElement.innerHTML = '<span class="error">Offline</span>';
+                });
+        }
+
+        function loadDashboardData() {
+            // Load stats
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('total-assets').textContent = 
+                        data.total_assets || data.total_devices || '0';
+                    document.getElementById('online-devices').textContent = 
+                        (data.device_status && data.device_status.online) || '0';
+                })
+                .catch(error => {
+                    console.error('Stats error:', error);
+                    document.getElementById('total-assets').textContent = 'ERR';
+                    document.getElementById('online-devices').textContent = 'ERR';
+                });
+
+            // Load departments count
+            fetch('/api/departments')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('departments').textContent = 
+                        Array.isArray(data) ? data.length : '0';
+                })
+                .catch(error => {
+                    console.error('Departments error:', error);
+                    document.getElementById('departments').textContent = 'ERR';
+                });
+
+            // Load device types count
+            fetch('/api/device-types')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('device-types').textContent = 
+                        Array.isArray(data) ? data.length : '0';
+                })
+                .catch(error => {
+                    console.error('Device types error:', error);
+                    document.getElementById('device-types').textContent = 'ERR';
+                });
+        }
+
+        function refreshData() {
+            checkSystemStatus();
+            loadDashboardData();
+        }
+
+        async function testAllAPIs() {
+            const resultsElement = document.getElementById('api-results');
+            resultsElement.innerHTML = '<span class="loading"></span> Testing APIs...';
+            
+            const apis = [
+                '/api/stats',
+                '/api/assets',
+                '/api/departments', 
+                '/api/device-types'
+            ];
+            
+            let results = '<h4>API Test Results:</h4>';
+            
+            for (const api of apis) {
+                try {
+                    const response = await fetch(api);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        results += `<div><span class="success">[OK]</span> ${api} - HTTP ${response.status}</div>`;
+                        if (data.error) {
+                            results += `<div style="margin-left: 20px; color: orange;">Warning: ${data.error}</div>`;
+                        }
+                    } else {
+                        results += `<div><span class="error">[ERROR]</span> ${api} - HTTP ${response.status}</div>`;
+                    }
+                } catch (error) {
+                    results += `<div><span class="error">[FAILED]</span> ${api} - ${error.message}</div>`;
+                }
+            }
+            
+            resultsElement.innerHTML = results;
+        }
+
+        async function checkSystemStatus() {
+            const resultsElement = document.getElementById('api-results');
+            resultsElement.innerHTML = '<span class="loading"></span> Checking system status...';
+            
+            try {
+                const response = await fetch('/api/system-status');
+                const data = await response.json();
+                
+                let results = '<h4>System Status Report:</h4>';
+                results += `<div><strong>Python Version:</strong> ${data.python_version}</div>`;
+                results += `<div><strong>Working Directory:</strong> ${data.working_directory}</div>`;
+                results += `<div><strong>Asset Manager:</strong> ${data.asset_manager_initialized ? '<span class="success">Initialized</span>' : '<span class="error">Not Initialized</span>'}</div>`;
+                results += `<div><strong>Platform:</strong> ${data.platform}</div>`;
+                
+                results += '<h5>Database Files:</h5>';
+                for (const [path, status] of Object.entries(data.database_paths)) {
+                    const statusText = status.exists ? 
+                        (status.readable ? '<span class="success">OK</span>' : '<span class="warning">Exists but not readable</span>') : 
+                        '<span class="error">Not Found</span>';
+                    results += `<div><strong>${path}:</strong> ${statusText} (${status.size} bytes)</div>`;
+                }
+                
+                resultsElement.innerHTML = results;
+                
+            } catch (error) {
+                resultsElement.innerHTML = '<div class="error">System status check failed: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>

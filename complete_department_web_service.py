@@ -7,6 +7,7 @@ Features:
 - Manual asset addition through web interface
 - Comprehensive device data display with all collected columns
 - Enhanced UI with department assignment capabilities
+- INTEGRATED WITH ENHANCED ACCESS CONTROL SYSTEM
 """
 
 from flask import Flask, render_template_string, request, jsonify, redirect, url_for
@@ -17,6 +18,23 @@ from datetime import datetime
 from typing import Dict, List, Optional
 import json
 import functools
+
+# Import enhanced access control system
+try:
+    from enhanced_access_control_system import (
+        access_control_manager,
+        check_ip_access,
+        authenticate_user,
+        create_session,
+        validate_session,
+        check_rate_limit,
+        log_access_attempt
+    )
+    ACCESS_CONTROL_ENABLED = True
+    print("[SECURITY] Enhanced Access Control System loaded successfully")
+except ImportError:
+    ACCESS_CONTROL_ENABLED = False
+    print("[WARNING] Enhanced Access Control System not available - using basic security")
 
 # Setup logging for web service access
 logging.basicConfig(
@@ -56,24 +74,74 @@ class CompleteDepartmentWebService:
         self.init_departments()
         
     def check_access(self, client_ip: str) -> bool:
-        """Check if client IP is allowed"""
+        """Enhanced access control check"""
         try:
-            client_addr = ipaddress.IPv4Address(client_ip)
-            for network in self.allowed_networks:
-                if client_addr in network:
+            if ACCESS_CONTROL_ENABLED:
+                # Use enhanced access control system
+                ip_allowed, reason = check_ip_access(client_ip)
+                if ip_allowed:
+                    logger.info(f"ACCESS ALLOWED: {client_ip} - {reason}")
                     return True
-            return False
+                else:
+                    logger.warning(f"ACCESS DENIED: {client_ip} - {reason}")
+                    return False
+            else:
+                # Fallback to basic IP network checking
+                client_addr = ipaddress.IPv4Address(client_ip)
+                for network in self.allowed_networks:
+                    if client_addr in network:
+                        return True
+                return False
         except:
             return False  # Block invalid IPs
     
     def require_access(self, f):
-        """Decorator to check access control"""
+        """Enhanced decorator to check access control with comprehensive logging"""
         @functools.wraps(f)
         def decorated_function(*args, **kwargs):
-            client_ip = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR'))
-            if client_ip and not self.check_access(client_ip):
-                logger.warning(f"ACCESS DENIED: {client_ip} -> {request.path}")
-                return jsonify({"error": "Access denied"}), 403
+            try:
+                client_ip = request.environ.get('HTTP_X_FORWARDED_FOR', 
+                                              request.environ.get('REMOTE_ADDR', '127.0.0.1'))
+                user_agent = request.headers.get('User-Agent', 'Unknown')
+                endpoint = request.endpoint or request.path
+                method = request.method
+                
+                # Enhanced access control check
+                if not self.check_access(client_ip):
+                    if ACCESS_CONTROL_ENABLED:
+                        log_access_attempt(client_ip, endpoint, method, user_agent, "ACCESS_DENIED")
+                    logger.warning(f"ACCESS DENIED: {client_ip} -> {method} {request.path}")
+                    return jsonify({
+                        "error": "Access denied",
+                        "message": "Your IP address is not authorized to access this service",
+                        "code": "ACCESS_DENIED"
+                    }), 403
+                
+                # Rate limiting check (if enhanced access control is available)
+                if ACCESS_CONTROL_ENABLED:
+                    rate_ok, rate_reason = check_rate_limit(client_ip, endpoint)
+                    if not rate_ok:
+                        log_access_attempt(client_ip, endpoint, method, user_agent, f"RATE_LIMITED: {rate_reason}")
+                        logger.warning(f"RATE LIMITED: {client_ip} -> {method} {request.path}")
+                        return jsonify({
+                            "error": "Rate limit exceeded",
+                            "message": "Too many requests, please try again later",
+                            "code": "RATE_LIMITED"
+                        }), 429
+                    
+                    # Log successful access
+                    log_access_attempt(client_ip, endpoint, method, user_agent, "SUCCESS")
+                
+                logger.info(f"ACCESS GRANTED: {client_ip} -> {method} {request.path}")
+                return f(*args, **kwargs)
+                
+            except Exception as e:
+                logger.error(f"Access control error: {e}")
+                return jsonify({
+                    "error": "Security check failed", 
+                    "message": "Please try again later",
+                    "code": "SECURITY_ERROR"
+                }), 500
             return f(*args, **kwargs)
         return decorated_function
     
@@ -2315,7 +2383,7 @@ class CompleteDepartmentWebService:
         </html>
         '''
 
-    def run(self, host='0.0.0.0', port=8080, debug=False):
+    def run(self, host='0.0.0.0', port=5556, debug=False):
         """Run the complete web service"""
         print("Starting Complete Department & Asset Management Web Service")
         print(f"URL: http://{host}:{port}")
@@ -2327,6 +2395,7 @@ class CompleteDepartmentWebService:
         print("   * Professional UI with Enhanced Tables")
         self.app.run(host=host, port=port, debug=debug)
 
-if __name__ == '__main__':
-    service = CompleteDepartmentWebService()
-    service.run(debug=True)
+# NOTE: Auto-startup disabled - use launch_original_desktop.py or GUI buttons
+# if __name__ == '__main__':
+#     service = CompleteDepartmentWebService()
+#     service.run(debug=True)

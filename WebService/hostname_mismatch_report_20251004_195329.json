@@ -1,0 +1,17 @@
+{
+  "total_assets": 1,
+  "matches": 1,
+  "mismatches": 0,
+  "no_dns_record": 0,
+  "dns_errors": 0,
+  "details": [
+    {
+      "hostname": "WS-ZBOOK-0069",
+      "device_hostname": "ws-zbook-0069",
+      "dns_hostname": "ws-zbook-0069.square.local",
+      "ip_address": "10.0.22.210",
+      "status": "Match",
+      "details": "Device hostname \"ws-zbook-0069\" matches DNS hostname \"ws-zbook-0069\""
+    }
+  ]
+}

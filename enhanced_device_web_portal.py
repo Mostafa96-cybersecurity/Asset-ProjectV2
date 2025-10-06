@@ -24,6 +24,17 @@ class EnhancedDeviceWebInterface:
         self.db_path = db_path
         self.setup_routes()
     
+    def run(self, host: str = '0.0.0.0', port: int = 5556, debug: bool = False):
+        """Run the web application"""
+        self.app.run(host=host, port=port, debug=debug)
+
+# NOTE: Auto-startup disabled - use launch_original_desktop.py or GUI buttons
+# if __name__ == '__main__':
+#     app = EnhancedDeviceWebInterface()
+#     print("🚀 Starting Enhanced Device Management Portal...")
+#     print("📱 Access: http://localhost:5556")
+#     app.run(debug=True)  self.setup_routes()
+    
     def setup_routes(self):
         """Setup all Flask routes"""
         

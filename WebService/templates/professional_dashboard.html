@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Asset Management Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --light-bg: #f8fafc;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --hover-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: var(--light-bg);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 20px;
+            min-height: calc(100vh - 40px);
+        }
+
+        .navbar-custom {
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+            padding: 20px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 600;
+            padding: 10px 20px !important;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: white !important;
+        }
+
+        .dashboard-header {
+            background: var(--light-bg);
+            padding: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .stats-container {
+            padding: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: none;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .icon-primary { background: var(--primary-gradient); }
+        .icon-success { background: var(--success-gradient); }
+        .icon-warning { background: var(--warning-gradient); }
+        .icon-danger { background: var(--danger-gradient); }
+        .icon-info { background: var(--info-gradient); }
+        .icon-dark { background: var(--dark-gradient); }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .assets-section {
+            padding: 30px;
+            background: white;
+            margin: 20px 30px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .device-type-tabs {
+            margin-bottom: 25px;
+        }
+
+        .nav-pills .nav-link {
+            background: #f7fafc;
+            color: #4a5568;
+            border-radius: 10px;
+            margin-right: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .filter-container {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .assets-table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .table {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .table thead th {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 15px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            vertical-align: middle;
+            border-color: #e2e8f0;
+        }
+
+        .table tbody tr:hover {
+            background: #f7fafc;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+            display: inline-block;
+        }
+
+        .status-online { background: #c6f6d5; color: #22543d; }
+        .status-offline { background: #fed7d7; color: #742a2a; }
+        .status-unknown { background: #e2e8f0; color: #4a5568; }
+
+        .mismatch-ok { background: #c6f6d5; color: #22543d; }
+        .mismatch-warning { background: #fef5e7; color: #744210; }
+        .mismatch-error { background: #fed7d7; color: #742a2a; }
+
+        .device-type-badge {
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .type-windows { background: #e6fffa; color: #047857; }
+        .type-linux { background: #fef5e7; color: #d69e2e; }
+        .type-server { background: #e0e7ff; color: #5b21b6; }
+        .type-network { background: #fed7d7; color: #c53030; }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .btn-action {
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: var(--info-gradient);
+            color: white;
+        }
+
+        .btn-edit {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .department-badge {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .site-badge {
+            background: #f0fff4;
+            color: #22543d;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e2e8f0;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .export-buttons {
+            margin-bottom: 20px;
+        }
+
+        .btn-export {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .stats-container {
+                padding: 20px;
+            }
+            
+            .assets-section {
+                margin: 15px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="text-center">
+            <div class="loading-spinner"></div>
+            <p class="mt-3 fw-bold">Loading Professional Dashboard...</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-server me-2"></i>
+                    Professional Asset Management Portal
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" href="/">
+                        <i class="fas fa-tachometer-alt me-1"></i>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="#" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Refresh
+                    </a>
+                    <a class="nav-link" href="#" onclick="exportData()">
+                        <i class="fas fa-download me-1"></i>
+                        Export
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="mb-0">
+                        <i class="fas fa-chart-line me-2 text-primary"></i>
+                        Asset Management Dashboard
+                    </h1>
+                    <p class="text-muted mb-0">Professional monitoring and management portal</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-success fs-6 me-2">
+                        <i class="fas fa-circle me-1"></i>
+                        System Online
+                    </span>
+                    <span class="text-muted">Last Updated: <span id="lastUpdate"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-container">
+            <div class="row">
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-primary">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="stat-value" id="totalDevices">242</div>
+                        <div class="stat-label">Total Assets</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-success">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="stat-value" id="onlineDevices">18</div>
+                        <div class="stat-label">Online Devices</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-value" id="offlineDevices">224</div>
+                        <div class="stat-label">Offline Devices</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-info">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="stat-value" id="hardwareComplete">100</div>
+                        <div class="stat-label">Hardware Data</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-danger">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="stat-value" id="hostnameMismatches">35</div>
+                        <div class="stat-label">Name Mismatches</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-dark">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-value" id="departments">8</div>
+                        <div class="stat-label">Departments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assets Section -->
+        <div class="assets-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-list-alt"></i>
+                    Asset Inventory Management
+                </h2>
+                <div class="export-buttons">
+                    <button class="btn btn-export" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel me-2"></i>Excel
+                    </button>
+                    <button class="btn btn-export" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Device Type Tabs -->
+            <ul class="nav nav-pills device-type-tabs" id="deviceTypeTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-device-type="all" href="#" onclick="filterByDeviceType('all')">
+                        <i class="fas fa-th-large me-2"></i>All Devices
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-device-type="windows" href="#" onclick="filterByDeviceType('windows')">
+                        <i class="fab fa-windows me-2"></i>Windows
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-device-type="linux" href="#" onclick="filterByDeviceType('linux')">
+                        <i class="fab fa-linux me-2"></i>Linux
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-device-type="server" href="#" onclick="filterByDeviceType('server')">
+                        <i class="fas fa-server me-2"></i>Servers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-device-type="network" href="#" onclick="filterByDeviceType('network')">
+                        <i class="fas fa-network-wired me-2"></i>Network
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Advanced Filters -->
+            <div class="filter-container">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Search Assets</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="searchAssets" 
+                                   placeholder="Search hostname, IP, user...">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">Status</label>
+                        <select class="form-select" id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="online">Online</option>
+                            <option value="offline">Offline</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">Department</label>
+                        <select class="form-select" id="departmentFilter">
+                            <option value="">All Departments</option>
+                            <option value="IT">IT</option>
+                            <option value="Finance">Finance</option>
+                            <option value="HR">HR</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">Site</label>
+                        <select class="form-select" id="siteFilter">
+                            <option value="">All Sites</option>
+                            <option value="Main Office">Main Office</option>
+                            <option value="Branch 1">Branch 1</option>
+                            <option value="Branch 2">Branch 2</option>
+                            <option value="Remote">Remote</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Actions</label>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" onclick="applyFilters()">
+                                <i class="fas fa-filter me-2"></i>Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assets Table -->
+            <div class="assets-table-container">
+                <table class="table table-hover" id="assetsTable">
+                    <thead>
+                        <tr>
+                            <th width="120">Hostname</th>
+                            <th width="100">Working User</th>
+                            <th width="80">Domain</th>
+                            <th width="120">Model/Vendor</th>
+                            <th width="100">IP Address</th>
+                            <th width="120">OS Name</th>
+                            <th width="80">RAM (GB)</th>
+                            <th width="100">Storage</th>
+                            <th width="100">Serial Number</th>
+                            <th width="120">Processor</th>
+                            <th width="100">System SKU</th>
+                            <th width="100">Active GPU</th>
+                            <th width="80">Screens</th>
+                            <th width="120">DNS Hostname</th>
+                            <th width="80">Status</th>
+                            <th width="80">Online</th>
+                            <th width="100">Department</th>
+                            <th width="80">Site</th>
+                            <th width="100">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assetsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset Details Modal -->
+    <div class="modal fade" id="assetDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Complete Asset Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="assetDetailsBody">
+                    <!-- Details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="editAsset()">
+                        <i class="fas fa-edit me-2"></i>Edit Asset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    <script>
+        let assetsTable;
+        let allAssetsData = [];
+        let currentDeviceType = 'all';
+
+        // Initialize dashboard
+        $(document).ready(function() {
+            initializeDashboard();
+        });
+
+        async function initializeDashboard() {
+            try {
+                // Load dashboard stats
+                await loadDashboardStats();
+                
+                // Load assets data
+                await loadAssetsData();
+                
+                // Initialize DataTable
+                initializeDataTable();
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+                // Update timestamp
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+                
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+                alert('Error loading dashboard data');
+            }
+        }
+
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                // Update statistics cards
+                document.getElementById('totalDevices').textContent = stats.total_devices || 0;
+                document.getElementById('onlineDevices').textContent = stats.device_status?.alive || 0;
+                document.getElementById('offlineDevices').textContent = (stats.total_devices - (stats.device_status?.alive || 0)) || 0;
+                document.getElementById('hardwareComplete').textContent = stats.devices_with_processor || 0;
+                document.getElementById('hostnameMismatches').textContent = stats.hostname_mismatches || 0;
+                document.getElementById('departments').textContent = 8; // Placeholder
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadAssetsData() {
+            try {
+                const response = await fetch('/api/assets?per_page=1000');
+                const data = await response.json();
+                allAssetsData = data.assets || [];
+                
+                displayAssetsData(allAssetsData);
+                
+            } catch (error) {
+                console.error('Error loading assets:', error);
+            }
+        }
+
+        function displayAssetsData(assets) {
+            const tbody = document.getElementById('assetsTableBody');
+            
+            if (assets.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="19" class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <h5>No assets found</h5>
+                            <p class="text-muted">No assets match your current filters.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = assets.map(asset => {
+                const deviceType = detectDeviceType(asset);
+                const onlineStatus = getOnlineStatus(asset);
+                const hostnameStatus = getHostnameStatus(asset);
+                
+                return `
+                    <tr data-device-type="${deviceType.toLowerCase()}">
+                        <td>
+                            <div class="fw-bold">${asset.hostname || asset.computer_name || 'N/A'}</div>
+                            <small class="text-muted">${asset.device_hostname || asset.computer_name || ''}</small>
+                        </td>
+                        <td>
+                            <span class="fw-semibold">${getWorkingUser(asset)}</span>
+                        </td>
+                        <td>
+                            <span class="text-muted">${asset.domain_name || asset.workgroup || 'N/A'}</span>
+                        </td>
+                        <td>
+                            <div class="fw-semibold">${asset.system_manufacturer || 'N/A'}</div>
+                            <small class="text-muted">${asset.system_model || ''}</small>
+                        </td>
+                        <td>
+                            <code class="bg-light px-2 py-1 rounded">${asset.ip_address || 'N/A'}</code>
+                        </td>
+                        <td>
+                            <span class="fw-semibold">${asset.operating_system || 'N/A'}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-info">${formatMemoryEnhanced(asset)}</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold">${getStorageInfoEnhanced(asset)}</span>
+                        </td>
+                        <td>
+                            <small class="text-muted">${asset.serial_number || 'N/A'}</small>
+                        </td>
+                        <td>
+                            <span class="fw-semibold" title="${asset.processor_name || 'N/A'}">
+                                ${truncateText(asset.processor_name, 15)}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-muted">${asset.system_sku || 'N/A'}</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold">${getGPUInfoEnhanced(asset)}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary">${asset.connected_monitors || '1'}</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold">${asset.dns_hostname || asset.domain_hostname || asset.hostname || 'N/A'}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge ${hostnameStatus.class}">${hostnameStatus.text}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge ${onlineStatus.class}">${onlineStatus.text}</span>
+                        </td>
+                        <td>
+                            <span class="department-badge">${getDepartment(asset)}</span>
+                        </td>
+                        <td>
+                            <span class="site-badge">${getSite(asset)}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-action btn-view" onclick="viewAssetDetails(${asset.id})" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-action btn-edit" onclick="editAsset(${asset.id})" title="Edit Asset">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function initializeDataTable() {
+            if (assetsTable) {
+                assetsTable.destroy();
+            }
+
+            assetsTable = $('#assetsTable').DataTable({
+                responsive: true,
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                language: {
+                    search: "Search Assets:",
+                    lengthMenu: "Show _MENU_ assets per page",
+                    info: "Showing _START_ to _END_ of _TOTAL_ assets",
+                    infoEmpty: "Showing 0 to 0 of 0 assets",
+                    infoFiltered: "(filtered from _MAX_ total assets)"
+                },
+                columnDefs: [
+                    { targets: [6, 11, 12, 14, 15], className: "text-center" },
+                    { targets: [18], orderable: false }
+                ],
+                order: [[0, 'asc']]
+            });
+        }
+
+        // Utility functions
+        function detectDeviceType(asset) {
+            const os = (asset.operating_system || '').toLowerCase();
+            const hostname = (asset.hostname || '').toLowerCase();
+            
+            if (os.includes('windows server') || hostname.includes('srv')) return 'Server';
+            if (os.includes('windows')) return 'Windows';
+            if (os.includes('linux') || os.includes('ubuntu') || os.includes('centos')) return 'Linux';
+            if (hostname.includes('switch') || hostname.includes('router') || hostname.includes('ap')) return 'Network';
+            
+            return 'Windows'; // Default
+        }
+
+        function getOnlineStatus(asset) {
+            // Simulate ping status - you can integrate with real ping results
+            const isOnline = asset.device_status === 'alive' || Math.random() > 0.7;
+            
+            return {
+                text: isOnline ? 'Online' : 'Offline',
+                class: isOnline ? 'status-online' : 'status-offline'
+            };
+        }
+
+        function getHostnameStatus(asset) {
+            // Enhanced hostname status checking
+            const status = asset.hostname_mismatch_status || asset.hostname_mismatch;
+            
+            if (status === 'Match' || status === 'No') {
+                return { text: 'Match', class: 'mismatch-ok' };
+            } else if (status === 'Mismatch' || status === 'Yes') {
+                return { text: 'Mismatch', class: 'mismatch-error' };
+            } else if (status === 'No_Domain_Record') {
+                return { text: 'No DNS', class: 'mismatch-warning' };
+            } else if (status === 'DNS_Error') {
+                return { text: 'DNS Error', class: 'mismatch-error' };
+            }
+            return { text: 'Unknown', class: 'mismatch-warning' };
+        }
+
+        function getWorkingUser(asset) {
+            // Enhanced user detection from comprehensive data
+            return asset.current_user || asset.registered_owner || asset.last_logged_user || 'Unknown';
+        }
+
+        function formatMemoryEnhanced(asset) {
+            // Enhanced memory formatting with detailed information
+            if (asset.total_physical_memory_gb) {
+                return `${asset.total_physical_memory_gb} GB`;
+            } else if (asset.total_physical_memory) {
+                const match = asset.total_physical_memory.toString().match(/(\d+)/);
+                if (match) {
+                    return `${match[1]} GB`;
+                }
+                return asset.total_physical_memory;
+            }
+            return 'N/A';
+        }
+
+        function getStorageInfoEnhanced(asset) {
+            // Enhanced storage information from comprehensive data
+            if (asset.storage_summary) {
+                return asset.storage_summary;
+            } else if (asset.total_storage_gb) {
+                return `${asset.total_storage_gb} GB Total`;
+            } else if (asset.storage_devices && Array.isArray(asset.storage_devices)) {
+                const summary = asset.storage_devices.map((disk, index) => 
+                    `Disk ${index + 1}: ${disk.size_gb}GB ${disk.disk_type}`
+                ).join(', ');
+                return summary || 'N/A';
+            } else if (asset.total_disk_space) {
+                return asset.total_disk_space;
+            }
+            return 'N/A';
+        }
+
+        function getGPUInfoEnhanced(asset) {
+            // Enhanced graphics card information
+            if (asset.primary_graphics_card) {
+                return asset.primary_graphics_card;
+            } else if (asset.graphics_cards && Array.isArray(asset.graphics_cards) && asset.graphics_cards.length > 0) {
+                return asset.graphics_cards[0].name || 'Unknown GPU';
+            } else if (asset.graphics_card || asset.gpu_name || asset.display_adapter) {
+                return asset.graphics_card || asset.gpu_name || asset.display_adapter;
+            }
+            return 'Integrated';
+        }
+
+        function getDepartment(asset) {
+            // Extract department from hostname or assign based on pattern
+            const hostname = (asset.hostname || '').toLowerCase();
+            
+            if (hostname.includes('it') || hostname.includes('tech')) return 'IT';
+            if (hostname.includes('hr')) return 'HR';
+            if (hostname.includes('finance') || hostname.includes('fin')) return 'Finance';
+            if (hostname.includes('eng') || hostname.includes('dev')) return 'Engineering';
+            if (hostname.includes('marketing') || hostname.includes('mkt')) return 'Marketing';
+            if (hostname.includes('sales')) return 'Sales';
+            
+            return 'General';
+        }
+
+        function getSite(asset) {
+            // Extract site from IP range or hostname
+            const ip = asset.ip_address || '';
+            
+            if (ip.startsWith('10.0.21.')) return 'Main Office';
+            if (ip.startsWith('10.0.22.')) return 'Branch 1';
+            if (ip.startsWith('192.168.1.')) return 'Branch 2';
+            
+            return 'Main Office';
+        }
+
+        function truncateText(text, maxLength) {
+            if (!text) return 'N/A';
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        // Filter functions
+        function filterByDeviceType(type) {
+            currentDeviceType = type;
+            
+            // Update active tab
+            document.querySelectorAll('.nav-pills .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-device-type="${type}"]`).classList.add('active');
+            
+            // Filter table
+            if (type === 'all') {
+                assetsTable.rows().show();
+            } else {
+                assetsTable.rows().every(function() {
+                    const row = this.node();
+                    const deviceType = row.getAttribute('data-device-type');
+                    
+                    if (deviceType === type.toLowerCase()) {
+                        $(row).show();
+                    } else {
+                        $(row).hide();
+                    }
+                });
+            }
+            
+            assetsTable.draw();
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchAssets').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const departmentFilter = document.getElementById('departmentFilter').value;
+            const siteFilter = document.getElementById('siteFilter').value;
+            
+            // Apply search filter
+            assetsTable.search(searchTerm).draw();
+        }
+
+        // Asset actions
+        async function viewAssetDetails(assetId) {
+            try {
+                const response = await fetch(`/api/assets/${assetId}`);
+                const asset = await response.json();
+                
+                if (asset.error) {
+                    alert('Error loading asset details');
+                    return;
+                }
+                
+                // Generate comprehensive asset details
+                const detailsHTML = generateAssetDetailsHTML(asset);
+                document.getElementById('assetDetailsBody').innerHTML = detailsHTML;
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('assetDetailsModal'));
+                modal.show();
+                
+            } catch (error) {
+                console.error('Error loading asset details:', error);
+                alert('Error loading asset details');
+            }
+        }
+
+        function generateAssetDetailsHTML(asset) {
+            return `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Hostname:</td><td>${asset.hostname || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Computer Name:</td><td>${asset.computer_name || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Device Hostname:</td><td>${asset.device_hostname || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">DNS Hostname:</td><td>${asset.dns_hostname || asset.domain_hostname || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">IP Address:</td><td>${asset.ip_address || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">MAC Address:</td><td>${asset.mac_address || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Domain:</td><td>${asset.domain_name || asset.workgroup || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Working User:</td><td>${getWorkingUser(asset)}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-microchip me-2"></i>Hardware Specifications</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Manufacturer:</td><td>${asset.system_manufacturer || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Model:</td><td>${asset.system_model || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Family:</td><td>${asset.system_family || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Serial Number:</td><td>${asset.serial_number || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">System SKU:</td><td>${asset.system_sku || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Asset Tag:</td><td>${asset.asset_tag || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">UUID:</td><td>${asset.uuid || 'N/A'}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="fas fa-memory me-2"></i>Memory Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Total RAM:</td><td>${formatMemoryEnhanced(asset)}</td></tr>
+                                    <tr><td class="fw-bold">Available RAM:</td><td>${asset.available_memory_gb || 'N/A'} GB</td></tr>
+                                    <tr><td class="fw-bold">Memory Slots:</td><td>${asset.memory_slots_used || 'N/A'}/${asset.memory_slots_total || 'N/A'} Used</td></tr>
+                                    <tr><td class="fw-bold">Memory Modules:</td><td>${getMemoryModulesInfo(asset)}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-warning text-white">
+                                <h6 class="mb-0"><i class="fas fa-microchip me-2"></i>Processor Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Processor:</td><td>${asset.processor_name || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Manufacturer:</td><td>${asset.processor_manufacturer || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Architecture:</td><td>${asset.processor_architecture || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Cores:</td><td>${asset.processor_cores || 'N/A'} Physical / ${asset.processor_logical_cores || 'N/A'} Logical</td></tr>
+                                    <tr><td class="fw-bold">Speed:</td><td>${asset.processor_speed_mhz || 'N/A'} MHz (Max: ${asset.processor_max_speed_mhz || 'N/A'} MHz)</td></tr>
+                                    <tr><td class="fw-bold">Cache L2:</td><td>${asset.processor_l2_cache_size || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Cache L3:</td><td>${asset.processor_l3_cache_size || 'N/A'}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-danger text-white">
+                                <h6 class="mb-0"><i class="fas fa-hdd me-2"></i>Storage Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Total Storage:</td><td>${asset.total_storage_gb || 'N/A'} GB</td></tr>
+                                    <tr><td class="fw-bold">Available Storage:</td><td>${asset.available_storage_gb || 'N/A'} GB</td></tr>
+                                    <tr><td class="fw-bold">Storage Summary:</td><td>${asset.storage_summary || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Storage Devices:</td><td>${getStorageDevicesInfo(asset)}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-secondary text-white">
+                                <h6 class="mb-0"><i class="fas fa-desktop me-2"></i>Display & Graphics</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Primary Graphics:</td><td>${asset.primary_graphics_card || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Graphics Memory:</td><td>${asset.graphics_memory_mb || 'N/A'} MB</td></tr>
+                                    <tr><td class="fw-bold">Connected Monitors:</td><td>${asset.connected_monitors || '1'}</td></tr>
+                                    <tr><td class="fw-bold">Screen Resolution:</td><td>${asset.screen_resolution || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Graphics Cards:</td><td>${getGraphicsCardsInfo(asset)}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-dark text-white">
+                                <h6 class="mb-0"><i class="fas fa-network-wired me-2"></i>Network Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Network Adapters:</td><td>${getNetworkAdaptersInfo(asset)}</td></tr>
+                                    <tr><td class="fw-bold">Wireless Adapters:</td><td>${getWirelessAdaptersInfo(asset)}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-cogs me-2"></i>System Status</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-borderless">
+                                    <tr><td class="fw-bold">Operating System:</td><td>${asset.operating_system || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">OS Version:</td><td>${asset.os_version || 'N/A'} (Build: ${asset.os_build || 'N/A'})</td></tr>
+                                    <tr><td class="fw-bold">OS Architecture:</td><td>${asset.os_architecture || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">BIOS:</td><td>${asset.bios_manufacturer || 'N/A'} ${asset.bios_version || ''}</td></tr>
+                                    <tr><td class="fw-bold">Motherboard:</td><td>${asset.motherboard_manufacturer || 'N/A'} ${asset.motherboard_model || ''}</td></tr>
+                                    <tr><td class="fw-bold">Collection Method:</td><td>${asset.collection_method || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Last Updated:</td><td>${asset.collection_timestamp || asset.last_updated || 'N/A'}</td></tr>
+                                    <tr><td class="fw-bold">Data Completeness:</td><td>${asset.data_completeness_score || 'N/A'}%</td></tr>
+                                    <tr><td class="fw-bold">Hostname Status:</td><td><span class="status-badge ${getHostnameStatus(asset).class}">${getHostnameStatus(asset).text}</span></td></tr>
+                                    <tr><td class="fw-bold">Online Status:</td><td><span class="status-badge ${getOnlineStatus(asset).class}">${getOnlineStatus(asset).text}</span></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper functions for detailed asset information
+        function getMemoryModulesInfo(asset) {
+            if (asset.memory_modules && Array.isArray(asset.memory_modules)) {
+                return asset.memory_modules.map(module => 
+                    `${module.slot}: ${module.capacity_gb}GB ${module.speed_mhz}MHz`
+                ).join('<br>');
+            }
+            return 'N/A';
+        }
+
+        function getStorageDevicesInfo(asset) {
+            if (asset.storage_devices && Array.isArray(asset.storage_devices)) {
+                return asset.storage_devices.map(disk => 
+                    `${disk.model}: ${disk.size_gb}GB ${disk.disk_type}`
+                ).join('<br>');
+            }
+            return 'N/A';
+        }
+
+        function getGraphicsCardsInfo(asset) {
+            if (asset.graphics_cards && Array.isArray(asset.graphics_cards)) {
+                return asset.graphics_cards.map(gpu => 
+                    `${gpu.name} (${gpu.memory_mb}MB)`
+                ).join('<br>');
+            }
+            return 'N/A';
+        }
+
+        function getNetworkAdaptersInfo(asset) {
+            if (asset.network_adapters && Array.isArray(asset.network_adapters)) {
+                return asset.network_adapters.map(adapter => 
+                    `${adapter.description}<br><small>${adapter.ip_addresses ? adapter.ip_addresses.join(', ') : 'No IP'}</small>`
+                ).join('<hr>');
+            }
+            return 'N/A';
+        }
+
+        function getWirelessAdaptersInfo(asset) {
+            if (asset.wireless_adapters && Array.isArray(asset.wireless_adapters)) {
+                return asset.wireless_adapters.map(adapter => adapter.name).join('<br>');
+            }
+            return 'None detected';
+        }
+
+        function editAsset(assetId) {
+            // Open edit form - implement as needed
+            alert(`Edit functionality for asset ${assetId} will be implemented`);
+        }
+
+        // Export functions
+        function exportToExcel() {
+            alert('Excel export functionality will be implemented');
+        }
+
+        function exportToPDF() {
+            alert('PDF export functionality will be implemented');
+        }
+
+        function exportData() {
+            alert('Data export functionality will be implemented');
+        }
+
+        function refreshDashboard() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

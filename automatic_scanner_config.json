@@ -1,21 +1,31 @@
 {
   "schedules": [
     {
-      "schedule_type": "interval",
-      "interval_minutes": 30,
+      "schedule_type": "daily",
+      "interval_minutes": 0,
+      "daily_time": "11:00",
+      "weekly_days": null,
+      "weekly_time": null,
+      "once_datetime": null,
+      "enabled": true,
+      "name": "Every Day 11 AM"
+    },
+    {
+      "schedule_type": "once",
+      "interval_minutes": 0,
       "daily_time": null,
       "weekly_days": null,
       "weekly_time": null,
       "once_datetime": null,
-      "enabled": false,
-      "name": "Default 30-minute scan"
+      "enabled": true,
+      "name": "First Scan"
     }
   ],
   "targets": [
     {
-      "name": "Local Network",
-      "network_range": "192.168.1.1-50",
-      "enabled": false,
+      "name": "MHQ Subnet",
+      "network_range": "10.0.0.0/16",
+      "enabled": true,
       "last_scan": null,
       "devices_found": 0
     }

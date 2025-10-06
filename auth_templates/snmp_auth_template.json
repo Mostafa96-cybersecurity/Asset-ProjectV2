@@ -1,0 +1,39 @@
+{
+  "snmp_communities": [
+    {
+      "community": "public",
+      "version": "2c",
+      "description": "Default read-only"
+    },
+    {
+      "community": "private",
+      "version": "2c",
+      "description": "Default read-write"
+    },
+    {
+      "community": "cisco",
+      "version": "2c",
+      "description": "Cisco devices"
+    },
+    {
+      "community": "hp",
+      "version": "2c",
+      "description": "HP devices"
+    },
+    {
+      "community": "dell",
+      "version": "2c",
+      "description": "Dell devices"
+    },
+    {
+      "community": "admin",
+      "version": "2c",
+      "description": "Admin community"
+    },
+    {
+      "community": "YOUR_CUSTOM_COMMUNITY",
+      "version": "2c",
+      "description": "Your organization"
+    }
+  ]
+}

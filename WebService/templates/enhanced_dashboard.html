@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Asset Management Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --light-color: #f8fafc;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --hover-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        body {
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: var(--light-color);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 20px;
+            min-height: calc(100vh - 40px);
+            overflow: hidden;
+        }
+        
+        .navbar-custom {
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px 30px;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 600;
+            padding: 10px 20px !important;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #38ef7d;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .dashboard-header {
+            background: var(--light-color);
+            padding: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .stats-container {
+            padding: 30px;
+            background: var(--light-color);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: none;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .stats-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .icon-primary { background: var(--primary-gradient); }
+        .icon-success { background: var(--success-gradient); }
+        .icon-warning { background: var(--warning-gradient); }
+        .icon-danger { background: var(--danger-gradient); }
+        .icon-info { background: var(--info-gradient); }
+        .icon-dark { background: var(--dark-gradient); }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: #718096;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .change-positive { 
+            background: rgba(17, 153, 142, 0.1); 
+            color: #11998e; 
+        }
+        
+        .change-negative { 
+            background: rgba(250, 112, 154, 0.1); 
+            color: #fa709a; 
+        }
+        
+        .charts-section {
+            padding: 30px;
+            background: white;
+            margin: 20px 30px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin: 20px 30px;
+        }
+        
+        .actions-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .actions-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-custom {
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .btn-success-custom {
+            background: var(--success-gradient);
+            color: white;
+        }
+        
+        .btn-info-custom {
+            background: var(--info-gradient);
+            color: white;
+        }
+        
+        .btn-warning-custom {
+            background: var(--warning-gradient);
+            color: white;
+        }
+        
+        .alert-enhanced {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid;
+        }
+        
+        .alert-success-enhanced {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.1), rgba(56, 239, 125, 0.1));
+            border-left-color: #11998e;
+            color: #22543d;
+        }
+        
+        .alert-warning-enhanced {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));
+            border-left-color: #f093fb;
+            color: #744210;
+        }
+        
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .floating-action-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .stats-container, .charts-section, .quick-actions {
+                margin: 15px;
+                padding: 20px;
+            }
+            
+            .floating-action-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/legacy">
+                    <i class="fas fa-server me-2"></i>
+                    Enhanced Asset Management Dashboard
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <div class="system-status">
+                        <div class="status-indicator"></div>
+                        <span>System Online</span>
+                    </div>
+                    <a class="nav-link" href="/assets">
+                        <i class="fas fa-list me-1"></i>
+                        All Assets
+                    </a>
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-chart-line me-1"></i>
+                        Professional View
+                    </a>
+                    <a class="nav-link" href="#" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Refresh
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0">
+                        <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+                        Enhanced Asset Management Dashboard
+                    </h1>
+                    <p class="text-muted mb-0">Comprehensive asset monitoring and management portal with enhanced features</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="badge bg-success fs-6 me-2">
+                        <i class="fas fa-circle me-1"></i>
+                        Active & Enhanced
+                    </span>
+                    <span class="text-muted">Last Updated: <span id="lastUpdate"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Statistics Cards Section -->
+        <div class="stats-container">
+            <div class="row">
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-primary">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="stat-value" id="totalDevices">242</div>
+                        <div class="stat-label">Total Assets</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+12 this month
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-success">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="stat-value" id="onlineDevices">18</div>
+                        <div class="stat-label">Online Devices</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+3 today
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-warning">
+                            <i class="fas fa-power-off"></i>
+                        </div>
+                        <div class="stat-value" id="offlineDevices">224</div>
+                        <div class="stat-label">Offline Devices</div>
+                        <div class="stat-change change-negative">
+                            <i class="fas fa-arrow-down me-1"></i>-5 today
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-info">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="stat-value" id="hardwareComplete">100</div>
+                        <div class="stat-label">Hardware Data</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-check me-1"></i>Complete
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-value" id="hostnameMismatches">35</div>
+                        <div class="stat-label">Name Mismatches</div>
+                        <div class="stat-change change-negative">
+                            <i class="fas fa-flag me-1"></i>Needs Review
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-6">
+                    <div class="stats-card">
+                        <div class="stats-icon icon-dark">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-value" id="departments">8</div>
+                        <div class="stat-label">Departments</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-users me-1"></i>Active
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Charts Section -->
+        <div class="charts-section">
+            <div class="chart-header">
+                <h2 class="chart-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Enhanced Analytics & Insights
+                </h2>
+                <div>
+                    <button class="btn btn-primary-custom btn-custom" onclick="refreshCharts()">
+                        <i class="fas fa-sync-alt me-2"></i>Refresh Charts
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5 class="chart-title">
+                                <i class="fas fa-chart-pie text-primary"></i>
+                                Device Status Overview
+                            </h5>
+                            <span class="badge bg-info">Live Data</span>
+                        </div>
+                        <canvas id="statusChart" height="300"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5 class="chart-title">
+                                <i class="fas fa-chart-bar text-success"></i>
+                                Operating System Distribution
+                            </h5>
+                            <span class="badge bg-success">Updated</span>
+                        </div>
+                        <canvas id="osChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5 class="chart-title">
+                                <i class="fas fa-cogs text-warning"></i>
+                                Collection Methods
+                            </h5>
+                        </div>
+                        <canvas id="collectionChart" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5 class="chart-title">
+                                <i class="fas fa-memory text-info"></i>
+                                Hardware Completeness
+                            </h5>
+                        </div>
+                        <canvas id="hardwareChart" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h5 class="chart-title">
+                                <i class="fas fa-exclamation-triangle text-danger"></i>
+                                System Health
+                            </h5>
+                        </div>
+                        <canvas id="healthChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Quick Actions Panel -->
+        <div class="quick-actions">
+            <div class="actions-header">
+                <h2 class="actions-title">
+                    <i class="fas fa-bolt"></i>
+                    Enhanced Quick Actions & Controls
+                </h2>
+                <span class="badge bg-primary">Enhanced Features</span>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 mb-3">
+                    <div class="d-grid">
+                        <a href="/assets" class="btn btn-primary-custom btn-custom">
+                            <i class="fas fa-list me-2"></i>
+                            View All Assets
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <div class="d-grid">
+                        <button class="btn btn-success-custom btn-custom" onclick="refreshDashboard()">
+                            <i class="fas fa-sync-alt me-2"></i>
+                            Refresh Data
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <div class="d-grid">
+                        <button class="btn btn-info-custom btn-custom" onclick="exportData()">
+                            <i class="fas fa-download me-2"></i>
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <div class="d-grid">
+                        <button class="btn btn-warning-custom btn-custom" onclick="scanNetwork()">
+                            <i class="fas fa-search me-2"></i>
+                            Scan Network
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced System Alerts -->
+            <div class="mt-4">
+                <h5><i class="fas fa-bell me-2"></i>Enhanced System Alerts</h5>
+                <div class="alert alert-success-enhanced alert-enhanced" role="alert">
+                    <strong><i class="fas fa-check-circle me-2"></i>System Status:</strong>
+                    All enhanced services are running normally. Advanced monitoring active. Last comprehensive scan completed successfully.
+                </div>
+                <div class="alert alert-warning-enhanced alert-enhanced" role="alert">
+                    <strong><i class="fas fa-exclamation-triangle me-2"></i>Enhanced Attention:</strong>
+                    35 hostname mismatches detected with advanced analysis. Enhanced review features available for detailed investigation.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Floating Action Button -->
+    <button class="floating-action-btn" onclick="refreshDashboard()" title="Enhanced Refresh Dashboard">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    
+    <script>
+        let statusChart, osChart, collectionChart, hardwareChart, healthChart;
+
+        // Initialize enhanced dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+            updateTimestamp();
+            
+            // Auto-refresh every 5 minutes
+            setInterval(refreshDashboard, 300000);
+        });
+
+        // Load enhanced dashboard data
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                updateDashboardStats(data);
+                createEnhancedCharts(data);
+            } catch (error) {
+                console.error('Error loading enhanced dashboard data:', error);
+                showError('Failed to load enhanced dashboard data');
+            }
+        }
+
+        // Update dashboard statistics with enhanced animations
+        function updateDashboardStats(data) {
+            // Update stat cards with smooth animation
+            animateValue('totalDevices', 0, data.total_devices, 1500);
+            animateValue('onlineDevices', 0, data.device_status?.alive || 0, 1500);
+            animateValue('offlineDevices', 0, (data.total_devices - (data.device_status?.alive || 0)), 1500);
+            animateValue('hardwareComplete', 0, data.devices_with_processor, 1500);
+            animateValue('hostnameMismatches', 0, data.hostname_mismatches, 1500);
+            animateValue('departments', 0, 8, 1500);
+        }
+
+        // Enhanced animate value counter with easing
+        function animateValue(elementId, start, end, duration) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const startTimestamp = performance.now();
+            const step = (timestamp) => {
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Easing function for smooth animation
+                const easedProgress = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.floor(easedProgress * (end - start) + start);
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        }
+
+        // Create enhanced charts with better styling
+        function createEnhancedCharts(data) {
+            createEnhancedStatusChart(data);
+            createEnhancedOSChart(data);
+            createEnhancedCollectionChart(data);
+            createEnhancedHardwareChart(data);
+            createEnhancedHealthChart(data);
+        }
+
+        // Enhanced Device Status Chart
+        function createEnhancedStatusChart(data) {
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            if (statusChart) statusChart.destroy();
+            
+            const statusData = data.device_status || {};
+            statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Online', 'Offline', 'Unknown'],
+                    datasets: [{
+                        data: [
+                            statusData.alive || 0,
+                            (data.total_devices - (statusData.alive || 0)) || 0,
+                            statusData.unknown || 0
+                        ],
+                        backgroundColor: [
+                            'rgba(17, 153, 142, 0.9)',
+                            'rgba(250, 112, 154, 0.9)',
+                            'rgba(100, 116, 139, 0.9)'
+                        ],
+                        borderColor: [
+                            '#11998e',
+                            '#fa709a',
+                            '#64748b'
+                        ],
+                        borderWidth: 3,
+                        hoverOffset: 15,
+                        cutout: '60%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: { size: 13, weight: 'bold' },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.9)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: 'rgba(255,255,255,0.3)',
+                            borderWidth: 2,
+                            cornerRadius: 10,
+                            displayColors: true
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        duration: 2500,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Enhanced Operating System Chart
+        function createEnhancedOSChart(data) {
+            const ctx = document.getElementById('osChart').getContext('2d');
+            if (osChart) osChart.destroy();
+            
+            const osData = data.operating_systems || [];
+            osChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: osData.map(os => os.name).slice(0, 6),
+                    datasets: [{
+                        label: 'Devices',
+                        data: osData.map(os => os.count).slice(0, 6),
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.9)',
+                            'rgba(79, 172, 254, 0.9)',
+                            'rgba(17, 153, 142, 0.9)',
+                            'rgba(240, 147, 251, 0.9)',
+                            'rgba(250, 112, 154, 0.9)',
+                            'rgba(44, 62, 80, 0.9)'
+                        ],
+                        borderColor: [
+                            '#667eea',
+                            '#4facfe',
+                            '#11998e',
+                            '#f093fb',
+                            '#fa709a',
+                            '#2c3e50'
+                        ],
+                        borderWidth: 3,
+                        borderRadius: 12,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.9)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            cornerRadius: 10
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { 
+                                color: 'rgba(0,0,0,0.1)',
+                                borderDash: [5, 5]
+                            },
+                            ticks: { 
+                                color: '#666',
+                                font: { weight: 'bold' }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { 
+                                color: '#666',
+                                font: { weight: 'bold' }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2500,
+                        easing: 'easeOutBounce'
+                    }
+                }
+            });
+        }
+
+        // Enhanced Collection Methods Chart
+        function createEnhancedCollectionChart(data) {
+            const ctx = document.getElementById('collectionChart').getContext('2d');
+            if (collectionChart) collectionChart.destroy();
+            
+            const collectionData = data.collection_methods || [];
+            collectionChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: collectionData.map(method => method.method),
+                    datasets: [{
+                        data: collectionData.map(method => method.count),
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.9)',
+                            'rgba(17, 153, 142, 0.9)',
+                            'rgba(240, 147, 251, 0.9)',
+                            'rgba(79, 172, 254, 0.9)'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 3,
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                font: { size: 11, weight: 'bold' },
+                                usePointStyle: true
+                            }
+                        }
+                    },
+                    animation: { 
+                        duration: 2000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Enhanced Hardware Completeness Chart
+        function createEnhancedHardwareChart(data) {
+            const ctx = document.getElementById('hardwareChart').getContext('2d');
+            if (hardwareChart) hardwareChart.destroy();
+            
+            hardwareChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Processor Data', 'Memory Data', 'MAC Addresses', 'Missing Data'],
+                    datasets: [{
+                        data: [
+                            data.devices_with_processor || 0,
+                            data.devices_with_memory || 0,
+                            data.devices_with_mac || 0,
+                            Math.max(0, data.total_devices - (data.devices_with_processor || 0))
+                        ],
+                        backgroundColor: [
+                            'rgba(17, 153, 142, 0.9)',
+                            'rgba(79, 172, 254, 0.9)',
+                            'rgba(102, 126, 234, 0.9)',
+                            'rgba(250, 112, 154, 0.9)'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 3,
+                        cutout: '50%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                font: { size: 10, weight: 'bold' },
+                                usePointStyle: true
+                            }
+                        }
+                    },
+                    animation: { 
+                        duration: 2000,
+                        easing: 'easeInOutBack'
+                    }
+                }
+            });
+        }
+
+        // Enhanced System Health Chart
+        function createEnhancedHealthChart(data) {
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            if (healthChart) healthChart.destroy();
+            
+            const healthScore = Math.max(0, 100 - ((data.hostname_mismatches || 0) / data.total_devices * 100));
+            
+            healthChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Healthy', 'Issues'],
+                    datasets: [{
+                        data: [healthScore, 100 - healthScore],
+                        backgroundColor: [
+                            healthScore > 80 ? 'rgba(17, 153, 142, 0.9)' : 
+                            healthScore > 60 ? 'rgba(240, 147, 251, 0.9)' : 
+                            'rgba(250, 112, 154, 0.9)',
+                            'rgba(225, 225, 225, 0.3)'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 3,
+                        cutout: '70%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + Math.round(context.parsed) + '%';
+                                }
+                            }
+                        }
+                    },
+                    animation: { 
+                        duration: 2000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Enhanced refresh function with better UX
+        function refreshDashboard() {
+            // Show loading animation on all refresh buttons
+            const refreshBtns = document.querySelectorAll('[onclick="refreshDashboard()"]');
+            refreshBtns.forEach(btn => {
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Refreshing...';
+                btn.disabled = true;
+                
+                // Store original content for restoration
+                btn.setAttribute('data-original', originalContent);
+            });
+            
+            // Add pulse animation to floating button
+            const floatingBtn = document.querySelector('.floating-action-btn');
+            floatingBtn.style.animation = 'pulse 1s infinite';
+            
+            // Reload data
+            loadDashboardData().then(() => {
+                // Reset buttons after delay
+                setTimeout(() => {
+                    refreshBtns.forEach(btn => {
+                        btn.innerHTML = btn.getAttribute('data-original') || btn.innerHTML;
+                        btn.disabled = false;
+                        btn.removeAttribute('data-original');
+                    });
+                    
+                    // Remove pulse animation
+                    floatingBtn.style.animation = '';
+                }, 1500);
+            });
+        }
+
+        // Refresh charts only
+        function refreshCharts() {
+            loadDashboardData();
+        }
+
+        // Update timestamp
+        function updateTimestamp() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+        }
+
+        // Enhanced export data function
+        function exportData() {
+            const btn = event.target;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Preparing Export...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Enhanced export functionality will be implemented soon with multiple formats support!');
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // Enhanced scan network function
+        function scanNetwork() {
+            const btn = event.target;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Scanning...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Enhanced network scan functionality will be implemented soon with advanced discovery features!');
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }, 3000);
+        }
+
+        // Show enhanced error function
+        function showError(message) {
+            console.error(message);
+            // Enhanced error handling - could implement toast notifications here
+        }
+    </script>
+</body>
+</html>

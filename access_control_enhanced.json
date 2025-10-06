@@ -1,0 +1,47 @@
+{
+  "settings": {
+    "authentication_enabled": true,
+    "ip_filtering_enabled": true,
+    "rate_limiting_enabled": true,
+    "session_timeout_minutes": 60,
+    "max_login_attempts": 5,
+    "lockout_duration_minutes": 30,
+    "require_https": false,
+    "log_all_requests": true
+  },
+  "allowed_networks": [
+    "127.0.0.0/8",
+    "192.168.0.0/16",
+    "10.0.0.0/8",
+    "172.16.0.0/12"
+  ],
+  "blocked_ips": [],
+  "allowed_ips": [
+    "127.0.0.1",
+    "169.254.124.20",
+    "::1"
+  ],
+  "users": {
+    "admin": {
+      "password_hash": "d90a759d46497dadcef421ab0de2a241b314bad05dcc3ed2f074801174b48ace",
+      "role": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "admin"
+      ],
+      "created": "2024-10-02T17:00:00",
+      "last_login": "2025-10-02T18:56:13.612081"
+    },
+    "user": {
+      "password_hash": "857abb72f6da5a8ab67a77e6168af960049e2f5c25d48692424ecf0de46d800d",
+      "role": "user",
+      "permissions": [
+        "read"
+      ],
+      "created": "2024-01-01T00:00:00",
+      "last_login": "2025-10-02T17:47:04.646828"
+    }
+  },
+  "last_updated": "2025-10-02T18:56:13.612088"
+}

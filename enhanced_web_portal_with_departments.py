@@ -635,12 +635,13 @@ class EnhancedDeviceWebInterface:
 </html>
         '''
 
-    def run(self, host='0.0.0.0', port=5555, debug=False):
+    def run(self, host='0.0.0.0', port=5556, debug=False):
         """Run the web interface"""
         print(f"🌐 Starting Enhanced Device Web Portal on http://{host}:{port}")
         print("🔧 Features: Department Management, Enhanced Data Display, Real-time Stats")
         self.app.run(host=host, port=port, debug=debug)
 
-if __name__ == '__main__':
-    interface = EnhancedDeviceWebInterface()
-    interface.run(debug=True)
+# NOTE: Auto-startup disabled - use launch_original_desktop.py or GUI buttons
+# if __name__ == '__main__':
+#     interface = EnhancedDeviceWebInterface()
+#     interface.run(debug=True)

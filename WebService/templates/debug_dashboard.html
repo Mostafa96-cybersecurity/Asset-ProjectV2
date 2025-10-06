@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management - API Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        .api-test { margin: 20px 0; }
+        .response { 
+            background-color: #f8f9fa; 
+            border: 1px solid #dee2e6; 
+            border-radius: 5px; 
+            padding: 15px; 
+            margin: 10px 0; 
+            white-space: pre-wrap; 
+            font-family: monospace; 
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-number { font-size: 2em; font-weight: bold; }
+        .stat-label { font-size: 0.9em; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Asset Management System - API Debug Dashboard</h1>
+        <div id="system-status" class="status info">
+            [INFO] Checking system status...
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>API Endpoint Tests</h2>
+        <div class="api-test">
+            <button onclick="testEndpoint('/api/stats', 'stats-response')">Test /api/stats</button>
+            <button onclick="testEndpoint('/api/assets', 'assets-response')">Test /api/assets</button>
+            <button onclick="testEndpoint('/api/departments', 'departments-response')">Test /api/departments</button>
+            <button onclick="testEndpoint('/api/device-types', 'device-types-response')">Test /api/device-types</button>
+        </div>
+        
+        <div class="api-test">
+            <h3>Stats API Response:</h3>
+            <div id="stats-response" class="response">Click "Test /api/stats" to see response</div>
+        </div>
+        
+        <div class="api-test">
+            <h3>Assets API Response:</h3>
+            <div id="assets-response" class="response">Click "Test /api/assets" to see response</div>
+        </div>
+        
+        <div class="api-test">
+            <h3>Departments API Response:</h3>
+            <div id="departments-response" class="response">Click "Test /api/departments" to see response</div>
+        </div>
+        
+        <div class="api-test">
+            <h3>Device Types API Response:</h3>
+            <div id="device-types-response" class="response">Click "Test /api/device-types" to see response</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Quick Stats Dashboard</h2>
+        <div class="grid" id="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-devices">--</div>
+                <div class="stat-label">Total Devices</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="online-devices">--</div>
+                <div class="stat-label">Online Devices</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="offline-devices">--</div>
+                <div class="stat-label">Offline Devices</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="unknown-devices">--</div>
+                <div class="stat-label">Unknown Devices</div>
+            </div>
+        </div>
+        <button onclick="loadQuickStats()">Refresh Stats</button>
+    </div>
+
+    <div class="container">
+        <h2>Database Connection Test</h2>
+        <div id="db-status" class="status warning">[INFO] Click button to test database connection</div>
+        <button onclick="testDatabase()">Test Database Connection</button>
+        <div id="db-response" class="response" style="display: none;"></div>
+    </div>
+
+    <script>
+        console.log('[DEBUG] Loading Asset Management API Debug Dashboard');
+        
+        // Test system status on load
+        window.onload = function() {
+            testSystemStatus();
+            loadQuickStats();
+        };
+
+        function testSystemStatus() {
+            document.getElementById('system-status').className = 'status info';
+            document.getElementById('system-status').textContent = '[INFO] Testing system connectivity...';
+            
+            fetch('/')
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('system-status').className = 'status success';
+                        document.getElementById('system-status').textContent = '[OK] System is running and responsive';
+                    } else {
+                        document.getElementById('system-status').className = 'status error';
+                        document.getElementById('system-status').textContent = '[ERROR] System returned HTTP ' + response.status;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('system-status').className = 'status error';
+                    document.getElementById('system-status').textContent = '[ERROR] System connectivity failed: ' + error.message;
+                });
+        }
+
+        async function testEndpoint(url, responseElementId) {
+            const responseElement = document.getElementById(responseElementId);
+            responseElement.textContent = '[INFO] Testing endpoint: ' + url + '...';
+            
+            try {
+                const response = await fetch(url);
+                const contentType = response.headers.get('content-type');
+                
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    responseElement.textContent = 
+                        `[HTTP ${response.status}] Response:\n` + 
+                        JSON.stringify(data, null, 2);
+                } else {
+                    const text = await response.text();
+                    responseElement.textContent = 
+                        `[HTTP ${response.status}] Response (non-JSON):\n` + text;
+                }
+            } catch (error) {
+                responseElement.textContent = '[ERROR] ' + error.message;
+            }
+        }
+
+        function loadQuickStats() {
+            console.log('[DEBUG] Loading quick stats');
+            
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('[DEBUG] Stats data:', data);
+                    
+                    document.getElementById('total-devices').textContent = 
+                        data.total_devices || data.total_assets || '0';
+                    document.getElementById('online-devices').textContent = 
+                        (data.device_status && data.device_status.online) || '0';
+                    document.getElementById('offline-devices').textContent = 
+                        (data.device_status && data.device_status.offline) || '0';
+                    document.getElementById('unknown-devices').textContent = 
+                        data.unknown_devices || '0';
+                })
+                .catch(error => {
+                    console.error('[ERROR] Loading stats:', error);
+                    document.getElementById('total-devices').textContent = 'ERR';
+                    document.getElementById('online-devices').textContent = 'ERR';
+                    document.getElementById('offline-devices').textContent = 'ERR';
+                    document.getElementById('unknown-devices').textContent = 'ERR';
+                });
+        }
+
+        function testDatabase() {
+            const statusElement = document.getElementById('db-status');
+            const responseElement = document.getElementById('db-response');
+            
+            statusElement.className = 'status info';
+            statusElement.textContent = '[INFO] Testing database connection...';
+            responseElement.style.display = 'block';
+            responseElement.textContent = 'Testing database access via /api/assets endpoint...';
+            
+            fetch('/api/assets?limit=1')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        statusElement.className = 'status error';
+                        statusElement.textContent = '[ERROR] Database connection failed';
+                        responseElement.textContent = 'Error: ' + data.error;
+                    } else {
+                        statusElement.className = 'status success';
+                        statusElement.textContent = '[OK] Database connection successful';
+                        responseElement.textContent = 
+                            'Database response:\n' + JSON.stringify(data, null, 2);
+                    }
+                })
+                .catch(error => {
+                    statusElement.className = 'status error';
+                    statusElement.textContent = '[ERROR] Database test failed';
+                    responseElement.textContent = 'Error: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>

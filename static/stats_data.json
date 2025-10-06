@@ -1,0 +1,30 @@
+{
+  "total_assets": 510,
+  "total_devices": 510,
+  "device_status": {
+    "online": 0,
+    "offline": 510,
+    "unknown": 0
+  },
+  "device_types": [
+    {
+      "name": "Asset Incomplete",
+      "count": 509
+    },
+    {
+      "name": "Windows Workstation",
+      "count": 1
+    }
+  ],
+  "departments": [
+    {
+      "name": "Unassigned",
+      "count": 510
+    }
+  ],
+  "incomplete_assets": 509,
+  "avg_data_completeness": 0.14901960784313725,
+  "status": "OK",
+  "classification_enabled": true,
+  "last_updated": "2025-10-05T17:13:55.641771"
+}

@@ -1,0 +1,16 @@
+{
+  "collection_policy": "unlimited",
+  "global_timeout": null,
+  "per_device_timeout": 120,
+  "total_devices_expected": 560,
+  "estimated_completion_time_minutes": 20,
+  "retry_failed_devices": true,
+  "max_retries": 3,
+  "collection_method_priority": [
+    "WMI",
+    "SNMP",
+    "SSH",
+    "HTTP",
+    "Basic Network"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schedules": [
+    {
+      "id": "hourly_quick",
+      "name": "Hourly Quick Scan",
+      "enabled": false,
+      "type": "interval",
+      "interval_minutes": 60,
+      "scan_type": "quick",
+      "targets": [
+        "localhost"
+      ],
+      "last_run": null,
+      "next_run": null,
+      "created": "2025-10-02T16:46:59.005914"
+    },
+    {
+      "id": "daily_full",
+      "name": "Daily Full Network Scan",
+      "enabled": false,
+      "type": "daily",
+      "daily_time": "02:00",
+      "scan_type": "comprehensive",
+      "targets": [
+        "network"
+      ],
+      "last_run": null,
+      "next_run": null,
+      "created": "2025-10-02T16:46:59.005921"
+    },
+    {
+      "id": "weekly_deep",
+      "name": "Weekly Deep Scan",
+      "enabled": false,
+      "type": "weekly",
+      "weekly_day": 0,
+      "weekly_time": "01:00",
+      "scan_type": "deep",
+      "targets": [
+        "all"
+      ],
+      "last_run": null,
+      "next_run": null,
+      "created": "2025-10-02T16:46:59.005922"
+    }
+  ],
+  "last_updated": "2025-10-02T16:46:59.005924"
+}

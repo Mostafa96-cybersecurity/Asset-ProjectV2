@@ -1,0 +1,9 @@
+{
+  "wmi_credentials": {
+    "domain": "YOUR_DOMAIN.COM",
+    "username": "svc-asset-scanner",
+    "password": "YOUR_SECURE_PASSWORD",
+    "connection_timeout": 30,
+    "authentication_level": "Packet"
+  }
+}

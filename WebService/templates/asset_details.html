@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Details - Asset Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --light-color: #f8fafc;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: var(--light-color);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin: 20px;
+            min-height: calc(100vh - 40px);
+            overflow: hidden;
+        }
+        
+        .navbar-custom {
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+            padding: 20px 30px;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .detail-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-title {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #64748b;
+            min-width: 200px;
+        }
+        
+        .info-value {
+            color: #2c3e50;
+            flex: 1;
+            text-align: right;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-alive { background-color: #dcfce7; color: #059669; }
+        .status-dead { background-color: #fee2e2; color: #dc2626; }
+        .status-unknown { background-color: #f1f5f9; color: #64748b; }
+        
+        .json-viewer {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-server me-2"></i>
+                    Asset Details
+                </a>
+                <a href="/" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="content">
+            <div id="loadingSpinner" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading asset details...</p>
+            </div>
+
+            <div id="assetDetails" style="display: none;">
+                <!-- Basic Information -->
+                <div class="detail-card">
+                    <h4 class="detail-title">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Basic Information
+                    </h4>
+                    <div id="basicInfo">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- System Information -->
+                <div class="detail-card">
+                    <h4 class="detail-title">
+                        <i class="fas fa-desktop me-2"></i>
+                        System Information
+                    </h4>
+                    <div id="systemInfo">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Hardware Information -->
+                <div class="detail-card">
+                    <h4 class="detail-title">
+                        <i class="fas fa-microchip me-2"></i>
+                        Hardware Information
+                    </h4>
+                    <div id="hardwareInfo">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Network Information -->
+                <div class="detail-card">
+                    <h4 class="detail-title">
+                        <i class="fas fa-network-wired me-2"></i>
+                        Network Information
+                    </h4>
+                    <div id="networkInfo">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Software Information -->
+                <div class="detail-card">
+                    <h4 class="detail-title">
+                        <i class="fas fa-cogs me-2"></i>
+                        Software Information
+                    </h4>
+                    <div id="softwareInfo">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="alert alert-danger" style="display: none;">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Failed to load asset details. Please try again.
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get asset ID from URL
+        const assetId = window.location.pathname.split('/').pop();
+        
+        // Load asset details on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAssetDetails();
+        });
+        
+        async function loadAssetDetails() {
+            try {
+                const response = await fetch(`/api/assets/${assetId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const asset = await response.json();
+                displayAssetDetails(asset);
+                
+            } catch (error) {
+                console.error('Failed to load asset details:', error);
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+        
+        function displayAssetDetails(asset) {
+            // Hide loading spinner
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('assetDetails').style.display = 'block';
+            
+            // Basic Information
+            document.getElementById('basicInfo').innerHTML = `
+                ${createInfoRow('Asset ID', asset.id)}
+                ${createInfoRow('Hostname', asset.hostname)}
+                ${createInfoRow('Computer Name', asset.computer_name)}
+                ${createInfoRow('IP Address', asset.ip_address)}
+                ${createInfoRow('Device Status', createStatusBadge(asset.device_status))}
+                ${createInfoRow('Device Type', asset.device_type)}
+                ${createInfoRow('Collection Method', asset.collection_method)}
+                ${createInfoRow('Last Seen', formatDateTime(asset.last_seen))}
+                ${createInfoRow('Data Completeness', `${asset.data_completeness_score || 0}%`)}
+            `;
+            
+            // System Information
+            document.getElementById('systemInfo').innerHTML = `
+                ${createInfoRow('Operating System', asset.operating_system)}
+                ${createInfoRow('OS Version', asset.os_version)}
+                ${createInfoRow('OS Build', asset.os_build)}
+                ${createInfoRow('System Manufacturer', asset.system_manufacturer)}
+                ${createInfoRow('System Model', asset.system_model)}
+                ${createInfoRow('System SKU', asset.system_sku)}
+                ${createInfoRow('BIOS Version', asset.bios_version)}
+                ${createInfoRow('Domain/Workgroup', asset.domain_workgroup)}
+                ${createInfoRow('Current User', asset.current_logged_user)}
+                ${createInfoRow('Uptime', asset.uptime_formatted)}
+            `;
+            
+            // Hardware Information
+            document.getElementById('hardwareInfo').innerHTML = `
+                ${createInfoRow('Processor', asset.processor_name)}
+                ${createInfoRow('CPU Cores', asset.processor_cores)}
+                ${createInfoRow('CPU Threads', asset.processor_threads)}
+                ${createInfoRow('CPU Usage', `${asset.cpu_usage_percent || 0}%`)}
+                ${createInfoRow('Total Memory', `${asset.total_physical_memory_gb || 0} GB`)}
+                ${createInfoRow('Memory Usage', `${asset.memory_usage_percent || 0}%`)}
+                ${createInfoRow('Storage Summary', asset.storage_summary)}
+                ${createInfoRow('Graphics Cards', asset.graphics_cards ? asset.graphics_cards.length : 0)}
+                ${createInfoRow('Connected Monitors', asset.connected_monitors)}
+                ${createInfoRow('USB Devices', asset.usb_devices ? asset.usb_devices.length : 0)}
+                ${createInfoRow('Audio Devices', asset.audio_devices ? asset.audio_devices.length : 0)}
+            `;
+            
+            // Network Information
+            document.getElementById('networkInfo').innerHTML = `
+                ${createInfoRow('MAC Address', asset.mac_address)}
+                ${createInfoRow('Network Adapters', asset.network_adapters ? asset.network_adapters.length : 0)}
+                ${createInfoRow('Hostname Match Status', createHostnameBadge(asset.hostname_mismatch_status))}
+                ${createInfoRow('Hostname Match Type', asset.hostname_mismatch_type)}
+                ${createInfoRow('Open Ports', asset.open_ports)}
+            `;
+            
+            // Software Information
+            document.getElementById('softwareInfo').innerHTML = `
+                ${createInfoRow('Installed Software', asset.installed_software ? asset.installed_software.length : 0)}
+                ${createInfoRow('Running Services', asset.running_services ? asset.running_services.length : 0)}
+                ${createInfoRow('User Profiles', asset.user_profiles ? asset.user_profiles.length : 0)}
+                ${createInfoRow('Antivirus Software', asset.antivirus_software)}
+                ${createInfoRow('Firewall Status', asset.firewall_status)}
+                ${createInfoRow('Windows Updates Pending', asset.windows_updates_pending)}
+            `;
+            
+            // Add detailed sections for arrays
+            if (asset.graphics_cards && asset.graphics_cards.length > 0) {
+                addDetailedSection('Graphics Cards', asset.graphics_cards, 'hardwareInfo');
+            }
+            
+            if (asset.network_adapters && asset.network_adapters.length > 0) {
+                addDetailedSection('Network Adapters', asset.network_adapters, 'networkInfo');
+            }
+            
+            if (asset.installed_software && asset.installed_software.length > 0) {
+                addDetailedSection('Installed Software (Top 10)', asset.installed_software.slice(0, 10), 'softwareInfo');
+            }
+        }
+        
+        function createInfoRow(label, value) {
+            return `
+                <div class="info-row">
+                    <span class="info-label">${label}:</span>
+                    <span class="info-value">${value || 'N/A'}</span>
+                </div>
+            `;
+        }
+        
+        function createStatusBadge(status) {
+            const statusClass = status === 'alive' ? 'status-alive' : 
+                              status === 'dead' ? 'status-dead' : 'status-unknown';
+            return `<span class="status-badge ${statusClass}">${status || 'Unknown'}</span>`;
+        }
+        
+        function createHostnameBadge(status) {
+            const badgeClass = status === 'MISMATCH' ? 'status-dead' : 'status-alive';
+            const text = status === 'MISMATCH' ? 'Mismatch' : 'Match';
+            return `<span class="status-badge ${badgeClass}">${text}</span>`;
+        }
+        
+        function formatDateTime(dateTime) {
+            if (!dateTime) return 'N/A';
+            try {
+                return new Date(dateTime).toLocaleString();
+            } catch {
+                return dateTime;
+            }
+        }
+        
+        function addDetailedSection(title, data, containerId) {
+            const container = document.getElementById(containerId);
+            const detailedDiv = document.createElement('div');
+            detailedDiv.className = 'mt-3';
+            detailedDiv.innerHTML = `
+                <h6>${title}:</h6>
+                <div class="json-viewer">${JSON.stringify(data, null, 2)}</div>
+            `;
+            container.appendChild(detailedDiv);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Asset Management Dashboard Test</h1>
+    
+    <div class="test-section">
+        <h3>API Test Results</h3>
+        <div id="apiResults">Testing API...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Quick Actions</h3>
+        <button onclick="testAPI()">Test API</button>
+        <button onclick="window.open('/production', '_blank')">Open Dashboard</button>
+        <button onclick="window.open('/', '_blank')">Open Main Page</button>
+    </div>
+    
+    <script>
+        async function testAPI() {
+            const resultsDiv = document.getElementById('apiResults');
+            resultsDiv.innerHTML = 'Testing API...';
+            
+            try {
+                const response = await fetch('/api/assets');
+                const data = await response.json();
+                
+                resultsDiv.innerHTML = `
+                    <div class="success">✅ API Status: ${response.status}</div>
+                    <div class="info">📊 Total Assets: ${data.assets ? data.assets.length : 0}</div>
+                    <div class="info">🔧 Sample Asset ID: ${data.assets && data.assets[0] ? data.assets[0].id : 'N/A'}</div>
+                    <div class="info">🏷️ Sample Hostname: ${data.assets && data.assets[0] ? data.assets[0].hostname : 'N/A'}</div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ API Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Auto-test on load
+        window.onload = () => testAPI();
+    </script>
+</body>
+</html>
